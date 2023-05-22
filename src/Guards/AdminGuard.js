@@ -5,26 +5,54 @@ import { useEffect } from "react";
 import { useRouter } from "next/router";
 
 // ** Hooks Import
-import { useAuth } from "src/hooks/useAuth";
+import { useAuthProvider } from "src/context/AuthContext";
 
-const GuestGuard = (props) => {
-  const { children, fallback } = props;
-  const auth = useAuth();
+
+const AuthGuard = (props) => {
+  console.log('inside Admin Guard')
+  const { children, fallback, pageType } = props;
+  const auth = useAuthProvider();
   const router = useRouter();
-  useEffect(() => {
-    if (!router.isReady) {
-      return;
-    }
-    if (window.localStorage.getItem("userData")) {
-      router.replace("/");
-    }
+  useEffect(
+    () => {
+      if (!router.isReady) {
+        return;
+      }
+      // console.log('auth.user $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', auth.user)
+      // console.log('role $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', JSON.parse(window.localStorage.getItem('userData')).role)
+
+      if (auth.user === null && !window.localStorage.getItem("accessToken")) {
+        // console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',auth)
+        if (router.asPath !== "/admin/login/") {
+          router.replace({
+            pathname: "/admin/login",
+            // query: { requireAuth: true, returnUrl: router.asPath },
+            query: {returnUrl: router.asPath },
+          });
+        } else {
+          router.replace({
+            pathname: "/",
+            // query: { requireAuth: true, returnUrl: router.asPath },
+          });
+        }
+      }
+      else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != 'admin')) {
+        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+        router.replace({
+          pathname: "/",
+          // query: { requireAuth: true, returnUrl: router.asPath },
+        });
+      }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.route]);
-  if (auth.loading || (!auth.loading && auth.user !== null)) {
+    [router.route, router.isReady]
+  );
+  if (auth.loading || auth.user === null) {
     return fallback;
   }
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', auth)
 
   return <>{children}</>;
 };
 
-export default GuestGuard;
+export default AuthGuard;

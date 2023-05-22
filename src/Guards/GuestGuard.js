@@ -30,7 +30,8 @@ const GuestGuard = (props) => {
 
 
   if (auth.loading || (!auth.loading && auth.user !== null)) {
-    console.log('value of auth.loading,', auth.loading)
+    console.log('value of auth.loading,', auth)
+    console.log('value of auth.user,', auth.user)
     return fallback;
   }
   // console.log('2222222222222222222222222222222222')

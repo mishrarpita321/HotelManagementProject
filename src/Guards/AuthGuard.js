@@ -18,6 +18,11 @@ const AuthGuard = (props) => {
       if (!router.isReady) {
         return;
       }
+
+      if (window.localStorage.getItem("userData")) {
+        // console.log('$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$', JSON.parse(window.localStorage.getItem("userData")).role)
+      }
+
       if (auth.user === null && !window.localStorage.getItem("accessToken")) {
         if (router.asPath !== "/") {
           router.replace({
@@ -31,11 +36,20 @@ const AuthGuard = (props) => {
           });
         }
       }
+      else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != 'user')) {
+        console.log('***********************Hi i am here************************')
+        router.replace({
+          pathname: "/admin/dashboard",
+          // query: { requireAuth: true, returnUrl: router.asPath },
+        });
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [router.route, router.isReady]
   );
   if (auth.loading || auth.user === null) {
+    console.log('Auth guard fallback')
+
     return fallback;
   }
 
