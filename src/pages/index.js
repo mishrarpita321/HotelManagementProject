@@ -56,7 +56,7 @@ export default function Home() {
 
   return (
     <>
-      <h1>This is home index page</h1>
+      <h1>This is home index page by arpita</h1>
       {/* <Modal isOpen={loginModalOpen} onClose={closeLoginModal}>
         <AuthPages />
       </Modal> */}
