@@ -2,7 +2,6 @@ import style from "../../styles/NavBar/navBar.module.css";
 const NavBar = () => {
     return (
         <>
-
             {/* header */}
             <header>
                 {/* header inner */}
@@ -70,8 +69,8 @@ const NavBar = () => {
             </header>
             {/* end header inner */}
             {/* end header */}
-
         </>
+
 
 
     )
