@@ -2,7 +2,7 @@ import style from "../../styles/NavBar/navBar.module.css";
 const NavBar = () => {
     return (
         <>
-<<<<<<< HEAD
+
             {/* header */}
             <header>
                 {/* header inner */}
@@ -70,9 +70,7 @@ const NavBar = () => {
             </header>
             {/* end header inner */}
             {/* end header */}
-=======
-            This is nav bar
->>>>>>> e409756f79b94304b35b9dd67686b1dd862e94bd
+
         </>
 
 
