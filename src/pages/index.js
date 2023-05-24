@@ -1,6 +1,3 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../../styles/Home.module.css'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthProvider } from 'src/context/AuthContext';
@@ -79,6 +76,3 @@ export default function Home() {
     </>
   )
 }
-// Home.guestGuard = false
-// Home.authGuard = false
-// Home.adminGuard = false
