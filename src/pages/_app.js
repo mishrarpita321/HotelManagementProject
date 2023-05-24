@@ -6,6 +6,11 @@ import AuthGuard from 'src/Guards/AuthGuard';
 import LoadingSpinner from 'src/components/LoadingSpinner';
 import AdminLoginGuard from 'src/Guards/AdminLoginGuard';
 
+
+import 'bootstrap/dist/css/bootstrap.css'
+
+
+
 const Guard = ({ children, guestGuard, authGuard, adminGuard, adminLoginGuard, pageType }) => {
   // console.log('children is ', children)
   // console.log('i am called from ')

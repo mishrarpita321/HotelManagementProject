@@ -4,6 +4,7 @@ import styles from '../../styles/Home.module.css'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthProvider } from 'src/context/AuthContext';
+import NavBar from 'src/components/NavBar';
 
 export default function Home() {
   const auth = useAuthProvider();
@@ -56,6 +57,7 @@ export default function Home() {
 
   return (
     <>
+      <NavBar />
       <h1>This is home index page by arpita</h1>
       {/* <Modal isOpen={loginModalOpen} onClose={closeLoginModal}>
         <AuthPages />
@@ -63,7 +65,8 @@ export default function Home() {
 
 
 
-      {loginModalOpen &&
+      {
+        loginModalOpen &&
         <>
           <div>
             <button>Close</button>
