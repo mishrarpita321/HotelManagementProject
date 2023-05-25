@@ -7,6 +7,9 @@ import AuthGuard from 'src/Guards/AuthGuard';
 import LoadingSpinner from 'src/components/LoadingSpinner';
 import AdminLoginGuard from 'src/Guards/AdminLoginGuard';
 
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { config } from "@fortawesome/fontawesome-svg-core";
+config.autoAddCss = false;
 
 import 'bootstrap/dist/css/bootstrap.css'
 
