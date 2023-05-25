@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useAuthProvider } from 'src/context/AuthContext';
 import NavBar from 'src/components/NavBar';
 
+
 export default function Home() {
   const auth = useAuthProvider();
   const router = useRouter();

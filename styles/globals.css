@@ -69,6 +69,7 @@
 }
 
 .back_re .title h2 {
+    cursor: default;
     color: #fff;
     font-size: 40px;
     padding: 40px 0;
