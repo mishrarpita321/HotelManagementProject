@@ -1,7 +1,9 @@
+import { config } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 export default function Footer() {
     return(
     <>
-    <footer> 
+    <footer>     
         <div className="footer">
             <div className="container">
                 <div className="row">
