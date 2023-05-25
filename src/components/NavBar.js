@@ -1,4 +1,4 @@
-import style from "../../styles/NavBar/navBar.module.css";
+import './NavBar.module.css'
 const NavBar = () => {
     return (
         <>
@@ -70,9 +70,6 @@ const NavBar = () => {
             {/* end header inner */}
             {/* end header */}
         </>
-
-
-
     )
 }
 export default NavBar
