@@ -1,5 +1,14 @@
+import { useState } from 'react'
+import Login from './Login'
 import './NavBar.module.css'
-const NavBar = () => {
+const NavBar = ({ showLogin, setShowLogin }) => {
+    // const [showLogin, setShowLogin] = useState(false);
+    const onClick = () => {
+        // setShowLogin(true);
+        setShowLogin(true)
+
+    }
+
     return (
         <>
             {/* header */}
@@ -35,17 +44,17 @@ const NavBar = () => {
                                     <div className="collapse navbar-collapse" id="navbarsExample04">
                                         <ul className="navbar-nav mr-auto">
                                             <li className="nav-item ">
-                                                <a className="nav-link" href="index.html">
+                                                <a className="nav-link" href="/">
                                                     Home
                                                 </a>
                                             </li>
                                             <li className="nav-item active">
-                                                <a className="nav-link" href="about.html">
+                                                <a className="nav-link" href="about-us">
                                                     About
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link" href="room.html">
+                                                <a className="nav-link" href="room">
                                                     Our room
                                                 </a>
                                             </li>
@@ -58,6 +67,11 @@ const NavBar = () => {
                                                 <a className="nav-link" href="contact.html">
                                                     Contact Us
                                                 </a>
+                                            </li>
+                                            <li className="nav-item">
+                                                <span onClick={onClick} className="nav-link loginButton " href="contact.html">
+                                                    Login
+                                                </span>
                                             </li>
                                         </ul>
                                     </div>

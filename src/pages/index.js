@@ -3,12 +3,18 @@ import { useRouter } from 'next/router';
 import { useAuthProvider } from 'src/context/AuthContext';
 import NavBar from 'src/components/NavBar';
 import Footer from 'src/components/Footer';
+import Login from 'src/components/Login';
+import UserRegistration from 'src/components/UserRegistration';
+import ChooseBookDt from 'src/components/ChooseBookDt';
 
 
 export default function Home() {
   const auth = useAuthProvider();
   const router = useRouter();
   // const [loginModalOpen, setLoginModalOpen] = useState(true);
+
+
+
   const [loginModalOpen, setLoginModalOpen] = useState(() => {
     return !!router.query.requireAuth ?? false;
   });
@@ -53,10 +59,15 @@ export default function Home() {
 
 
 
+  const [formStep, setFormStep] = useState(1)
+
+  const [showLogin, setShowLogin] = useState(false)
+  console.log('##########3', showLogin)
+
 
   return (
     <>
-      <NavBar />
+      <NavBar showLogin={showLogin} setShowLogin={setShowLogin} />
       {/* <h1>This is home index page by arpita</h1> */}
       {/* <Modal isOpen={loginModalOpen} onClose={closeLoginModal}>
         <AuthPages />
@@ -86,70 +97,19 @@ export default function Home() {
                   alt="Third slide"
                 />
               </div>
+
+              {formStep == 1 ? (
+                <>
+                  <Login showLogin={showLogin} setShowLogin={setShowLogin} setFormStep={setFormStep} />
+                </>
+              ) : (
+                <>
+                  <UserRegistration showLogin={showLogin} setShowLogin={setShowLogin} setFormStep={setFormStep} />
+                </>
+              )}
             </div>
           </div>
-          <div className="booking_ocline">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-5">
-                  <div className="book_room">
-                    <h1>Book a Room Online</h1>
-                    <form className="book_now">
-                      <div className="row">
-                        <div className="col-md-12">
-                          <span>Arrival</span>
-                          <img className="date_cua" src="images/date.png" />
-                          <input
-                            className="online_book"
-                            placeholder="dd/mm/yyyy"
-                            type="date"
-                            name="dd/mm/yyyy"
-                          />
-                        </div>
-                        <div className="col-md-12">
-                          <span>Departure</span>
-                          <img className="date_cua" src="images/date.png" />
-                          <input
-                            className="online_book"
-                            placeholder="dd/mm/yyyy"
-                            type="date"
-                            name="dd/mm/yyyy"
-                          />
-                        </div>
-                        <div className="col-md-12">
-                          <button className="book_btn">Book Now</button>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="login">
-            <input type="checkbox" id="show" />
-            <label htmlFor="show" className="show-btn">
-              Login
-            </label>
-            <div className="container">
-              <label htmlFor="show" className="close-btn" title="close">
-                ×
-              </label>
-              <h1>Welcome</h1>
-              <form action="#">
-                <label>Email or Phone</label>
-                <input type="text" />
-                <label>Password</label>
-                <input type="password" />
-                <a href="#">Forgot Password?</a>
-                <button>Submit</button>
-                <div className="link">
-                  Not a member? <a href="RegForm.html">Sigup here</a>
-                </div>
-                <closeform />
-              </form>
-            </div>
-          </div>
+          <ChooseBookDt/>
         </section>
         {/* end banner */}
         {/* about */}
