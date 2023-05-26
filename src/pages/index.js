@@ -15,10 +15,10 @@ export default function Home() {
 
 
 
-  const [loginModalOpen, setLoginModalOpen] = useState(() => {
-    return !!router.query.requireAuth ?? false;
-  });
-  const closeLoginModal = () => setLoginModalOpen(false);
+  // const [loginModalOpen, setLoginModalOpen] = useState(() => {
+  //   return !!router.query.requireAuth ?? false;
+  // });
+  // const closeLoginModal = () => setLoginModalOpen(false);
 
 
 
@@ -61,7 +61,11 @@ export default function Home() {
 
   const [formStep, setFormStep] = useState(1)
 
-  const [showLogin, setShowLogin] = useState(false)
+  const [showLogin, setShowLogin] = useState(
+    () => {
+      return !!router.query.requireAuth ?? false;
+    }
+  )
   console.log('##########3', showLogin)
 
 
@@ -109,7 +113,7 @@ export default function Home() {
               )}
             </div>
           </div>
-          <ChooseBookDt/>
+          <ChooseBookDt />
         </section>
         {/* end banner */}
         {/* about */}
