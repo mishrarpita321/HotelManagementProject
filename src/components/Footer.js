@@ -104,7 +104,7 @@ export default function Footer() {
                                         <br />
                                         Distributed by{" "}
                                         <a href="https://themewagon.com/" target="_blank">
-                                            ThemeWagon
+                                            Arpita
                                         </a>
                                     </p>
                                 </div>
