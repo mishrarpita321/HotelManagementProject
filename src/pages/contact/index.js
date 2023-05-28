@@ -1,9 +1,28 @@
+import { useRouter } from "next/router";
+import { useState } from "react";
+import AuthPages from "src/components/Auth/AuthPages";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
+import OurModal from "src/components/modal/OurModal";
+import { useAuthProvider } from "src/context/AuthContext";
 
 export default function contact() {
+    const auth = useAuthProvider();
+    const router = useRouter();
+
+    const [showLogin, setShowLogin] = useState(
+        () => {
+            return !!router.query.requireAuth ?? false;
+        }
+    )
     return (<>
-        <NavBar/>
+        <NavBar showLogin={showLogin} setShowLogin={setShowLogin} />
+        <OurModal
+            show={showLogin}
+            onHide={() => setShowLogin(false)}
+        >
+            <AuthPages />
+        </OurModal>
         <>
             <div className="back_re">
                 <div className="container">
@@ -80,6 +99,6 @@ export default function contact() {
                 </div>
             </div>
         </>
-        <Footer/>
+        <Footer />
     </>)
 }

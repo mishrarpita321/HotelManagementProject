@@ -56,7 +56,7 @@ const AvailableRooms = () => {
                         rooms.map((room, i) => {
                             return (
                                 <>
-                                    <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 roomCard" >
+                                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3 roomCard" >
                                         <div className="roomChildCard" >
                                             <div className="row position-relative roomBox">
                                                 <div className="ribbon">

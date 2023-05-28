@@ -1,10 +1,32 @@
 import NavBar from 'src/components/NavBar'
-import styles from '../../../styles/AboutUs/AboutUs.module.css'
 import Footer from 'src/components/Footer'
+import { useState } from 'react';
+
+import OurModal from 'src/components/modal/OurModal';
+import AuthPages from 'src/components/Auth/AuthPages';
+import { useRouter } from 'next/router';
+import { useAuthProvider } from 'src/context/AuthContext';
+
 export default function aboutUs(params) {
+    const auth = useAuthProvider();
+    const router = useRouter();
+
+    const [showLogin, setShowLogin] = useState(
+        () => {
+            return !!router.query.requireAuth ?? false;
+        }
+    )
+
     return (
         <>
-            <NavBar />
+            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} />
+            <OurModal
+                show={showLogin}
+                onHide={() => setShowLogin(false)}
+            >
+                <AuthPages />
+            </OurModal>
+
             <div className="back_re">
                 <div className="container">
                     <div className="row">

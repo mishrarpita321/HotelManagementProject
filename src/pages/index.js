@@ -6,6 +6,11 @@ import Footer from 'src/components/Footer';
 import Login from 'src/components/Login';
 import UserRegistration from 'src/components/UserRegistration';
 import ChooseBookDt from 'src/components/ChooseBookDt';
+import Modal from 'src/components/modal/OurModal';
+import OurModal from 'src/components/modal/OurModal';
+import Auth from 'src/config/auth';
+import AuthPages from 'src/components/Auth/AuthPages';
+// import { Modal } from 'bootstrap';
 
 
 export default function Home() {
@@ -59,19 +64,28 @@ export default function Home() {
 
 
 
-  const [formStep, setFormStep] = useState(1)
+
 
   const [showLogin, setShowLogin] = useState(
     () => {
       return !!router.query.requireAuth ?? false;
     }
   )
-  console.log('##########3', showLogin)
+
 
 
   return (
     <>
       <NavBar showLogin={showLogin} setShowLogin={setShowLogin} />
+      {/* <Modal isOpen={showLogin}  ><>Hello</></Modal> */}
+
+      <OurModal
+        show={showLogin}
+        onHide={() => setShowLogin(false)}
+      >
+        <AuthPages />
+      </OurModal>
+      {/* <h1>Hello</h1> */}
       {/* <h1>This is home index page by arpita</h1> */}
       {/* <Modal isOpen={loginModalOpen} onClose={closeLoginModal}>
         <AuthPages />
@@ -102,7 +116,7 @@ export default function Home() {
                 />
               </div>
 
-              {formStep == 1 ? (
+              {/* {formStep == 1 ? (
                 <>
                   <Login showLogin={showLogin} setShowLogin={setShowLogin} setFormStep={setFormStep} />
                 </>
@@ -110,7 +124,7 @@ export default function Home() {
                 <>
                   <UserRegistration showLogin={showLogin} setShowLogin={setShowLogin} setFormStep={setFormStep} />
                 </>
-              )}
+              )} */}
             </div>
           </div>
           <ChooseBookDt />
