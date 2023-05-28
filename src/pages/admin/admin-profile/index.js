@@ -1,4 +1,4 @@
-import NavBar from "src/components/NavBarAdmin"
+import NavBarAdmin from "src/components/NavBarAdmin"
 
 export default function Dashboard(params) {
     return (
