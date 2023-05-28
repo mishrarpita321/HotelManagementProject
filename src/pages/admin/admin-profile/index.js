@@ -12,4 +12,4 @@ export default function Dashboard(params) {
 }
 Dashboard.guestGuard = false
 Dashboard.authGuard = false
-Dashboard.adminGuard = true
+Dashboard.adminGuard = false
