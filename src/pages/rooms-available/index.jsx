@@ -2,7 +2,7 @@ import { useState } from "react"
 import Footer from "src/components/Footer"
 import NavBar from "src/components/NavBar"
 
-const availableRooms = () => {
+const AvailableRooms = () => {
 
     const [rooms, setRooms] = useState(
         [
@@ -56,7 +56,7 @@ const availableRooms = () => {
                         rooms.map((room, i) => {
                             return (
                                 <>
-                                    <div className="col-3 roomCard" >
+                                    <div className="col-xs-12 col-sm-6 col-md-4 col-lg-3 roomCard" >
                                         <div className="roomChildCard" >
                                             <div className="row position-relative roomBox">
                                                 <div className="ribbon">
@@ -97,4 +97,4 @@ const availableRooms = () => {
     )
 }
 
-export default availableRooms
+export default AvailableRooms
