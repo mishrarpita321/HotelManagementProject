@@ -28,7 +28,7 @@ const NavBar = ({ showLogin, setShowLogin }) => {
                                     <div className="center-desk">
                                         <div className="logo">
                                             <Link href="/">
-                                                <img src="images/logo.png" alt="#" />
+                                                <img src="images/logo_1.png" alt="#" />
                                             </Link>
                                         </div>
                                     </div>
@@ -65,12 +65,12 @@ const NavBar = ({ showLogin, setShowLogin }) => {
                                                 </Link>
                                             </li>
                                             <li className={`nav-item ${pathname == '/gallary' ? 'active' : ''}`}>
-                                                <Link className="nav-link" href="gallery.html">
+                                                <Link className="nav-link" href="gallery">
                                                     Gallery
                                                 </Link>
                                             </li>
                                             <li className={`nav-item ${pathname == '/contact' ? 'active' : ''}`}>
-                                                <Link className="nav-link" href="contact.html">
+                                                <Link className="nav-link" href="contact">
                                                     Contact Us
                                                 </Link>
                                             </li>
