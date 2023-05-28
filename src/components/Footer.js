@@ -43,17 +43,17 @@ export default function Footer() {
                                         <a href="#">Home</a>
                                     </li>
                                     <li>
-                                        <a href="about.html"> About</a>
+                                        <a href="about-us"> About</a>
                                     </li>
                                     <li >
-                                        <a href="room.html">Our Room</a>
+                                        <a href="room">Our Room</a>
                                     </li>
                                     <li>
-                                        <a href="gallery.html">Gallery</a>
+                                        <a href="gallery">Gallery</a>
                                     </li>
 
                                     <li>
-                                        <a href="contact.html">Contact Us</a>
+                                        <a href="contact">Contact Us</a>
                                     </li>
                                 </ul>
                             </div>

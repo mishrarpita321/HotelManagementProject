@@ -1,6 +1,9 @@
+import NavBar from "src/components/NavBarAdmin"
+
 export default function Dashboard(params) {
     return (
         <>
+            <NavBarAdmin/>
             <h1>
                 This is admin profile page.
             </h1>
