@@ -38,7 +38,7 @@ export default function Categories() {
                 <ul>
                     {bookingList.map((booking, i) => {
                         return (
-                            <li>
+                            <li key={booking.id}>
                                 <Link href={`/admin/booking/${booking.id}`} >
                                     {booking.name}
                                 </Link>

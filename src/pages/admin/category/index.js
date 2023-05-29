@@ -40,7 +40,7 @@ export default function Categories() {
                 <ul>
                     {categoriesList.map((category, i) => {
                         return (
-                            <li>
+                            <li key={category.id}>
                                 <Link href={`/admin/category/${category.id}`} >
                                     {category.name}
                                 </Link>
