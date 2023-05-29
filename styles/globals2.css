@@ -1209,3 +1209,14 @@ ul.social_icon li a:hover {
      box-shadow: 6px 8px 8px 2px rgba(0, 0, 0, 0.16),
           0px 3px 6px 0px rgba(0, 0, 0, 0.23);
 }
+
+.chekin-checkout{
+     background-color: #52404014;
+     padding: 5px;
+
+}
+.detailBook{
+     background-color: #52404014;
+    padding: 5px;
+    border-left: 7px solid white;
+}
