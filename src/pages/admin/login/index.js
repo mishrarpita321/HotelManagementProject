@@ -4,6 +4,7 @@ import styles from '../../../../styles/Home.module.css'
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthProvider } from 'src/context/AuthContext';
+import NavBar from 'src/components/NavBar'
 
 export default function Dashboard() {
     const auth = useAuthProvider();
@@ -56,15 +57,40 @@ export default function Dashboard() {
 
     return (
         <>
-            <h1>This is Admin Login page</h1>
-            {/* <Modal isOpen={loginModalOpen} onClose={closeLoginModal}>
-        <AuthPages />
-      </Modal> */}
+            {/* <h1>This is Admin Login page</h1> */}
+
 
 
             <div>
-                <button>Close</button>
-                <button onClick={handleLogin}>Login</button>
+                <NavBar />
+                <div className='container mt-4'>
+                    <div style={{ justifyContent: "center" }} className='row '>
+                        <div className='col-5'>
+                            <div style={{ background: "unset" }} className="login">
+                                <div style={{ display: "block", position: "unset", transform: "unset", width: "unset", borderRadius: "12px" }} className="container">
+                                    <h1>Welcome Admin</h1>
+                                    <form action="#">
+                                        <label>Email or Phone</label>
+                                        <input type="text" />
+                                        <label>Password</label>
+                                        <input type="password" />
+                                        <button>Submit</button>
+                                        <div className="forgetpwd"><a href="#">Forgot Password?</a></div>
+                                        {/* <div className="link">
+                                            Not a member? <a href="#" onClick={() => setPage("registration")} >Sigup here</a>
+                                        </div> */}
+                                        <closeform />
+                                    </form>
+                                </div>
+                            </div>
+                            {/* Roshan */}
+                        </div>
+                    </div>
+
+
+                </div>
+
+                {/* <button onClick={handleLogin}>Login</button> */}
             </div>
 
 
@@ -75,4 +101,4 @@ export default function Dashboard() {
 Dashboard.guestGuard = false
 Dashboard.authGuard = false
 Dashboard.adminGuard = false
-Dashboard.adminLoginGuard=true
+Dashboard.adminLoginGuard = true
