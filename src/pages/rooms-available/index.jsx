@@ -7,11 +7,11 @@ const AvailableRooms = () => {
     const [rooms, setRooms] = useState(
         [
             {
-                name: 'Delux',
+                name: 'Presidential Suite',
                 price: '30'
             },
             {
-                name: 'Delux-1',
+                name: 'Standard Suite',
                 price: '40'
             },
             {
