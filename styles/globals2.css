@@ -1124,7 +1124,7 @@ ul.social_icon li a:hover {
 .roomCard {
      display: flex;
      justify-content: center;
-     min-height: 320px;
+     min-height: 360px;
      margin-top: 50px !important;
 }
 
@@ -1145,7 +1145,7 @@ ul.social_icon li a:hover {
 
 .roomBox {
      margin: 0px 0px 0 51px;
-     width: 251px;
+     width: 302px;
      height: 214px;
      justify-content: center;
 }
@@ -1168,7 +1168,7 @@ ul.social_icon li a:hover {
      top: 14px;
      /* right: 192px; */
      /* right: 286px; */
-     right: 148px;
+     right: 198px;
 }
 
 .ribbon span::before {

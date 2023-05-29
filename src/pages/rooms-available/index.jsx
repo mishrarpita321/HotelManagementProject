@@ -30,18 +30,6 @@ const AvailableRooms = () => {
                 name: 'Delux-2',
                 price: '50'
             },
-            {
-                name: 'Delux-2',
-                price: '50'
-            },
-            {
-                name: 'Delux-2',
-                price: '50'
-            },
-            {
-                name: 'Delux-2',
-                price: '50'
-            },
         ]
 
 
@@ -50,13 +38,24 @@ const AvailableRooms = () => {
     return (
         <>
             <NavBar />
+            <div className="back_re">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="title">
+                                <h2>Rooms Available for Booking</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div className="container">
                 <div className=" row" >
                     {
                         rooms.map((room, i) => {
                             return (
                                 <>
-                                    <div className="col-xs-6 col-sm-6 col-md-4 col-lg-3 roomCard" >
+                                    <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
                                         <div className="roomChildCard" >
                                             <div className="row position-relative roomBox">
                                                 <div className="ribbon">
