@@ -1,6 +1,19 @@
 import Link from "next/link";
 
-export default function NavBarAdmin(){
+export default function NavBarAdmin({ showLogin, setShowLogin }){
+
+    const { pathname } = useRouter()
+
+    // const IsActive = pathname === url
+    // const IsActive = pathname === url
+
+    // const [showLogin, setShowLogin] = useState(false);
+    const onClick = () => {
+        // setShowLogin(true);
+        setShowLogin(true)
+    }
+
+
     return(<> 
                 <header>
                 {/* header inner */}
