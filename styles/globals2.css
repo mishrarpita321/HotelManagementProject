@@ -1210,13 +1210,90 @@ ul.social_icon li a:hover {
           0px 3px 6px 0px rgba(0, 0, 0, 0.23);
 }
 
-.chekin-checkout{
+.chekin-checkout {
      background-color: #52404014;
      padding: 5px;
 
 }
-.detailBook{
+
+.detailBook {
      background-color: #52404014;
-    padding: 5px;
-    border-left: 7px solid white;
+     padding: 5px;
+     border-left: 7px solid white;
+}
+
+.guestForm {
+     background-color: #f2f2f2;
+     padding: 20px;
+     border-radius: 5px;
+     width: fit-content;
+     margin-top: 20px !important;
+}
+
+.guestForm h5 {
+     color: #333;
+     font-size: 20px;
+     margin-top: 0;
+     margin-bottom: 10px;
+}
+
+.guestForm label {
+     color: #555;
+     font-weight: bold;
+}
+
+.guestForm input[type="text"],
+.guestForm input[type="email"],
+.guestForm input[type="phone"],
+.guestForm select.custom-select {
+     width: 97%;
+     padding: 8px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     background-color: #fff;
+     color: #333;
+}
+
+.guestForm input[type="text"]:focus,
+.guestForm input[type="email"]:focus,
+.guestForm input[type="phone"]:focus,
+.guestForm select.custom-select:focus {
+     outline: none;
+     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+     color: #999;
+}
+
+.guestForm .row>.col {
+     margin-bottom: 10px;
+}
+
+.liItems {
+     background-color: #f2f2f2;
+     padding: 20px;
+     border-radius: 5px;
+     width: -moz-fit-content;
+     width: fit-content;
+     margin-top: 12px !important;
+     width: 86%;
+     background-color: beige
+}
+
+.addGuestBtn {
+     background-color: #d1b8b8;
+     padding: 11px !important;
+     border-radius: 8px;
+     width: fit-content !important;
+     margin-top: 10px !important;
+}
+.priceRow{
+     border-bottom: 1px solid #90959a;
+     padding: 4px;
+     background-color: antiquewhite;
+}
+.priceAlign{
+     text-align: center !important;
+}
+.containerPrice{
+     margin: 20px 0 20px 0;
 }
