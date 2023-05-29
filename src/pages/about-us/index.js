@@ -7,7 +7,7 @@ import AuthPages from 'src/components/Auth/AuthPages';
 import { useRouter } from 'next/router';
 import { useAuthProvider } from 'src/context/AuthContext';
 
-export default function aboutUs(params) {
+export default function AboutUs(params) {
     const auth = useAuthProvider();
     const router = useRouter();
 

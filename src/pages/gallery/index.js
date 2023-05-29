@@ -5,7 +5,7 @@ import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
 import OurModal from "src/components/modal/OurModal";
 import { useAuthProvider } from "src/context/AuthContext";
-export default function gallery() {
+export default function Gallery() {
     const auth = useAuthProvider();
     const router = useRouter();
 
