@@ -1,7 +1,7 @@
 import Footer from "src/components/Footer"
 import NavBar from "src/components/NavBar"
 
-export default function bookingDetail() {
+export default function BookingDetail() {
     return (
         <>
             <NavBar />
@@ -58,18 +58,30 @@ export default function bookingDetail() {
                                         <div className="row"><input type="text" /></div>
                                     </div>
                                     <div className="col">
-                                        <label>Last name</label>
-                                        <input type="text" />
+                                        <div className="row">
+                                            <label>Last name</label>
+                                        </div>
+                                        <div className="row">
+                                            <input type="text" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="col">
-                                        <div className="row"><label>Email Address</label></div>
-                                        <div className="row"><input type="email" /></div>
+                                        <div className="row">
+                                            <label>Email Address</label>
+                                        </div>
+                                        <div className="row">
+                                            <input type="email" />
+                                        </div>
                                     </div>
                                     <div className="col">
-                                        <div className="row"><label>Contact Number</label></div>
-                                        <div className="row"><input type="phone" /></div>
+                                        <div className="row">
+                                            <label>Contact Number</label>
+                                        </div>
+                                        <div className="row">
+                                            <input type="phone" />
+                                        </div>
                                     </div>
                                 </div>
                             </form>
