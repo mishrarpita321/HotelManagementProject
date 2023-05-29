@@ -6,7 +6,7 @@ import NavBar from "src/components/NavBar";
 import OurModal from "src/components/modal/OurModal";
 import { useAuthProvider } from "src/context/AuthContext";
 
-export default function room(params) {
+export default function Room(params) {
     const auth = useAuthProvider();
     const router = useRouter();
 

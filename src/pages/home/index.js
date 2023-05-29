@@ -1,6 +1,6 @@
 // import '../../../styles/registration.module.css'
 // import './home.css';
-export default function () {
+export default function Home () {
     return (
         <>
             <div className=" roshan page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
