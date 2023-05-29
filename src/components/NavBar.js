@@ -3,6 +3,8 @@ import Login from './Login'
 import './NavBar.module.css'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
+import Image from 'next/image'
+// import logo from '../images/logo_1.png'
 const NavBar = ({ showLogin, setShowLogin }) => {
     const { pathname } = useRouter()
 
@@ -28,7 +30,9 @@ const NavBar = ({ showLogin, setShowLogin }) => {
                                     <div className="center-desk">
                                         <div className="logo">
                                             <Link href="/">
-                                                <img src="images/logo_1.png" alt="#" />
+                                                {/* <Image src={"images/logo_1.png"} alt="#" /> */}
+                                                <img src={"/images/logo_1.png"} alt="#" />
+                                                {/* <img src={logo} alt="#" /> */}
                                             </Link>
                                         </div>
                                     </div>
