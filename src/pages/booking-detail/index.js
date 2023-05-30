@@ -1,5 +1,7 @@
 import Footer from "src/components/Footer"
 import NavBar from "src/components/NavBar"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 export default function BookingDetail() {
     return (
@@ -42,12 +44,24 @@ export default function BookingDetail() {
                         <div className="row liItems">
                             <div className="col">
                                 <h5>Important Details</h5>
-                                <ol>
-                                    <li>Room With Breakfast + Lunch + Dinner</li>
-                                    <li>Passport, Aadhar, Driving License and Govt. ID are accepted as ID proof(s)</li>
-                                    <li>Pets are allowed.</li>
-                                    <li>Outside food is not allowed.</li>
-                                </ol>
+                                <ul style={{padding: 0}}>
+                                    <li>
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <span style={{marginLeft: "10px"}}>Room With Breakfast + Lunch + Dinner</span>
+                                    </li>
+                                    <li>
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <span style={{marginLeft: "10px"}}>Passport, Aadhar, Driving License and Govt. ID are accepted as ID proof(s)</span>
+                                    </li>
+                                    <li>
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <span style={{marginLeft: "10px"}}>Pets are allowed.</span>
+                                    </li>
+                                    <li>
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <span style={{marginLeft: "10px"}}>Outside food is not allowed.</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                         <div className="row guestForm" >
@@ -151,7 +165,7 @@ export default function BookingDetail() {
                             <div className="row">
                                 <h5>Price Breakup</h5>
                             </div>
-                            <div className="container" style={{marginTop: "14px"}}>
+                            <div className="container" style={{ marginTop: "14px" }}>
                                 <div className="row priceRow" >
                                     <div className="col">
                                         <div className="row">
