@@ -1223,7 +1223,7 @@ ul.social_icon li a:hover {
 }
 
 .guestForm {
-     background-color: #f2f2f2;
+     background-color: rgb(195 184 210 / 30%);
      padding: 20px;
      border-radius: 5px;
      width: fit-content;
@@ -1276,7 +1276,6 @@ ul.social_icon li a:hover {
      width: fit-content;
      margin-top: 12px !important;
      width: 86%;
-     background-color: beige
 }
 
 .addGuestBtn {
