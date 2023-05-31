@@ -7,12 +7,12 @@ const RoomList = () => {
   const router = useRouter();
   const { query } = router;
   const [rooms, setRooms] = useState([
-    { id: 1, category: 'deluxe', name: 'Deluxe Room 1' },
-    { id: 2, category: 'deluxe', name: 'Deluxe Room 2' },
-    { id: 3, category: 'standard', name: 'Standard Room 1' },
-    { id: 4, category: 'standard', name: 'Standard Room 2' },
-  ]);
+    { id: 1, roomNo: 122, status: true, inventory: true, cleaning: false, category: 'deluxe' },
+    { id: 2, roomNo: 222, status: true, inventory: true, cleaning: false, category: 'deluxe' },
+    { id: 3, roomNo: 322, status: true, inventory: true, cleaning: false, category: 'deluxe' },
 
+  ]);
+  console.log(rooms)
   // Function to fetch the list of rooms from the API based on the category
   const fetchRooms = async () => {
     try {
@@ -35,18 +35,33 @@ const RoomList = () => {
     return null;
   }
 
+
+  const addRoomClick = () => {
+    let newroom = { id: 4, roomNo: 322, status: true, inventory: true, cleaning: false, category: 'deluxe' }
+
+    setRooms([...rooms, newroom]);
+  }
+
+
+  const deleteRoomClick = () => {
+    let newroom = { id: 4, roomNo: 322, status: true, inventory: true, cleaning: false, category: 'deluxe' }
+    setRooms(rooms.filter((item) => item.id != newroom.id));
+  };
+
+
+
+
   return (
     <div>
       <h1>Rooms</h1>
-      {rooms.map((room) => (
+      {/* {rooms.map((room) => (
         <div key={room.id}>
           <h2>{room.name}</h2>
           <p>Category: {room.category}</p>
-          {/* Add more room details as needed */}
         </div>
-      ))}
+      ))} */}
       <div className="container">
-        <button className="loginButton">+ Add Room</button>
+        <button onClick={addRoomClick} className="loginButton">+ Add Room</button>
         <table className="table table-bordered table-hover transaction">
           <thead className="thead-dark">
             <tr style={{ backgroundColor: "#38325059" }}>
@@ -59,37 +74,27 @@ const RoomList = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-              <td>@mdo</td>
-              <td>
-                <button className="edit">Edit</button>
-                <button className="delete">Delete</button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-              <td>@fat</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-              <td>@twitter</td>
-            </tr>
+            {rooms.map((room, i) => {
+              return (
+                <tr key={i}>
+                  <th scope="row">{room.roomNo}</th>
+                  <td>{room.category}</td>
+                  <td>{(room.status ? (<>true</>) : (<>false</>))}</td>
+                  <td>{(room.inventory ? (<>true</>) : (<>false</>))}</td>
+                  <td>{(room.cleaning ? (<>true</>) : (<>false</>))}</td>
+                  <td>
+                    <button className="edit">Edit</button>
+                    <button onClick={deleteRoomClick} className="delete">Delete</button>
+                  </td>
+                </tr>
+              )
+
+            })}
+
           </tbody>
         </table>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
