@@ -47,7 +47,57 @@ export default function Categories() {
                     })}
                 </ul>
 
-
+                <table className="table table-bordered table-hover transaction">
+                    <thead className="thead-dark">
+                        <tr style={{ backgroundColor: "#38325059" }}>
+                            <th scope="col">Booking Id</th>
+                            <th scope="col">Guest Name</th>
+                            <th scope="col">PaymentMethod</th>
+                            <th scope="col">Roomcategory</th>
+                            <th scope="col">RoomNo</th>
+                            <th scope="col">Amount</th>
+                            <th scope="col">Arrival Dt</th>
+                            <th scope="col">Departure Dt</th>
+                            <th scope="col">Parking</th>
+                            <th scope="col">No. of Guest</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1234</th>
+                            <td>Arpita Mishra</td>
+                            <td>Credit</td>
+                            <td>Deluxe</td>
+                            <td>750</td>
+                            <td>500</td>
+                            <td>01June,2023</td>
+                            <td>05June,2023</td>
+                            <td>No</td>
+                            <td>2</td>
+                            <td>
+                                <button className="edit">Edit</button>
+                                <button className="delete">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1234</th>
+                            <td>Arpita Mishra</td>
+                            <td>Credit</td>
+                            <td>Deluxe</td>
+                            <td>750</td>
+                            <td>500</td>
+                            <td>01June,2023</td>
+                            <td>05June,2023</td>
+                            <td>No</td>
+                            <td>2</td>
+                            <td>
+                                <button className="edit">Edit</button>
+                                <button className="delete">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <NoCloseModal show={showAddDialog} onHide={() => { setShowAddDialog(false) }}>
                     <AddCategoryDialog />
                 </NoCloseModal>
