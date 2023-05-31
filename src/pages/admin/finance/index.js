@@ -1,12 +1,14 @@
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
+import TitleBanner from "src/components/TitleBanner";
 
 export default function finance() {
     return (
         <>
             <NavBar />
             <>
-                <div className="back_re">
+                <TitleBanner marginBotton={'40px'} padding={'7'} />
+                {/* <div className="back_re">
                     <div className="container">
                         <div className="row">
                             <div className="col-md-12">
@@ -16,7 +18,7 @@ export default function finance() {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
                 <div className="container">
                     <table className="table table-bordered table-hover transaction">
                         <thead className="thead-dark">
