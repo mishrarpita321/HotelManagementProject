@@ -46,19 +46,19 @@ export default function BookingDetail() {
                                 <h5>Important Details</h5>
                                 <ul style={{padding: 0}}>
                                     <li>
-                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" style={{color: "#c00079"}} />
                                         <span style={{marginLeft: "10px"}}>Room With Breakfast + Lunch + Dinner</span>
                                     </li>
                                     <li>
-                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" style={{color: "#c00079"}} />
                                         <span style={{marginLeft: "10px"}}>Passport, Aadhar, Driving License and Govt. ID are accepted as ID proof(s)</span>
                                     </li>
                                     <li>
-                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" style={{color: "#c00079"}} />
                                         <span style={{marginLeft: "10px"}}>Pets are allowed.</span>
                                     </li>
                                     <li>
-                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" />
+                                        <FontAwesomeIcon icon={faCheck} className="fas fa-check" style={{color: "#c00079"}} />
                                         <span style={{marginLeft: "10px"}}>Outside food is not allowed.</span>
                                     </li>
                                 </ul>
