@@ -154,9 +154,9 @@
      box-sizing: border-box !important;
 }
 
-.container {
-     max-width: 1170px !important;
-}
+ .bookDetail .container {
+     max-width: 1140px !important;
+} 
 
 html {
      scroll-behavior: smooth;
@@ -1224,7 +1224,7 @@ ul.social_icon li a:hover {
 
 .guestForm {
      background-color: rgb(195 184 210 / 30%);
-     padding: 20px;
+     padding: 13px;
      border-radius: 5px;
      width: fit-content;
      margin-top: 20px !important;
@@ -1285,14 +1285,36 @@ ul.social_icon li a:hover {
      width: fit-content !important;
      margin-top: 10px !important;
 }
-.priceRow{
+
+.priceRow {
      border-bottom: 1px solid #90959a;
      padding: 4px;
      background-color: antiquewhite;
 }
-.priceAlign{
+
+.priceAlign {
      text-align: center !important;
 }
-.containerPrice{
+
+.containerPrice {
      margin: 20px 0 20px 0;
+}
+
+.transaction {
+     text-align: center;
+     margin: 50px 0 0 0;
+     border: 1px solid !important;
+}
+
+.edit,
+.delete {
+     margin-right: 5px;
+     padding: 9px;
+     border-radius: 20px;
+     width: 67px;
+     background-color: #d3e99d;
+}
+.delete{
+     margin-right: 0px;
+     background-color: #e99d9d
 }

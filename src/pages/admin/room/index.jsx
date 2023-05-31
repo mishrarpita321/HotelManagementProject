@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Tab } from 'react-bootstrap';
+import Footer from 'src/components/Footer';
 
 const RoomList = () => {
   const router = useRouter();
@@ -43,6 +45,51 @@ const RoomList = () => {
           {/* Add more room details as needed */}
         </div>
       ))}
+      <div className="container">
+        <button className="loginButton">+ Add Room</button>
+        <table className="table table-bordered table-hover transaction">
+          <thead className="thead-dark">
+            <tr style={{ backgroundColor: "#38325059" }}>
+              <th scope="col">Room No</th>
+              <th scope="col">Category</th>
+              <th scope="col">Status</th>
+              <th scope="col">Inventory Available?</th>
+              <th scope="col">Cleaning Status?</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Mark</td>
+              <td>Otto</td>
+              <td>@mdo</td>
+              <td>@mdo</td>
+              <td>
+                <button className="edit">Edit</button>
+                <button className="delete">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td>Jacob</td>
+              <td>Thornton</td>
+              <td>@fat</td>
+              <td>@fat</td>
+              <td>@fat</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>
+              <td>Larry</td>
+              <td>the Bird</td>
+              <td>@twitter</td>
+              <td>@twitter</td>
+              <td>@twitter</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <Footer/>
     </div>
   );
 };
