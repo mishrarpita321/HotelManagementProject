@@ -76,8 +76,7 @@ export default function Room(params) {
                                     <h3>Suite</h3>
                                     <p>
                                         A living room connected with to one or more bedrooms.A room with
-                                        one or more bedrooms and a separate living space.Size between 70
-                                        m² to 100 m²
+                                        one or more bedrooms and a separate living space.Size between 70 to 100 m²
                                     </p>
                                 </div>
                             </div>

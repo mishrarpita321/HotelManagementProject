@@ -202,8 +202,7 @@ export default function Home() {
                     <h3>Suite</h3>
                     <p>
                       A living room connected with to one or more bedrooms.A room with
-                      one or more bedrooms and a separate living space.Size between 70
-                      m² to 100 m²
+                      one or more bedrooms and a separate living space.Size between 70 to 100 m²
                     </p>
                   </div>
                 </div>
@@ -270,7 +269,7 @@ export default function Home() {
                     <p>
                       Rooms are larger than the standard suite rooms. While the
                       standard hotel room is separated into a bedroom and
-                      bathroom,include a living room as well.{" "}
+                      bathroom,include a living room.{" "}
                     </p>
                   </div>
                 </div>
