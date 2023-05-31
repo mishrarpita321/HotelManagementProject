@@ -19,7 +19,8 @@ const defaultProvider = {
   setLoading: () => Boolean,
   isInitialized: false,
   setIsInitialized: () => Boolean,
-  handleLoginInitial: () => Promise.resolve(),
+  
+  handleLogin: () => Promise.resolve(),
 
 };
 export const AuthContext = createContext(defaultProvider);
@@ -82,7 +83,7 @@ export const AuthProvider = ({ children }) => {
 
 
 
-  const handleLoginInitial = (params, userData) => {
+  const handleLogin = (params, userData) => {
     const data = [];
     const headers = {
       Accept: "application/json",
@@ -101,7 +102,7 @@ export const AuthProvider = ({ children }) => {
         // userData(data);
         window.localStorage.setItem(
           authConfig.storageTokenKeyName,
-          res.data.details.token
+          res.data.accessToken
         );
       })
       .then(() => {
@@ -116,13 +117,12 @@ export const AuthProvider = ({ children }) => {
           .then(async (response) => {
             const returnUrl = router.query.returnUrl;
             console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",response)
-            setUser({ ...response.data.user });
+            // setUser({ ...response.data.user });
 
-            await window.localStorage.setItem(
-              "userData",
-              JSON.stringify(response.data.user)
-              // response.data.user
-            );
+            // await window.localStorage.setItem(
+            //   "userData",
+            //   JSON.stringify(response.data.user)
+            // );
 
 
             // if (response.data.data.data.name == '' || response.data.data.data.email == '' || response.data.data.data.mobileNo == '') {
@@ -159,7 +159,6 @@ export const AuthProvider = ({ children }) => {
           data["error"] = err.response.data;
           userData(data);
         } else {
-
           data["message"] = "network-error";
           data["type"] = 0; /* show in email field */
           data["error"] = "some thing went wrong";
@@ -195,7 +194,7 @@ export const AuthProvider = ({ children }) => {
     setIsInitialized,
     refreshAuth: refreshAuth,
 
-    handleLoginInitial: handleLoginInitial,
+    handleLogin: handleLogin,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
@@ -211,7 +210,7 @@ export const useAuthProvider = () => {
     setIsInitialized,
     refreshAuth: refreshAuth,
 
-    handleLoginInitial: handleLoginInitial,
+    handleLogin: handleLogin,
 
   } = useContext(AuthContext)
 
@@ -224,7 +223,7 @@ export const useAuthProvider = () => {
     setIsInitialized,
     refreshAuth,
 
-    handleLoginInitial,
+    handleLogin,
   }), [
     user,
     loading,
@@ -234,6 +233,6 @@ export const useAuthProvider = () => {
     setIsInitialized,
     refreshAuth,
 
-    handleLoginInitial
+    handleLogin
   ])
 }

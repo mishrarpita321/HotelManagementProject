@@ -15,7 +15,7 @@ const RoomList = () => {
   const fetchRooms = async () => {
     try {
       // Make API call with the appropriate endpoint and query parameters
-      const response = await fetch(`/api/rooms?category=${query.category || ''}`);
+      const response = await fetch(`/api/rooms?category=${query.categoyry || ''}`);
       const data = await response.json();
       setRooms(data);
     } catch (error) {
