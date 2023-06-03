@@ -19,8 +19,9 @@ const defaultProvider = {
   setLoading: () => Boolean,
   isInitialized: false,
   setIsInitialized: () => Boolean,
-  
+
   handleLogin: () => Promise.resolve(),
+  handleRegistration: () => Promise.resolve(),
 
 };
 export const AuthContext = createContext(defaultProvider);
@@ -55,11 +56,11 @@ export const AuthProvider = ({ children }) => {
           .then(async (response) => {
             setLoading(false);
             console.log(response)
-            setUser({ ...response.data.user });
+            setUser({ ...response.data });
           })
           .catch(() => {
             localStorage.removeItem("userData");
-            localStorage.removeItem("refreshToken");
+            // localStorage.removeItem("refreshToken");
             localStorage.removeItem("accessToken");
             setUser(null);
             setLoading(false);
@@ -98,7 +99,7 @@ export const AuthProvider = ({ children }) => {
         // window.localStorage.setItem(authConfig.storageTokenKeyName, res.data.accessToken)
         data["message"] = "success";
         data["data"] = res;
-        console.log("##########################################################",res)
+        console.log("##########################################################", res)
         // userData(data);
         window.localStorage.setItem(
           authConfig.storageTokenKeyName,
@@ -116,13 +117,13 @@ export const AuthProvider = ({ children }) => {
           })
           .then(async (response) => {
             const returnUrl = router.query.returnUrl;
-            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",response)
-            // setUser({ ...response.data.user });
+            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", response)
+            setUser({ ...response.data });
 
-            // await window.localStorage.setItem(
-            //   "userData",
-            //   JSON.stringify(response.data.user)
-            // );
+            await window.localStorage.setItem(
+              "userData",
+              JSON.stringify(response.data)
+            );
 
 
             // if (response.data.data.data.name == '' || response.data.data.data.email == '' || response.data.data.data.mobileNo == '') {
@@ -168,6 +169,54 @@ export const AuthProvider = ({ children }) => {
   };
 
 
+  const handleRegistration = (params, userData) => {
+    // console.log(params)
+    // return
+    const data = [];
+    const headers = {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Origin": "*",
+    };
+    axios
+      .post(authConfig.registrationEndpoint, params, { headers: headers })
+      .then(async (res) => {
+        window.localStorage.setItem(
+          authConfig.storageTokenKeyName,
+          res.data.accessToken
+        );
+        data["message"] = "success";
+        data["data"] = res;
+        userData(data);
+      })
+      .catch((err) => {
+        console.log('from catch:', err)
+        if (err.response.status == 409) {
+          data["message"] = "failed";
+          data["type"] = 0; /* show in email field */
+          data["error"] = err.response.data;
+          userData(data);
+        } else if (err.response.status == 404) {
+          data["message"] = "failed";
+          data["type"] = 0; /* show in email field */
+          data["error"] = err.response.data;
+          userData(data);
+        } else if (err.response.status == 401) {
+          data["message"] = "failed";
+          data["type"] = 1; /* show in password field */
+          data["error"] = err.response.data;
+          userData(data);
+        } else {
+
+          data["message"] = "network-error";
+          data["type"] = 0; /* show in email field */
+          data["error"] = "some thing went wrong";
+          userData(data);
+        }
+      });
+  };
+
 
 
 
@@ -195,6 +244,7 @@ export const AuthProvider = ({ children }) => {
     refreshAuth: refreshAuth,
 
     handleLogin: handleLogin,
+    handleRegistration: handleRegistration,
   };
 
   return <AuthContext.Provider value={values}>{children}</AuthContext.Provider>;
@@ -211,6 +261,7 @@ export const useAuthProvider = () => {
     refreshAuth: refreshAuth,
 
     handleLogin: handleLogin,
+    handleRegistration: handleRegistration,
 
   } = useContext(AuthContext)
 
@@ -224,6 +275,7 @@ export const useAuthProvider = () => {
     refreshAuth,
 
     handleLogin,
+    handleRegistration,
   }), [
     user,
     loading,
@@ -233,6 +285,7 @@ export const useAuthProvider = () => {
     setIsInitialized,
     refreshAuth,
 
-    handleLogin
+    handleLogin,
+    handleRegistration,
   ])
 }

@@ -42,11 +42,11 @@ export default function Login({ }) {
 
   const handleLogin = (data) => {
     console.log('Hi submit is clicked')
-    alert('asdf')
+    // alert('asdf')
     setLoginLoading(true)
     const { email, password } = data;
     // let id = email;
-    
+
     auth.handleLogin({ email, password }, (data) => {
       setLoginLoading(false)
       if (data.message === "success") {
@@ -76,7 +76,12 @@ export default function Login({ }) {
 
   };
 
-
+  const errorStyle = {
+    color: 'red',
+    // fontWeight: 'bold',
+    fontSize: '15px',
+    margin: '0px 9px',
+  };
   console.log(errors)
 
 
@@ -111,7 +116,7 @@ export default function Login({ }) {
               )}
             />
             {errors.email && (
-              <p style={{ marginTop: 0 }} className="text-sm text-red-500">
+              <p style={errorStyle} className="text-sm text-red-500">
                 {errors.email.message}
               </p>
             )}
@@ -136,7 +141,7 @@ export default function Login({ }) {
               )}
             />
             {errors.password && (
-              <p style={{ marginTop: 0 }} className="text-sm text-red-500">
+              <p style={errorStyle} className="text-sm text-red-500">
                 {errors.password.message}
               </p>
             )}

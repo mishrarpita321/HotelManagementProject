@@ -6,7 +6,9 @@ import SideBar from 'src/components/Admin/SideBar';
 import NavBar from 'src/components/NavBar';
 import NavBarAdmin from 'src/components/NavBarAdmin';
 import TitleBanner from 'src/components/TitleBanner';
+
 import SideBar4 from 'src/components/Admin/SideBar4';
+
 
 const RoomList = () => {
 
@@ -112,7 +114,13 @@ const RoomList = () => {
             </table>
           </div>
         </div>
+
       </div>
+      {/* <div className='row' > */}
+      {/* <div className='col-2'>
+          Roshan Devkota
+        </div> */}
+      {/* </div> */}
       <Footer />
     </>
 

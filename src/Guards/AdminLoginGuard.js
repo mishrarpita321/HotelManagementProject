@@ -19,8 +19,12 @@ const AdminLoginGuard = (props) => {
     if (!router.isReady) {
       return
     }
-    if (window.localStorage.getItem('userData')) {
+    if (window.localStorage.getItem('userData') && JSON.parse(window.localStorage.getItem('userData')).role == '[ADMIN]') {
+      // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', JSON.parse(window.localStorage.getItem('userData')).role)
+
       router.replace('/admin/dashboard')
+    } else if (window.localStorage.getItem('userData') && JSON.parse(window.localStorage.getItem('userData')).role == '[USER]') {
+      router.replace('/')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.route])
@@ -29,10 +33,6 @@ const AdminLoginGuard = (props) => {
   }
 
   return <>{children}</>
-
-
-
-  return <>{children}</>;
 };
 
 export default AdminLoginGuard;

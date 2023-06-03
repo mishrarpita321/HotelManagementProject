@@ -1,31 +1,251 @@
+
 import { useContext, useState } from "react"
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import { AuthPageContext } from "src/context/AuthPageContext";
+import { useAuthProvider } from "src/context/AuthContext";
+import NoCloseModal from "../modal/NoCloseModal";
+import AlertModal from "../AlertModal";
 
 export default function UserRegistration({ }) {
+  const auth = useAuthProvider();
   const [page, setPage] = useContext(AuthPageContext);
+
+  const [loginLoading, setLoginLoading] = useState(false)
+
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
+  const schema = yup.object().shape({
+    email: yup.string().email().required("Email is a required field"),
+    username: yup.string().required("Username is a required field"),
+    phone: yup.string()
+      .required("required")
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .min(11, "too short")
+      .max(11, "too long"),
+    password: yup.string().min(5).required("Password is a required field"),
+    confirm_password: yup
+      .string()
+      .min(5)
+      .required("Confirm Password is a required field")
+      .oneOf([yup.ref("password")], "Password does not match"),
+  });
+
+
+  const defaultValues = {
+    email: 'mahesh@gmail.com',
+    password: 'mahesh',
+    username: 'mahesh',
+    confirm_password: 'mahesh',
+    phone: '15735598680'
+  }
+
+  const {
+    watch,
+    control,
+    setError,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues,
+    mode: "onBlur",
+    resolver: yupResolver(schema),
+  });
+
+
+
+
+  const handleLogin = (data) => {
+    // console.log('Hi submit is clicked')
+    // alert('asdf')
+    setLoginLoading(true)
+    const { email, username, phone, password } = data;
+    // let id = email;
+    auth.handleRegistration({ email, username, phone, password }, (data) => {
+      setLoginLoading(false)
+      console.log('returned data:', data)
+      if (data.message === "success") {
+        // setEmail(id);
+        // setStep(2);
+      } else {
+        if (data.message === "failed") {
+          if (data.type === 1) {
+            setError("password", {
+              // type: 'manual',
+              message: data.error.message,
+            });
+          } else {
+            setError("email", {
+              // type: 'manual',
+              message: data.error.message,
+            });
+          }
+        } else {
+          setError("different", {
+            // type: 'manual',
+            message: data.error,
+          });
+        }
+      }
+    });
+
+
+  };
+
+  const errorStyle = {
+    color: 'red',
+    // fontWeight: 'bold',
+    fontSize: '15px',
+    margin: '0px 9px',
+  };
+  console.log(errors)
+
+
+
+  const [showError, setShowError] = useState(true)
 
 
   return (
     <>
+      {/* <NoCloseModal show={showError} onHide={() => setShowError(false)} > <>Success</></NoCloseModal > */}
+      <AlertModal isOpen={showError} onClose={() => setShowError(false)} type={'error'} title={'this is title'} content={'this is content'} >{'Hi'}</AlertModal>
       <div style={{ background: "unset" }} className="login">
         <div style={{ display: "block", position: "unset", transform: "unset", width: "unset", borderRadius: "12px" }} className="container">
           {/* <div onClick={onClick}>x</div> */}
           {/* <button onClick={onClick} >Close</button> */}
           <h1>Registration</h1>
           <form action="#">
-            <label>Full Name</label>
-            <input type="text" />
+            {/* <label>Full Name</label> */}
+            {/* <input type="text" /> */}
+
             <label>Email</label>
-            <input type="email" />
-            <label>Contact Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="49 123 456789321" pattern="[0-9]{2} [0-9]{3} [0-9]{8}"></input>
-            <label>Date of Birth</label>
-            <input type="date" />
+            <Controller
+              name="email"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <input
+                  disabled={loginLoading}
+                  value={value}
+                  onChange={onChange}
+                  // label="Email ID"
+                  id="email"
+                  type="text"
+                // error={Boolean(errors.password)}
+                />
+              )}
+            />
+            {errors.email && (
+              <p style={errorStyle} className="text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
             <label>UserName</label>
-            <input type="text" />
+            <Controller
+              name="username"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <input
+                  disabled={loginLoading}
+                  value={value}
+                  onChange={onChange}
+                  id="username"
+                  type="text"
+                // error={Boolean(errors.password)}
+                />
+              )}
+            />
+            {errors.username && (
+              <p style={errorStyle} className="text-sm text-red-500">
+                {errors.username.message}
+              </p>
+            )}
+
+
+            <label>Contact Number</label>
+            <Controller
+              name="phone"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange, onBlur } }) => (
+
+
+                <input
+                  disabled={loginLoading}
+                  value={value}
+                  onChange={onChange}
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="49 123 456789321"
+                // pattern="[0-9]{2} [0-9]{3} [0-9]{8}"
+                // label="Email ID"
+
+                // error={Boolean(errors.password)}
+                />
+              )}
+            />
+            {errors.phone && (
+              <p style={errorStyle} className="text-sm text-red-500">
+                {errors.phone.message}
+              </p>
+            )}
+            {/* <input type="tel" id="phone" name="phone" placeholder="49 123 456789321" pattern="[0-9]{2} [0-9]{3} [0-9]{8}"></input> */}
+            {/* <label>Date of Birth</label> */}
+            {/* <input type="date" /> */}
             <label>Password</label>
-            <input type="password" />
-            <button>Submit</button>
+            <Controller
+              name="password"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <input
+                  disabled={loginLoading}
+                  value={value}
+                  onBlur={onBlur}
+                  label="Password"
+                  onChange={onChange}
+                  id="password"
+                  // error={Boolean(errors.password)}
+                  type="password"
+                />
+              )}
+            />
+            {errors.password && (
+              <p style={errorStyle} className="text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
+            <label>Confirm Password</label>
+            <Controller
+              name="confirm_password"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <input
+                  disabled={loginLoading}
+                  value={value}
+                  onBlur={onBlur}
+                  // label="Password"
+                  onChange={onChange}
+                  id="confirm_password"
+                  // error={Boolean(errors.password)}
+                  type="password"
+                />
+              )}
+            />
+            {errors.confirm_password && (
+              <p style={errorStyle} className="text-sm text-red-500">
+                {errors.confirm_password.message}
+              </p>
+            )}
+            <button
+              disabled={loginLoading}
+              onClick={handleSubmit(handleLogin)}>
+              Submit
+            </button>
             <div className="forgetpwd"><a href="#" >Forgot Password?</a></div>
             <div className="link">
               Already a member? <a href="#" onClick={() => setPage("login")}>Sigin here</a>
