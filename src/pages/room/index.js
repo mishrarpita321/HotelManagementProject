@@ -3,6 +3,7 @@ import { useState } from "react";
 import AuthPages from "src/components/Auth/AuthPages";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
+import TitleBanner from "src/components/TitleBanner";
 import OurModal from "src/components/modal/OurModal";
 import { useAuthProvider } from "src/context/AuthContext";
 
@@ -24,7 +25,7 @@ export default function Room(params) {
             >
                 <AuthPages />
             </OurModal>
-            <div className="back_re">
+            {/* <div className="back_re">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -34,7 +35,10 @@ export default function Room(params) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
+            {/* <TitleBanner marginBotton={'40px'} padding={'7'} /> */}
+            <TitleBanner title={"Our Room"}/>
+
 
             <div className="our_room">
                 <div className="container">
@@ -76,8 +80,7 @@ export default function Room(params) {
                                     <h3>Suite</h3>
                                     <p>
                                         A living room connected with to one or more bedrooms.A room with
-                                        one or more bedrooms and a separate living space.Size between 70
-                                        m² to 100 m²
+                                        one or more bedrooms and a separate living space.Size between 70 to 100 m²
                                     </p>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import { useState } from "react";
 import AuthPages from "src/components/Auth/AuthPages";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
+import TitleBanner from "src/components/TitleBanner";
 import OurModal from "src/components/modal/OurModal";
 import { useAuthProvider } from "src/context/AuthContext";
 
@@ -24,7 +25,7 @@ export default function Contact() {
             <AuthPages />
         </OurModal>
         <>
-            <div className="back_re">
+            {/* <div className="back_re">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -34,7 +35,8 @@ export default function Contact() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
+            <TitleBanner title={"Contact"}/>
             {/*  contact */}
             <div className="contact">
                 <div className="container">

@@ -73,7 +73,9 @@ export default function Categories() {
                             <td>500</td>
                             <td>01June,2023</td>
                             <td>05June,2023</td>
-                            <td>No</td>
+                            <td>
+                                No
+                            </td>
                             <td>2</td>
                             <td>
                                 <button className="edit">Edit</button>
