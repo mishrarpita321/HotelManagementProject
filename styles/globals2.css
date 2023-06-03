@@ -1328,3 +1328,19 @@ ul.social_icon li a:hover {
 .list-group-item-light.list-group-item-action{
      color: #000;
 }
+
+.confirm {
+     text-align: center;
+     border-bottom: 1px solid #9f9999;
+     padding: 8px;
+     background-color: #dcedcb;
+     text-align:center;
+}
+.popupButtons{
+     display: flex;
+     justify-content: flex-end;
+    margin: 2%;
+}
+.buttonClose {
+     margin-right: inherit;
+}
