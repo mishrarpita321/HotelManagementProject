@@ -27,7 +27,7 @@ const AuthGuard = (props) => {
           router.replace({
             pathname: "/admin/login",
             // query: { requireAuth: true, returnUrl: router.asPath },
-            query: {returnUrl: router.asPath },
+            query: { returnUrl: router.asPath },
           });
         } else {
           router.replace({
@@ -36,7 +36,7 @@ const AuthGuard = (props) => {
           });
         }
       }
-      else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != 'admin')) {
+      else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != '[ADMIN]')) {
         console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
         router.replace({
           pathname: "/",
@@ -51,6 +51,7 @@ const AuthGuard = (props) => {
     return fallback;
   }
   console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', auth)
+  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', window.localStorage.getItem('userData').role)
 
   return <>{children}</>;
 };

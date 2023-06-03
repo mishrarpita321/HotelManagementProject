@@ -6,6 +6,8 @@ import SideBar from 'src/components/Admin/SideBar';
 import NavBar from 'src/components/NavBar';
 import NavBarAdmin from 'src/components/NavBarAdmin';
 import TitleBanner from 'src/components/TitleBanner';
+import SideBar2 from 'src/components/Admin/SideBar2';
+import SideBar3 from 'src/components/Admin/SideBar3';
 
 const RoomList = () => {
 
@@ -70,67 +72,57 @@ const RoomList = () => {
   return (
     <>
       <NavBarAdmin />
+      <div className='container'>
+        <div className='row' >
+          <div className='col-2'>
+            <SideBar2 />
+          </div>
+          {/* <div className='col-10'>Roshan</div> */}
+          <div className='col-10 '>
+            <TitleBanner marginBotton={'40px'} padding={'7'} />
+            <div className="">
+              <button onClick={addRoomClick} className="loginButton">+ Add Room</button>
+              <table className="table table-bordered table-hover transaction">
+                <thead className="thead-dark">
+                  <tr style={{ backgroundColor: "#38325059" }}>
+                    <th scope="col">Room No</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Inventory Available?</th>
+                    <th scope="col">Cleaning Status?</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rooms.map((room, i) => {
+                    return (
+                      <tr key={i}>
+                        <th scope="row">{room.roomNo}</th>
+                        <td>{room.category}</td>
+                        <td>{(room.status ? (<>true</>) : (<>false</>))}</td>
+                        <td>{(room.inventory ? (<>true</>) : (<>false</>))}</td>
+                        <td>{(room.cleaning ? (<>true</>) : (<>false</>))}</td>
+                        <td>
+                          <button className="edit">Edit</button>
+                          <button onClick={deleteRoomClick.bind(this, 4)} className="delete">Delete</button>
+                        </td>
+                      </tr>
+                    )
 
-      <div className='row' >
-        <div className='col-2'>
-          <SideBar />
-        </div>
-        <div className='col-10 container'>
-          <TitleBanner marginBotton={'40px'} padding={'7'} />
-          {/* <div className="back_re">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="title">
-                    <h2>Our Room</h2>
-                  </div>
-                </div>
-              </div>
+                  })}
+
+                </tbody>
+              </table>
             </div>
-          </div> */}
-          {/* <h1>Rooms</h1> */}
-          {/* {rooms.map((room) => (
-        <div key={room.id}>
-          <h2>{room.name}</h2>
-          <p>Category: {room.category}</p>
-        </div>
-      ))} */}
-          <div className="">
-            <button onClick={addRoomClick} className="loginButton">+ Add Room</button>
-            <table className="table table-bordered table-hover transaction">
-              <thead className="thead-dark">
-                <tr style={{ backgroundColor: "#38325059" }}>
-                  <th scope="col">Room No</th>
-                  <th scope="col">Category</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">Inventory Available?</th>
-                  <th scope="col">Cleaning Status?</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {rooms.map((room, i) => {
-                  return (
-                    <tr key={i}>
-                      <th scope="row">{room.roomNo}</th>
-                      <td>{room.category}</td>
-                      <td>{(room.status ? (<>true</>) : (<>false</>))}</td>
-                      <td>{(room.inventory ? (<>true</>) : (<>false</>))}</td>
-                      <td>{(room.cleaning ? (<>true</>) : (<>false</>))}</td>
-                      <td>
-                        <button className="edit">Edit</button>
-                        <button onClick={deleteRoomClick.bind(this, 4)} className="delete">Delete</button>
-                      </td>
-                    </tr>
-                  )
-
-                })}
-
-              </tbody>
-            </table>
           </div>
         </div>
+
       </div>
+      {/* <div className='row' > */}
+      {/* <div className='col-2'>
+          Roshan Devkota
+        </div> */}
+      {/* </div> */}
       <Footer />
     </>
 

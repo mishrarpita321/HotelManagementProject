@@ -36,7 +36,7 @@ const AuthGuard = (props) => {
           });
         }
       }
-      else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != 'user')) {
+      else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != '[USER]')) {
         console.log('***********************Hi i am here************************')
         router.replace({
           pathname: "/admin/dashboard",

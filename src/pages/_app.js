@@ -2,6 +2,7 @@ import GuestGuard from 'src/Guards/GuestGuard';
 import AdminGuard from 'src/Guards/AdminGuard';
 import '../../styles/globals.css'
 import '../../styles/globals2.css'
+import '../../styles/adminSidebar.css'
 import { AuthProvider } from '../context/AuthContext'
 import AuthGuard from 'src/Guards/AuthGuard';
 import LoadingSpinner from 'src/components/LoadingSpinner';
