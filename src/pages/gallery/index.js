@@ -3,6 +3,7 @@ import { useState } from "react";
 import AuthPages from "src/components/Auth/AuthPages";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
+import TitleBanner from "src/components/TitleBanner";
 import OurModal from "src/components/modal/OurModal";
 import { useAuthProvider } from "src/context/AuthContext";
 export default function Gallery() {
@@ -23,7 +24,7 @@ export default function Gallery() {
             <AuthPages />
         </OurModal>
         <>
-            <div className="back_re">
+            {/* <div className="back_re">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-12">
@@ -33,7 +34,11 @@ export default function Gallery() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> */}
+            {/* <TitleBanner marginBotton={'40px'} padding={'7'} /> */}
+            <TitleBanner title={"Gallery"} />
+            
+
             {/* gallery */}
             <div className="gallery">
                 <div className="container">

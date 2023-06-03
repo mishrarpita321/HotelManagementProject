@@ -154,9 +154,9 @@
      box-sizing: border-box !important;
 }
 
- .bookDetail .container {
+.bookDetail .container {
      max-width: 1140px !important;
-} 
+}
 
 html {
      scroll-behavior: smooth;
@@ -1314,7 +1314,17 @@ ul.social_icon li a:hover {
      width: 67px;
      background-color: #d3e99d;
 }
-.delete{
+
+.delete {
      margin-right: 0px;
      background-color: #e99d9d
+}
+
+.list-group-item-light.list-group-item-action:hover, .list-group-item-light.list-group-item-action:active, .list-group-item-light.list-group-item-action:focus {
+     color: #000000 !important;
+     /* background-color: #e4d1d1 !important; */
+     background-color: #e7c2537d !important;
+}
+.list-group-item-light.list-group-item-action{
+     color: #000;
 }

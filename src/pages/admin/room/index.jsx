@@ -6,6 +6,7 @@ import SideBar from 'src/components/Admin/SideBar';
 import NavBar from 'src/components/NavBar';
 import NavBarAdmin from 'src/components/NavBarAdmin';
 import TitleBanner from 'src/components/TitleBanner';
+import SideBar4 from 'src/components/Admin/SideBar4';
 
 const RoomList = () => {
 
@@ -71,30 +72,12 @@ const RoomList = () => {
     <>
       <NavBarAdmin />
 
-      <div className='row' >
-        <div className='col-2'>
-          <SideBar />
+      <div className='row container' >
+      <div className='col-2'>
+          <SideBar4 />
         </div>
-        <div className='col-10 container'>
-          <TitleBanner marginBotton={'40px'} padding={'7'} />
-          {/* <div className="back_re">
-            <div className="container">
-              <div className="row">
-                <div className="col-md-12">
-                  <div className="title">
-                    <h2>Our Room</h2>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> */}
-          {/* <h1>Rooms</h1> */}
-          {/* {rooms.map((room) => (
-        <div key={room.id}>
-          <h2>{room.name}</h2>
-          <p>Category: {room.category}</p>
-        </div>
-      ))} */}
+        <div className='col-10'>
+          <TitleBanner marginBotton={'40px'} padding={'7'} title={"Rooms"} />
           <div className="">
             <button onClick={addRoomClick} className="loginButton">+ Add Room</button>
             <table className="table table-bordered table-hover transaction">
@@ -125,7 +108,6 @@ const RoomList = () => {
                   )
 
                 })}
-
               </tbody>
             </table>
           </div>
