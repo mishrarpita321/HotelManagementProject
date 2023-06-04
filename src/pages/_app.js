@@ -2,7 +2,6 @@ import GuestGuard from 'src/Guards/GuestGuard';
 import AdminGuard from 'src/Guards/AdminGuard';
 import '../../styles/globals.css'
 import '../../styles/globals2.css'
-import '../../styles/adminSidebar.css'
 import { AuthProvider } from '../context/AuthContext'
 import AuthGuard from 'src/Guards/AuthGuard';
 import LoadingSpinner from 'src/components/LoadingSpinner';
@@ -13,6 +12,8 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
 import 'bootstrap/dist/css/bootstrap.css'
+import { AlertProvider } from 'src/context/AlertContext';
+import Alert from 'src/components/AlertTest';
 
 
 
@@ -30,9 +31,9 @@ const Guard = ({ children, guestGuard, authGuard, adminGuard, adminLoginGuard, p
     return <AuthGuard fallback={<div className="h-screen flex items-center justify-center"><LoadingSpinner /></div>} pageType={pageType}>{children}</AuthGuard>;
     visibility = ("Page is visible to logged-in users");
   }
-   else if (adminLoginGuard) {
+  else if (adminLoginGuard) {
     return <AdminLoginGuard fallback={<div className="h-screen flex items-center justify-center"><LoadingSpinner /></div>} pageType={pageType}>{children}</AdminLoginGuard>;
-  } 
+  }
   else {
     // Page visible to all users
     visibility = ("Page is visible to all users");
@@ -71,7 +72,10 @@ function MyApp({ Component, pageProps }) {
     <>
       <AuthProvider>
         <Guard guestGuard={guestGuard} authGuard={authGuard} adminGuard={adminGuard} adminLoginGuard={adminLoginGuard} pageType={pageType}>
-          {getLayout(<Component {...pageProps} />)}
+          <AlertProvider>
+            {getLayout(<Component {...pageProps} />)}
+            <Alert />
+          </AlertProvider>
         </Guard>
       </AuthProvider>
     </>

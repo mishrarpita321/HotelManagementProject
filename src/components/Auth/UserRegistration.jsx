@@ -7,8 +7,31 @@ import { AuthPageContext } from "src/context/AuthPageContext";
 import { useAuthProvider } from "src/context/AuthContext";
 import NoCloseModal from "../modal/NoCloseModal";
 import AlertModal from "../AlertModal";
+import AlertModal2 from "../AlertModal2";
+import AlertTest from "../AlertTest";
+import { AlertContext } from "src/context/AlertContext";
+
 
 export default function UserRegistration({ }) {
+  const { showAlert } = useContext(AlertContext);
+
+
+
+  const handleConfirmation = () => {
+    showAlert('confirmation', 'Are you sure you want to proceed?');
+  };
+
+  const handleSuccess = () => {
+    showAlert('success', 'Operation completed successfully!');
+  };
+
+  const handleError = () => {
+    showAlert('error', 'An error occurred.');
+  };
+
+
+
+
   const auth = useAuthProvider();
   const [page, setPage] = useContext(AuthPageContext);
 
@@ -106,19 +129,20 @@ export default function UserRegistration({ }) {
   const [showError, setShowError] = useState(true)
 
 
+
   return (
     <>
       {/* <NoCloseModal show={showError} onHide={() => setShowError(false)} > <>Success</></NoCloseModal > */}
-      <AlertModal isOpen={showError} onClose={() => setShowError(false)} type={'error'} title={'this is title'} content={'this is content'} >{'Hi'}</AlertModal>
-      <div style={{ background: "unset" }} className="login">
-        <div style={{ display: "block", position: "unset", transform: "unset", width: "unset", borderRadius: "12px" }} className="container">
-          {/* <div onClick={onClick}>x</div> */}
-          {/* <button onClick={onClick} >Close</button> */}
-          <h1>Registration</h1>
-          <form action="#">
-            {/* <label>Full Name</label> */}
-            {/* <input type="text" /> */}
+      {/* <AlertModal2 isOpen={showError} onClose={() => setShowError(false)} type={'error'} title={'this is title 2'} content={'this is content'} >{'Hi'}</AlertModal2> */}
 
+      {/* {showError && (
+        <AlertTest type="success" message="This is a success alert!" />
+      )} */}
+
+      <div style={{ background: "unset" }} className="login hide-scrollbar-component">
+        <div style={{ display: "block", position: "unset", transform: "unset", width: "unset", borderRadius: "12px" }} className="container">
+          <h1 onClick={handleSuccess} >Registration</h1>
+          <form action="#">
             <label>Email</label>
             <Controller
               name="email"
@@ -162,8 +186,6 @@ export default function UserRegistration({ }) {
                 {errors.username.message}
               </p>
             )}
-
-
             <label>Contact Number</label>
             <Controller
               name="phone"
@@ -192,9 +214,6 @@ export default function UserRegistration({ }) {
                 {errors.phone.message}
               </p>
             )}
-            {/* <input type="tel" id="phone" name="phone" placeholder="49 123 456789321" pattern="[0-9]{2} [0-9]{3} [0-9]{8}"></input> */}
-            {/* <label>Date of Birth</label> */}
-            {/* <input type="date" /> */}
             <label>Password</label>
             <Controller
               name="password"
@@ -241,6 +260,29 @@ export default function UserRegistration({ }) {
                 {errors.confirm_password.message}
               </p>
             )}
+            <label>Confirm Password</label>
+            <Controller
+              name="confirm_password"
+              control={control}
+              rules={{ required: true }}
+              render={({ field: { value, onChange, onBlur } }) => (
+                <input
+                  disabled={loginLoading}
+                  value={value}
+                  onBlur={onBlur}
+                  // label="Password"
+                  onChange={onChange}
+                  id="confirm_password"
+                  // error={Boolean(errors.password)}
+                  type="password"
+                />
+              )}
+            />
+            {errors.confirm_password && (
+              <p style={errorStyle} className="text-sm text-red-500">
+                {errors.confirm_password.message}
+              </p>
+            )}
             <button
               disabled={loginLoading}
               onClick={handleSubmit(handleLogin)}>
@@ -251,7 +293,9 @@ export default function UserRegistration({ }) {
               Already a member? <a href="#" onClick={() => setPage("login")}>Sigin here</a>
             </div>
             <closeform />
+
           </form>
+
         </div>
       </div>
     </>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuthProvider } from 'src/context/AuthContext';
 import NavBar from 'src/components/NavBar';
@@ -10,6 +10,7 @@ import Modal from 'src/components/modal/OurModal';
 import OurModal from 'src/components/modal/OurModal';
 import Auth from 'src/config/auth';
 import AuthPages from 'src/components/Auth/AuthPages';
+import { AlertContext } from 'src/context/AlertContext';
 // import { Modal } from 'bootstrap';
 
 
@@ -33,8 +34,11 @@ export default function Home() {
     }
   )
 
-
-
+  const { showAlert, hideAlert } = useContext(AlertContext);
+  const handleClick = () => {
+    alert('clicked')
+    showAlert('success', 'This is a success alert!');
+  };
 
   return (
     <>
@@ -98,7 +102,7 @@ export default function Home() {
             <div className="row">
               <div className="col-md-5">
                 <div className="titlepage">
-                  <h2>About Us</h2>
+                  <h2 >About Us</h2>
                   <p>
                     The passage experienced a surge in popularity during the 1960s
                     when Letraset used it on their dry-transfer sheets, and again
