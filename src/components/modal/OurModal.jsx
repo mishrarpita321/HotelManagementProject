@@ -31,6 +31,7 @@ function OurModal({ show, onHide, children, }) {
         size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        dialogClassName="modal-large"
       >
         <div onClick={closeModal} style={{ display: "flex", alignSelf: "flex-end", backgroundColor: "#a571ba", height: "25px", width: "25px", cursor: "pointer", borderRadius: "30px", justifyContent: "center", position: "absolute", top: "-12px", right: "-12px", alignItems: "center" }} >
           <FontAwesomeIcon icon={faClose} />
