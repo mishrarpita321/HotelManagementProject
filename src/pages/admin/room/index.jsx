@@ -68,6 +68,7 @@ const RoomList = () => {
   };
 
 
+  const [showAddDialog, addRoomClick] = useState()
 
 
   return (
@@ -81,7 +82,7 @@ const RoomList = () => {
         <div className='col-10'>
           <TitleBanner marginBotton={'40px'} padding={'7'} title={"Rooms"} />
           <div className="">
-            <button onClick={addRoomClick} className="loginButton">+ Add Room</button>
+            <button onClick={() => addRoomClick(true)} className="loginButton">+ Add Room</button>
             <table className="table table-bordered table-hover transaction">
               <thead className="thead-dark">
                 <tr style={{ backgroundColor: "#38325059" }}>
