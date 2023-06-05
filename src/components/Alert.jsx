@@ -11,7 +11,7 @@ const Alert = () => {
     return null; // If no alert is present, render nothing
   }
 
-  const { type, message, onConfirm, onCancel } = alert;
+  const { type, message, onConfirm, onCancel, onOk, buttonAction } = alert;
 
   // Define the appropriate icon and color based on the alert type
   let icon, color;
@@ -26,6 +26,29 @@ const Alert = () => {
     color = 'text-primary';
   }
 
+
+
+
+  const handleConfirm = () => {
+    onConfirm(buttonAction);
+    hideAlert();
+  };
+
+  const handleCancel = () => {
+    onCancel(buttonAction);
+    hideAlert();
+  };
+  const handleSuccessOk = () => {
+    onOk(buttonAction);
+    hideAlert();
+  };
+
+  const handleClose = () => {
+    hideAlert();
+  };
+
+
+
   return (
     <div className="alert-overlay">
       <div className={`alert alert-${type}`}>
@@ -39,16 +62,21 @@ const Alert = () => {
         <div className="alert-footer">
           {type === 'confirmation' && (
             <>
-              <button className="btn btn-secondary me-2" onClick={onCancel}>
+              <button className="btn btn-secondary me-2" onClick={handleCancel}>
                 Cancel
               </button>
-              <button className="btn btn-primary" onClick={onConfirm}>
+              <button className="btn btn-primary" onClick={handleConfirm}>
                 Confirm
               </button>
             </>
           )}
-          {type !== 'confirmation' && (
-            <button className="btn btn-primary" onClick={onConfirm}>
+          {type === 'success' && (
+            <button className="btn btn-primary" onClick={handleSuccessOk}>
+              Ok
+            </button>
+          )}
+          {type === 'error' && (
+            <button className="btn btn-primary" onClick={handleClose}>
               Ok
             </button>
           )}

@@ -13,7 +13,7 @@ config.autoAddCss = false;
 
 import 'bootstrap/dist/css/bootstrap.css'
 import { AlertProvider } from 'src/context/AlertContext';
-import Alert from 'src/components/AlertTest';
+import Alert from 'src/components/Alert';
 
 
 

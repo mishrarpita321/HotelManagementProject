@@ -8,7 +8,7 @@ import { useAuthProvider } from "src/context/AuthContext";
 import NoCloseModal from "../modal/NoCloseModal";
 import AlertModal from "../AlertModal";
 import AlertModal2 from "../AlertModal2";
-import AlertTest from "../AlertTest";
+import AlertTest from "../Alert";
 import { AlertContext } from "src/context/AlertContext";
 
 
@@ -89,31 +89,19 @@ export default function UserRegistration({ }) {
       setLoginLoading(false)
       console.log('returned data:', data)
       if (data.message === "success") {
+        onAlerSuccessHandle('Congratulation, your account is create.')
         // setEmail(id);
         // setStep(2);
       } else {
+        console.log(data)
         if (data.message === "failed") {
-          if (data.type === 1) {
-            setError("password", {
-              // type: 'manual',
-              message: data.error.message,
-            });
-          } else {
-            setError("email", {
-              // type: 'manual',
-              message: data.error.message,
-            });
-          }
+          onAlertErrorHandle(data.error.message);
         } else {
-          setError("different", {
-            // type: 'manual',
-            message: data.error,
-          });
+          console.log(data.error)
+          onAlertErrorHandle(data.error);
         }
       }
     });
-
-
   };
 
   const errorStyle = {
@@ -122,26 +110,61 @@ export default function UserRegistration({ }) {
     fontSize: '15px',
     margin: '0px 9px',
   };
-  console.log(errors)
+  // console.log(errors)
 
 
 
   const [showError, setShowError] = useState(true)
 
 
+  const onAlertErrorHandle = (message) => {
+    showAlert(
+      'error',
+      message,
+      () => {
+        console.log('Ok button Clicked');
+      }
+    )
+  }
+  const onAlerSuccessHandle = (message) => {
+    showAlert(
+      'success',
+      message,
+      () => {
+      },
+      () => {
+      },
+      () => {
+        setPage("login")
+      }
+    )
+  }
+  // const onAlerConfirmationHandle = (type, error) => {
+  //   showAlert(
+  //     'confirmation',
+  //     error,
+  //     () => {
+  //       console.log('button confirm');
+  //     },
+  //     () => {
+  //       console.log('button cancel');
+  //     }
+  //   )
+  // }
+
+
+
+
+
+
+
+
 
   return (
     <>
-      {/* <NoCloseModal show={showError} onHide={() => setShowError(false)} > <>Success</></NoCloseModal > */}
-      {/* <AlertModal2 isOpen={showError} onClose={() => setShowError(false)} type={'error'} title={'this is title 2'} content={'this is content'} >{'Hi'}</AlertModal2> */}
-
-      {/* {showError && (
-        <AlertTest type="success" message="This is a success alert!" />
-      )} */}
-
       <div style={{ background: "unset" }} className="login hide-scrollbar-component">
         <div style={{ display: "block", position: "unset", transform: "unset", width: "unset", borderRadius: "12px" }} className="container">
-          <h1 onClick={handleSuccess} >Registration</h1>
+          <h1>Registration</h1>
           <form action="#">
             <label>Email</label>
             <Controller
