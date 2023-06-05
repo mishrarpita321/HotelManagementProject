@@ -6,8 +6,10 @@ import Footer from 'src/components/Footer';
 // import NavBar from 'src/components/NavBar';
 import NavBarAdmin from 'src/components/NavBarAdmin';
 import TitleBanner from 'src/components/TitleBanner';
-
+import PropertyForm from "src/components/Admin/category/AddCategoryForm"
+import NoCloseModal from "src/components/modal/NoCloseModal"
 import SideBar4 from 'src/components/Admin/SideBar4';
+import AddRoomDialog from 'src/components/Admin/AddRoomDialog';
 
 
 const RoomList = () => {
@@ -53,11 +55,11 @@ const RoomList = () => {
   }
 
 
-  const addRoomClick = () => {
-    let newroom = { id: 4, roomNo: 322, status: true, inventory: true, cleaning: false, category: 'deluxe' }
+  // const addRoomClick = () => {
+  //   let newroom = { id: 4, roomNo: 322, status: true, inventory: true, cleaning: false, category: 'deluxe' }
 
-    setRooms([...rooms, newroom]);
-  }
+  //   setRooms([...rooms, newroom]);
+  // }
 
 
   const deleteRoomClick = (id) => {
@@ -114,6 +116,10 @@ const RoomList = () => {
               </tbody>
             </table>
           </div>
+          <NoCloseModal show={showAddDialog} onHide={() => { addRoomClick(false) }}>
+            {/* <AddCategoryDialog /> */}
+            <AddRoomDialog />
+          </NoCloseModal>
         </div>
 
       </div>
