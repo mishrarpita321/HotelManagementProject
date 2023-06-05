@@ -1,31 +1,46 @@
-import SideBar4 from "../SideBar4"
-
-export default function AddCategoryDialog() {
-    const onClick = () => {
-        setFormStep(1)
-        setShowLogin(false)
-    }
-
+export default function AddRoomDialog() {
     return (
         <>
             <div className="container">
-                {/* <div className="lab"><label
-                    onClick={onClick}
-                    className="close-btn LoginCloseBtn" title="close">
-                    ×
-                </label>
-                </div> */}
                 <div className="row categoryForm">
-                    <h5>Add category</h5>
+                    <h5>Add room</h5>
                     <form>
                         <div className="row">
                             <div className="col">
-                                <div className="row"><label>Category name</label></div>
+                                <div className="row"><label>Room No</label></div>
                                 <div className="row"><input type="text" /></div>
                             </div>
                             <div className="col">
                                 <div className="row">
-                                    <label>Size</label>
+                                    <label>Category</label>
+                                </div>
+                                <div className="row">
+                                    <select class="custom-select mr-sm-2">
+                                        <option selected>Deluxe.</option>
+                                        <option selected>Deluxe.</option>
+                                        <option selected>Deluxe.</option>
+                                        <option selected>Deluxe.</option>
+                                        <option selected>Deluxe.</option>
+                                        <option selected>Deluxe.</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <div className="row">
+                                    <label>Status</label>
+                                </div>
+                                <div className="row">
+                                    <select class="custom-select mr-sm-2">
+                                        <option selected>Please Select.</option>
+                                        <option value="1">Booked.</option>
+                                        <option value="2">Not Booked</option>
+                                    </select>                                </div>
+                            </div>
+                            <div className="col">
+                                <div className="row">
+                                    <label>Inventory Available?</label>
                                 </div>
                                 <div className="row">
                                     <input type="text" />
@@ -35,35 +50,18 @@ export default function AddCategoryDialog() {
                         <div className="row">
                             <div className="col">
                                 <div className="row">
-                                    <label>Price</label>
+                                    <label>Cleaning Status?</label>
                                 </div>
                                 <div className="row">
                                     <input type="text" />
                                 </div>
                             </div>
-                            <div className="col">
-                                <div className="row">
-                                    <label>Capacity</label>
-                                </div>
-                                <div className="row">
-                                    <input type="number" />
-                                </div>
-                            </div>
                         </div>
-                        <div className="row">
-                            <div className="col">
-                                <div className="row">
-                                    <label>Rooms</label>
-                                </div>
-                                <div className="row">
-                                    <input type="number" />
-                                </div>
-                            </div>
-                        </div>
-                            <button className="loginButton" style={{width: "78px"}}>Save</button>
+                        <button className="loginButton" style={{ width: "78px" }}>Save</button>
                     </form>
                 </div>
-            </div>
-        </>
+            </div>        </>
     )
+
+
 }

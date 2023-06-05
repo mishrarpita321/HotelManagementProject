@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Tab } from 'react-bootstrap';
+// import { Tab } from 'react-bootstrap';
 import Footer from 'src/components/Footer';
-import SideBar from 'src/components/Admin/SideBar';
-import NavBar from 'src/components/NavBar';
+// import SideBar from 'src/components/Admin/SideBar';
+// import NavBar from 'src/components/NavBar';
 import NavBarAdmin from 'src/components/NavBarAdmin';
 import TitleBanner from 'src/components/TitleBanner';
 
@@ -75,7 +75,7 @@ const RoomList = () => {
       <NavBarAdmin />
 
       <div className='row container' >
-      <div className='col-2'>
+        <div className='col-2'>
           <SideBar4 />
         </div>
         <div className='col-10'>
