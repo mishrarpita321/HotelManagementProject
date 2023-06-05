@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useState } from "react"
 import SideBar4 from "src/components/Admin/SideBar4"
 import AddCategoryDialog from "src/components/Admin/category/AddCategoryDialog"
+import PropertyForm from "src/components/Admin/category/AddCategoryForm"
 import NavBar from "src/components/NavBar"
 import NoCloseModal from "src/components/modal/NoCloseModal"
 
@@ -39,7 +40,7 @@ export default function Categories() {
                 <div className="col-2">
                     <SideBar4 />
                 </div>
-                <div className="col-12">
+                <div className="col-10">
                     <h1>Categories</h1>
                     <button onClick={() => setShowAddDialog(true)} > add +</button>
                     <ul>
@@ -55,7 +56,8 @@ export default function Categories() {
                     </ul>
 
                     <NoCloseModal show={showAddDialog} onHide={() => { setShowAddDialog(false) }}>
-                        <AddCategoryDialog />
+                        {/* <AddCategoryDialog /> */}
+                        <PropertyForm />
                     </NoCloseModal>
                 </div>
             </div >

@@ -25,7 +25,7 @@ export default function AddCategoryDialog() {
                             </div>
                             <div className="col">
                                 <div className="row">
-                                    <label>Size</label>
+                                    <label>Size (sq.mt)</label>
                                 </div>
                                 <div className="row">
                                     <input type="text" />
@@ -60,7 +60,10 @@ export default function AddCategoryDialog() {
                                 </div>
                             </div>
                         </div>
-                            <button className="loginButton" style={{width: "78px"}}>Save</button>
+                        <div className="row" style={{display: "flex"}}>
+                            <button className="loginButton" style={{width: "78px", marginRight: "5px"}}>Save</button>
+                            <button className="loginButton" style={{width: "78px"}}>Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>
