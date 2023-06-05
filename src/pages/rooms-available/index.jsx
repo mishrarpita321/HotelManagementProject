@@ -95,5 +95,7 @@ const AvailableRooms = () => {
         </>
     )
 }
-
+AvailableRooms.guestGuard = false
+AvailableRooms.authGuard = true
+AvailableRooms.adminGuard = false
 export default AvailableRooms

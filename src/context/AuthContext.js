@@ -192,28 +192,43 @@ export const AuthProvider = ({ children }) => {
       })
       .catch((err) => {
         console.log('from catch:', err)
-        if (err.response.status == 409) {
+        if (err.response.status == 410 ||
+          err.response.status == 400 ||
+          err.response.status == 401) {
           data["message"] = "failed";
           data["type"] = 0; /* show in email field */
           data["error"] = err.response.data;
           userData(data);
-        } else if (err.response.status == 404) {
-          data["message"] = "failed";
-          data["type"] = 0; /* show in email field */
-          data["error"] = err.response.data;
-          userData(data);
-        } else if (err.response.status == 401) {
-          data["message"] = "failed";
-          data["type"] = 1; /* show in password field */
-          data["error"] = err.response.data;
-          userData(data);
-        } else {
-
+        }
+        else {
           data["message"] = "network-error";
           data["type"] = 0; /* show in email field */
           data["error"] = "some thing went wrong";
           userData(data);
         }
+        // if (err.response.status == 409) {
+        //   data["message"] = "failed";
+        //   data["type"] = 0; /* show in email field */
+        //   data["error"] = err.response.data;
+        //   userData(data);
+        // } else if (err.response.status == 404) {
+        //   data["message"] = "failed";
+        //   data["type"] = 0; /* show in email field */
+        //   data["error"] = err.response.data;
+        //   userData(data);
+        // } else if (err.response.status == 401) {
+        //   data["message"] = "failed";
+        //   data["type"] = 1; /* show in password field */
+        //   data["error"] = err.response.data;
+        //   userData(data);
+        // } else {
+
+
+        //   data["message"] = "network-error";
+        //   data["type"] = 0; /* show in email field */
+        //   data["error"] = "some thing went wrong";
+        //   userData(data);
+        // }
       });
   };
 
