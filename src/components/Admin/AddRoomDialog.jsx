@@ -2,8 +2,8 @@ export default function AddRoomDialog() {
     return (
         <>
             <div className="container">
-                <div className="row categoryForm">
-                    <h5>Add room</h5>
+                <div className="row categoryForm" style={{ width: "auto" }}>
+                    <h5 style={{ textAlign: "center", marginBottom: "15px" }}>Add room</h5>
                     <form>
                         <div className="row">
                             <div className="col">
@@ -16,12 +16,12 @@ export default function AddRoomDialog() {
                                 </div>
                                 <div className="row">
                                     <select class="custom-select mr-sm-2">
-                                        <option selected>Deluxe.</option>
-                                        <option selected>Deluxe.</option>
-                                        <option selected>Deluxe.</option>
-                                        <option selected>Deluxe.</option>
-                                        <option selected>Deluxe.</option>
-                                        <option selected>Deluxe.</option>
+                                    <option selected>Presidential suite</option>
+                                        <option >Suite</option>
+                                        <option >Executive Suite</option>
+                                        <option >Studio</option>
+                                        <option >Standard suite rooms</option>
+                                        <option >Deluxe.</option>
                                     </select>
                                 </div>
                             </div>
@@ -48,7 +48,7 @@ export default function AddRoomDialog() {
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col">
+                            <div className="col-6">
                                 <div className="row">
                                     <label>Cleaning Status?</label>
                                 </div>
@@ -57,7 +57,10 @@ export default function AddRoomDialog() {
                                 </div>
                             </div>
                         </div>
-                        <button className="loginButton" style={{ width: "78px" }}>Save</button>
+                        <div className="row" style={{marginTop: "13px", justifyContent: "center"}}>
+                            <button className="loginButton" style={{ width: "78px" }}>Save</button>
+                            <button className="loginButton" style={{ width: "78px", marginLeft: "20px"}}>Cancel</button>
+                        </div>
                     </form>
                 </div>
             </div>        </>

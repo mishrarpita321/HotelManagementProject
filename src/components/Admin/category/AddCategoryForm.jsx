@@ -108,7 +108,7 @@ const PropertyForm = () => {
 
         <div className='row' style={{justifyContent: "center"}}>
           <Button variant="primary" type="submit" className="submit-button col-2">Submit</Button>
-          <Button variant="primary" type="submit" className="submit-button col-2">Cancel</Button>
+          <Button variant="primary"  className="submit-button col-2">Cancel</Button>
         </div>
       </Form>
     </Container>
