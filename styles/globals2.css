@@ -1083,7 +1083,7 @@ ul.social_icon li a:hover {
 
 .loginButton:hover {
 
-     color: unset !important;
+     /* color: unset !important; */
      border-bottom: unset !important;
      cursor: pointer;
 }
@@ -1352,7 +1352,61 @@ ul.social_icon li a:hover {
 
 
 
+.categoryForm {
+     background-color: rgb(195 184 210 / 30%);
+     padding: 13px;
+     border-radius: 5px;
+     width: fit-content;
+     /* margin-top: 20px !important; */
+}
 
+.categoryForm h5 {
+     color: #333;
+     font-size: 20px;
+     margin-top: 0;
+     margin-bottom: 10px;
+}
+
+.categoryForm label {
+     color: #555;
+     font-weight: bold;
+}
+
+.categoryForm input,
+.categoryForm select.custom-select {
+     width: 97%;
+     padding: 8px;
+     border: 1px solid #ccc;
+     border-radius: 4px;
+     box-sizing: border-box;
+     background-color: #fff;
+     color: #333 !important;
+}
+
+.categoryForm input:focus,
+.categoryForm select.custom-select:focus {
+     outline: none;
+     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+     /* color: #999; */
+}
+
+.categoryForm .row>.col {
+     margin-bottom: 10px;
+}
+
+.icon-shape {
+     display: inline-flex;
+     align-items: center;
+     justify-content: center;
+     text-align: center;
+     vertical-align: middle;
+ }
+ 
+ .icon-sm {
+     width: 2rem;
+     height: 2rem;
+     
+ }
 
 
 
@@ -1612,3 +1666,38 @@ ul.social_icon li a:hover {
      background-color: #007bff;
      border-color: #007bff;
 }
+
+
+
+
+
+
+.property-form {
+     /* background-color: #f8f9fa; */
+     background-color: rgb(195 184 210 / 30%);
+     padding: 20px;
+     border-radius: 5px;
+     width: 100%;
+     max-width: 600px;
+   }
+   
+   .property-form label {
+     font-weight: bold;
+   }
+   
+   .property-form input[type="text"],
+   .property-form input[type="number"] {
+     width: 100%;
+   }
+   
+   .property-form .submit-button,.property-form .submit-button:hover,.property-form .submit-button:active {
+     margin-top: 10px;
+     /* width: 100%; */
+     background-color: #ccc2c2;
+    font-weight: 500;
+    color: #000000 !important;
+    border: 1px solid #3e3939;
+   }
+   /* .property-form .submit-button:hover,.property-form .submit-button:active {
+    background-color: #cb8282 !important;
+   } */

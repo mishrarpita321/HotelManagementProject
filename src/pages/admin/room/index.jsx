@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Tab } from 'react-bootstrap';
+// import { Tab } from 'react-bootstrap';
 import Footer from 'src/components/Footer';
-import SideBar from 'src/components/Admin/SideBar';
-import NavBar from 'src/components/NavBar';
+// import SideBar from 'src/components/Admin/SideBar';
+// import NavBar from 'src/components/NavBar';
 import NavBarAdmin from 'src/components/NavBarAdmin';
 import TitleBanner from 'src/components/TitleBanner';
-
+import PropertyForm from "src/components/Admin/category/AddCategoryForm"
+import NoCloseModal from "src/components/modal/NoCloseModal"
 import SideBar4 from 'src/components/Admin/SideBar4';
+import AddRoomDialog from 'src/components/Admin/AddRoomDialog';
 
 
 const RoomList = () => {
@@ -53,11 +55,11 @@ const RoomList = () => {
   }
 
 
-  const addRoomClick = () => {
-    let newroom = { id: 4, roomNo: 322, status: true, inventory: true, cleaning: false, category: 'deluxe' }
+  // const addRoomClick = () => {
+  //   let newroom = { id: 4, roomNo: 322, status: true, inventory: true, cleaning: false, category: 'deluxe' }
 
-    setRooms([...rooms, newroom]);
-  }
+  //   setRooms([...rooms, newroom]);
+  // }
 
 
   const deleteRoomClick = (id) => {
@@ -68,6 +70,7 @@ const RoomList = () => {
   };
 
 
+  const [showAddDialog, addRoomClick] = useState()
 
 
   return (
@@ -75,13 +78,13 @@ const RoomList = () => {
       <NavBarAdmin />
 
       <div className='row container' >
-      <div className='col-2'>
+        <div className='col-2'>
           <SideBar4 />
         </div>
         <div className='col-10'>
           <TitleBanner marginBotton={'40px'} padding={'7'} title={"Rooms"} />
           <div className="">
-            <button onClick={addRoomClick} className="loginButton">+ Add Room</button>
+            <button onClick={() => addRoomClick(true)} className="loginButton">+ Add Room</button>
             <table className="table table-bordered table-hover transaction">
               <thead className="thead-dark">
                 <tr style={{ backgroundColor: "#38325059" }}>
@@ -113,6 +116,10 @@ const RoomList = () => {
               </tbody>
             </table>
           </div>
+          <NoCloseModal show={showAddDialog} onHide={() => { addRoomClick(false) }}>
+            {/* <AddCategoryDialog /> */}
+            <AddRoomDialog />
+          </NoCloseModal>
         </div>
 
       </div>
