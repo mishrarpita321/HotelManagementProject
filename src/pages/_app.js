@@ -70,14 +70,18 @@ function MyApp({ Component, pageProps }) {
   const pageType = Component.pageType ?? 'user';
   return (
     <>
-      <AuthProvider>
-        <Guard guestGuard={guestGuard} authGuard={authGuard} adminGuard={adminGuard} adminLoginGuard={adminLoginGuard} pageType={pageType}>
-          <AlertProvider>
+      <AlertProvider>
+
+
+        <AuthProvider>
+          <Guard guestGuard={guestGuard} authGuard={authGuard} adminGuard={adminGuard} adminLoginGuard={adminLoginGuard} pageType={pageType}>
+            {/* <AlertProvider> */}
             {getLayout(<Component {...pageProps} />)}
             <Alert />
-          </AlertProvider>
-        </Guard>
-      </AuthProvider>
+            {/* </AlertProvider> */}
+          </Guard>
+        </AuthProvider>
+      </AlertProvider>
     </>
   )
 }
