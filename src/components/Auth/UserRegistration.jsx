@@ -79,7 +79,7 @@ export default function UserRegistration({ }) {
 
 
 
-  const handleLogin = (data) => {
+  const handleSignup = (data) => {
     // console.log('Hi submit is clicked')
     // alert('asdf')
     setLoginLoading(true)
@@ -283,32 +283,9 @@ export default function UserRegistration({ }) {
                 {errors.confirm_password.message}
               </p>
             )}
-            <label>Confirm Password</label>
-            <Controller
-              name="confirm_password"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange, onBlur } }) => (
-                <input
-                  disabled={loginLoading}
-                  value={value}
-                  onBlur={onBlur}
-                  // label="Password"
-                  onChange={onChange}
-                  id="confirm_password"
-                  // error={Boolean(errors.password)}
-                  type="password"
-                />
-              )}
-            />
-            {errors.confirm_password && (
-              <p style={errorStyle} className="text-sm text-red-500">
-                {errors.confirm_password.message}
-              </p>
-            )}
             <button
               disabled={loginLoading}
-              onClick={handleSubmit(handleLogin)}>
+              onClick={handleSubmit(handleSignup)}>
               Submit
             </button>
             <div className="forgetpwd"><a href="#" >Forgot Password?</a></div>

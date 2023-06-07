@@ -9,6 +9,17 @@ import axios from "axios";
 
 // ** Config
 import authConfig from "src/config/auth";
+import { AlertContext } from "./AlertContext";
+
+
+
+
+
+
+
+
+
+
 
 // ** Defaults
 const defaultProvider = {
@@ -26,8 +37,13 @@ const defaultProvider = {
 };
 export const AuthContext = createContext(defaultProvider);
 
+
 export const AuthProvider = ({ children }) => {
   const [refresh, setRefresh] = useState(0)
+
+  const { showAlert } = useContext(AlertContext);
+
+
 
   // ** States
   const [user, setUser] = useState(defaultProvider.user);
@@ -117,24 +133,51 @@ export const AuthProvider = ({ children }) => {
           })
           .then(async (response) => {
             const returnUrl = router.query.returnUrl;
-            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", response)
-            setUser({ ...response.data });
+            const url = router.asPath;
 
-            await window.localStorage.setItem(
-              "userData",
-              JSON.stringify(response.data)
-            );
+            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", response)
+
 
 
             // if (response.data.data.data.name == '' || response.data.data.data.email == '' || response.data.data.data.mobileNo == '') {
             //   router.replace('/account/details')
             // } else {
 
-            if (returnUrl == undefined) {
-              router.reload();
+            if (url.includes('/admin/login') && response.data.role !== "[ADMIN]") {
+              // The URL contains "/admin/login"
+              window.localStorage.clear()
+              console.log('Admin login page');
+              showAlert(
+                'error',
+                'Please Login with Admin credintials',
+                () => {
+                  console.log('Please Login with Admin credintials');
+                  return
+                }
+              )
             } else {
-              const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
-              router.replace(redirectURL)
+              // The URL does not contain "/admin/login"
+              console.log('Not admin login page');
+
+              setUser({ ...response.data });
+
+              await window.localStorage.setItem(
+                "userData",
+                JSON.stringify(response.data)
+              );
+
+              if (returnUrl == undefined) {
+                if (response.data.role == "[ADMIN]") {
+                  router.replace('/admin/dashboard')
+                } else {
+                  router.reload();
+                }
+                // console.log(response.data.role)
+              } else {
+                const redirectURL = returnUrl && returnUrl !== '/' ? returnUrl : '/'
+                router.replace(redirectURL)
+              }
+
             }
 
 
