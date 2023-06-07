@@ -1,12 +1,15 @@
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import SideBar4 from "src/components/Admin/SideBar4"
 import AddCategoryDialog from "src/components/Admin/category/AddCategoryDialog"
 import PropertyForm from "src/components/Admin/category/AddCategoryForm"
 import NavBar from "src/components/NavBar"
 import NoCloseModal from "src/components/modal/NoCloseModal"
+import { fetchCategoriesList } from "src/store/admin/category"
 
 export default function Categories() {
+    const [showAddDialog, setShowAddDialog] = useState(false)
     const [categoriesList, setCategoriesList] = useState(
         [
             {
@@ -30,8 +33,16 @@ export default function Categories() {
         ]
     )
 
-
-    const [showAddDialog, setShowAddDialog] = useState()
+    // ** Hooks
+    const dispatch = useDispatch()
+    const store = useSelector(state => state.categoriesList)
+    console.log(store)
+    useEffect(() => {
+        dispatch(
+            fetchCategoriesList({
+            })
+        )
+    }, [dispatch])
 
     return (
         <>
@@ -57,10 +68,13 @@ export default function Categories() {
 
                     <NoCloseModal show={showAddDialog} onHide={() => { setShowAddDialog(false) }}>
                         {/* <AddCategoryDialog /> */}
-                        <PropertyForm />
+                        <PropertyForm setShowAddDialog={() => { setShowAddDialog(false) }} />
                     </NoCloseModal>
                 </div>
             </div >
         </>
     )
 }
+Categories.guestGuard = false
+Categories.authGuard = true
+Categories.adminGuard = true
