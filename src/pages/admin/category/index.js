@@ -9,7 +9,7 @@ import NavBar from "src/components/NavBar"
 import TitleBanner from "src/components/TitleBanner"
 import NoCloseModal from "src/components/modal/NoCloseModal"
 import { fetchCategoriesList } from "src/store/admin/category"
-
+import { Buffer } from 'buffer'
 
 export default function Categories() {
     const [showAddDialog, setShowAddDialog] = useState(false)
@@ -71,6 +71,15 @@ export default function Categories() {
 
 
 
+
+
+    function byteArrayToBase64(byteArray) {
+        const buffer = Buffer.from(byteArray);
+        const base64 = buffer.toString('base64');
+        console.log(base64)
+        return base64;
+    }
+
     return (
         <>
             <NavBar />
@@ -98,6 +107,18 @@ export default function Categories() {
                             <tbody>
                                 {categories.map((category, i) => {
                                     const decompressedImage = decompressBase64(category.imageData);
+
+                                    // var utf8 = require('utf8');
+                                    // var binaryToBase64 = require('binaryToBase64');
+
+                                    // // var text = 'foo © bar 𝌆 baz';
+                                    // // var bytes = utf8.encode(text);
+                                    // var encoded = binaryToBase64(category.imageData);
+                                    // console.log(encoded);
+
+
+
+
                                     return (
                                         <tr key={i}>
                                             <th scope="row">{category?.title}</th>
@@ -106,8 +127,9 @@ export default function Categories() {
                                             <td>{category?.price}</td>
                                             {/* <td>{(room?.cleaning ? (<>true</>) : (<>false</>))}</td> */}
                                             <td>
-                                                {/* <img src={`data:${getImageFormat(category.imageData)};base64,${category.imageData}`} style={{ height: "200px", width: "200px" }}></img> */}
-                                                <img src={`data:image/png;base64,${decompressedImage}`} style={{ height: "200px", width: "200px" }}></img>
+                                                <img src={`data:image/jpeg;base64,${byteArrayToBase64(category.imageData)}`} style={{ height: "200px", width: "200px" }}></img>
+                                                {/* <img src={`data:${getImageFormat(category.imageData)};base64,${encoded}`} style={{ height: "200px", width: "200px" }}></img> */}
+                                                {/* <img src={`data:image/png;base64,${decompressedImage}`} style={{ height: "200px", width: "200px" }}></img> */}
                                                 {/* <img src={`data:image/jpeg;base64,`} style={{ height: "200px", width: "200px" }}></img> */}
                                             </td>
                                             <td>{category.maxPeopleAllowed}</td>

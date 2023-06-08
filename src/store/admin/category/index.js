@@ -18,7 +18,7 @@ export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchDat
   // const filterParams = "?" + (params.name ? 'name=' + params.name : '') + (params.role ? '&role=' + params.role : '') + (params.currentPlan ? '&currentPlan=' + params.currentPlan : '') + (params.status ? '&status=' + params.status : '')
   const filterParams = ''
 
-  const response = await axios.get(adminConfig.categoriesGetAllEndpoint , { headers })
+  const response = await axios.get(adminConfig.categoriesGetAllEndpoint, { headers })
   // console.log(response)
   return {
     categories: response.data,
@@ -29,21 +29,19 @@ export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchDat
 export const addCategory = createAsyncThunk('appAdminCategory/addData', async (data, { getState, dispatch }) => {
   const headers = {
     Accept: 'application/json',
-    // 'Content-Type': 'application/json',
     'Content-Type': 'multipart/form-data',
-    // "processData": false,
-    // "mimeType": "multipart/form-data",
-    // "contentType": false,
-    // "data": form,
+
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
-  console.log(data)
+  console.log(getState())
   let returnResponse = null
   try {
     const response = await axios.post(adminConfig.categoryAddEndpoint, data, { headers })
-    dispatch(fetchCategoriesList(getState().user.params))
-    returnResponse = { 'status': 'success', 'message': response?.data?.message }
+    console.log(response)
+    dispatch(fetchCategoriesList(getState().category.params))
+    returnResponse = { 'status': 'success', 'message': response?.data }
   } catch (e) {
+    console.log(e)
     returnResponse = {
       'status': 'failed',
       'message': (typeof (e?.response?.data?.message) != undefined ? (e?.response?.data?.message) : ('Something went wrong'))

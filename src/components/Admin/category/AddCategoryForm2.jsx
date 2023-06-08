@@ -60,19 +60,20 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
       price,
       maxPeopleAllowed: capacity
     };
-    const test = JSON.stringify({
-      "title": "Delux",
-      "rooms": 3,
-      "size": 45,
-      "price": 12,
-      "maxPeopleAllowed": 4
+    const test = JSON.stringify(categoryDto)
+
+
+    const blob= new Blob([test],{
+      type:'application/json'
     })
+
 
     const formData = new FormData();
     formData.append('image', image);
-    formData.append('categoryDto', test);
+    formData.append('categoryDto', blob);
 
     dispatch(addCategory(formData)).then((data) => {
+      console.log(data)
       if (data?.payload?.status === 'success') {
         onAlertSuccessHandle(data?.payload?.message);
       } else {
@@ -89,7 +90,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
 
   const onAlertSuccessHandle = (message) => {
     showAlert('success', message, () => { }, () => { }, () => {
-      setPage('login');
+      setShowAddDialog(false)
     });
   };
 
