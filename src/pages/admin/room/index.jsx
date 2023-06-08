@@ -13,6 +13,8 @@ import AddRoomDialog from 'src/components/Admin/AddRoomDialog';
 
 
 const RoomList = () => {
+  const [showAddDialog, addRoomClick] = useState(false)
+
 
 
   useEffect(() => {
@@ -32,6 +34,13 @@ const RoomList = () => {
 
   ]);
   console.log(rooms)
+
+
+  useEffect(() => {
+    fetchRooms();
+  }, [query.category]); // Fetch rooms whenever the category query parameter changes
+
+
   // Function to fetch the list of rooms from the API based on the category
   const fetchRooms = async () => {
     try {
@@ -44,9 +53,6 @@ const RoomList = () => {
     }
   };
 
-  useEffect(() => {
-    fetchRooms();
-  }, [query.category]); // Fetch rooms whenever the category query parameter changes
 
   if (query.roomId) {
     // Redirect to dynamic room details page if roomId is provided in the query
@@ -69,8 +75,6 @@ const RoomList = () => {
 
   };
 
-
-  const [showAddDialog, addRoomClick] = useState()
 
 
   return (

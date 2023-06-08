@@ -3,7 +3,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import './PropertyForm.css'; // Import your custom CSS file for additional styling
 
-const PropertyForm = () => {
+const PropertyForm = ({ setShowAddDialog }) => {
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
@@ -15,14 +15,14 @@ const PropertyForm = () => {
     <Container style={{ display: "contents" }}>
       <Form className="property-form" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="name">
-          <h4 style={{textAlign: "center"}}>Add Category </h4>
+          <h4 style={{ textAlign: "center" }}>Add Category </h4>
           <Form.Label>Name:</Form.Label>
           <Controller
             control={control}
             name="name"
             rules={{ required: true }}
             render={({ field }) => (
-              <Form.Control type="text" {...field} style={{marginBottom: "10px"}}/>
+              <Form.Control type="text" {...field} style={{ marginBottom: "10px" }} />
             )}
           />
           {errors.name && <Form.Text className="text-danger">This field is required</Form.Text>}
@@ -39,7 +39,7 @@ const PropertyForm = () => {
               valueAsNumber: true,
             }}
             render={({ field }) => (
-              <Form.Control type="number" {...field} style={{marginBottom: "10px"}}/>
+              <Form.Control type="number" {...field} style={{ marginBottom: "10px" }} />
             )}
           />
           {errors.rooms?.type === 'required' && (
@@ -61,7 +61,7 @@ const PropertyForm = () => {
               valueAsNumber: true,
             }}
             render={({ field }) => (
-              <Form.Control type="number" {...field} style={{marginBottom: "10px"}}/>
+              <Form.Control type="number" {...field} style={{ marginBottom: "10px" }} />
             )}
           />
           {errors.size?.type === 'required' && (
@@ -82,7 +82,7 @@ const PropertyForm = () => {
               valueAsNumber: true,
             }}
             render={({ field }) => (
-              <Form.Control type="number" {...field} style={{marginBottom: "10px"}}/>
+              <Form.Control type="number" {...field} style={{ marginBottom: "10px" }} />
             )}
           />
           {errors.size?.type === 'required' && (
@@ -100,15 +100,15 @@ const PropertyForm = () => {
             name="price"
             rules={{ required: true }}
             render={({ field }) => (
-              <Form.Control type="number" {...field} style={{marginBottom: "10px"}}/>
+              <Form.Control type="number" {...field} style={{ marginBottom: "10px" }} />
             )}
           />
           {errors.price && <Form.Text className="text-danger">This field is required</Form.Text>}
         </Form.Group>
 
-        <div className='row' style={{justifyContent: "center"}}>
+        <div className='row' style={{ justifyContent: "center" }}>
           <Button variant="primary" type="submit" className="submit-button col-2">Submit</Button>
-          <Button variant="primary"  className="submit-button col-2">Cancel</Button>
+          <Button variant="primary" onClick={() => setShowAddDialog(false)} className="submit-button col-2">Cancel</Button>
         </div>
       </Form>
     </Container>

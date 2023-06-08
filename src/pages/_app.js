@@ -14,6 +14,8 @@ config.autoAddCss = false;
 import 'bootstrap/dist/css/bootstrap.css'
 import { AlertProvider } from 'src/context/AlertContext';
 import Alert from 'src/components/Alert';
+import { Provider } from 'react-redux';
+import { store } from 'src/store';
 
 
 
@@ -70,14 +72,18 @@ function MyApp({ Component, pageProps }) {
   const pageType = Component.pageType ?? 'user';
   return (
     <>
-      <AuthProvider>
-        <Guard guestGuard={guestGuard} authGuard={authGuard} adminGuard={adminGuard} adminLoginGuard={adminLoginGuard} pageType={pageType}>
-          <AlertProvider>
-            {getLayout(<Component {...pageProps} />)}
-            <Alert />
-          </AlertProvider>
-        </Guard>
-      </AuthProvider>
+      <Provider store={store}>
+        <AlertProvider>
+          <AuthProvider>
+            <Guard guestGuard={guestGuard} authGuard={authGuard} adminGuard={adminGuard} adminLoginGuard={adminLoginGuard} pageType={pageType}>
+              {/* <AlertProvider> */}
+              {getLayout(<Component {...pageProps} />)}
+              <Alert />
+              {/* </AlertProvider> */}
+            </Guard>
+          </AuthProvider>
+        </AlertProvider>
+      </Provider>
     </>
   )
 }
