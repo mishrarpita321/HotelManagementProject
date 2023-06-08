@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { useState } from "react"
+import BookingForm from "src/components/Admin/AdminBooking"
 import SideBar4 from "src/components/Admin/SideBar4"
 import AddCategoryDialog from "src/components/Admin/category/AddCategoryDialog"
 import NavBar from "src/components/NavBar"
@@ -29,7 +30,7 @@ export default function Categories() {
     )
 
 
-    const [showAddDialog, setShowAddDialog] = useState()
+    const [showAddDialog, addBookingClick] = useState()
 
     return (
         <>
@@ -40,8 +41,8 @@ export default function Categories() {
                 </div>
                 <div className="col-10">
                     <TitleBanner marginBotton={'40px'} padding={'7'} title={"Bookings"} />
-                    <input placeholder="search" />
-
+                    <input placeholder="search" /><br />
+                    <button onClick={() => addBookingClick(true)} className="loginButton" style={{marginTop: "30px"}}>Create New Booking</button>
                     <table className="table table-bordered table-hover transaction">
                         <thead className="thead-dark">
                             <tr style={{ backgroundColor: "#38325059" }}>
@@ -92,8 +93,8 @@ export default function Categories() {
                             </tr>
                         </tbody>
                     </table>
-                    <NoCloseModal show={showAddDialog} onHide={() => { setShowAddDialog(false) }}>
-                        <AddCategoryDialog />
+                    <NoCloseModal show={showAddDialog} onHide={() => { addBookingClick(false) }}>
+                        <BookingForm />
                     </NoCloseModal>
                 </div >
             </div>
