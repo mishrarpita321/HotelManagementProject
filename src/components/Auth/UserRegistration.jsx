@@ -40,7 +40,7 @@ export default function UserRegistration({ }) {
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
   const schema = yup.object().shape({
-    email: yup.string().email().required("Email is a required field"),
+    // email: yup.string().email().required("Email is a required field"),
     username: yup.string().required("Username is a required field"),
     phone: yup.string()
       .required("required")
@@ -84,12 +84,18 @@ export default function UserRegistration({ }) {
     // alert('asdf')
     setLoginLoading(true)
     const { email, username, phone, password } = data;
+    const formData=JSON.stringify( {
+      email,
+      username,
+      phone,
+      password
+    })
     // let id = email;
-    auth.handleRegistration({ email, username, phone, password }, (data) => {
+    auth.handleRegistration( formData, (data) => {
       setLoginLoading(false)
       console.log('returned data:', data)
       if (data.message === "success") {
-        onAlerSuccessHandle('Congratulation, your account is create.')
+        onAlerSuccessHandle('Congratulation, your account is created.')
         // setEmail(id);
         // setStep(2);
       } else {

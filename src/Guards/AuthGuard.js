@@ -9,7 +9,7 @@ import { useAuthProvider } from "src/context/AuthContext";
 
 
 const AuthGuard = (props) => {
-  console.log('inside Auth Guard')
+  // console.log('inside Auth Guard')
   const { children, fallback, pageType } = props;
   const auth = useAuthProvider();
   const router = useRouter();
@@ -37,7 +37,7 @@ const AuthGuard = (props) => {
         }
       }
       else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != '[USER]')) {
-        console.log('***********************Hi i am here************************')
+        // console.log('***********************Hi i am here************************')
         router.replace({
           pathname: "/admin/dashboard",
           // query: { requireAuth: true, returnUrl: router.asPath },
@@ -48,7 +48,7 @@ const AuthGuard = (props) => {
     [router.route, router.isReady]
   );
   if (auth.loading || auth.user === null) {
-    console.log('Auth guard fallback')
+    // console.log('Auth guard fallback')
 
     return fallback;
   }

@@ -8,10 +8,8 @@ import adminConfig from 'src/config/adminConfig'
 export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchData', async params => {
   const data = [];
   const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Origin": "*",
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
 
@@ -21,20 +19,25 @@ export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchDat
   const filterParams = ''
 
   const response = await axios.get(adminConfig.categoriesGetAllEndpoint , { headers })
-  console.log(response)
-  // return {
-  //   categories: response.data.data.data,
-  // };
+  // console.log(response)
+  return {
+    categories: response.data,
+  };
 })
 
 // ** Add Categories
 export const addCategory = createAsyncThunk('appAdminCategory/addData', async (data, { getState, dispatch }) => {
   const headers = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
-    // 'Content-Type': 'multipart/form-data',
+    // 'Content-Type': 'application/json',
+    'Content-Type': 'multipart/form-data',
+    // "processData": false,
+    // "mimeType": "multipart/form-data",
+    // "contentType": false,
+    // "data": form,
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
+  console.log(data)
   let returnResponse = null
   try {
     const response = await axios.post(adminConfig.categoryAddEndpoint, data, { headers })
