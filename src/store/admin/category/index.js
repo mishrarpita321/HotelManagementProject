@@ -49,6 +49,37 @@ export const addCategory = createAsyncThunk('appAdminCategory/addData', async (d
   }
   return returnResponse
 })
+// ** Edit Categories
+export const editCategory = createAsyncThunk('appAdminCategory/editData', async (data, { getState, dispatch }) => {
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'multipart/form-data',
+
+    Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
+  }
+  console.log(data.get('image'))
+  if(data.get('image')=='undefined'){
+    console.log("asdf")
+    data.delete('image')
+  }
+  const id = data.get('id')
+  data.delete('id')
+  // return
+  let returnResponse = null
+  try {
+    const response = await axios.patch(adminConfig.categoryEditEndpoint + '/' + id, data, { headers })
+    console.log(response)
+    dispatch(fetchCategoriesList(getState().category.params))
+    returnResponse = { 'status': 'success', 'message': response?.data }
+  } catch (e) {
+    console.log(e)
+    returnResponse = {
+      'status': 'failed',
+      'message': (typeof (e?.response?.data?.message) != undefined ? (e?.response?.data?.message) : ('Something went wrong'))
+    }
+  }
+  return returnResponse
+})
 
 // ** Delete Category
 export const deleteCategory = createAsyncThunk('appAdminCategory/deleteData', async (id, { getState, dispatch }) => {

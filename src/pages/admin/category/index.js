@@ -5,14 +5,17 @@ import SideBar4 from "src/components/Admin/SideBar4"
 import AddCategoryDialog from "src/components/Admin/category/AddCategoryDialog"
 import AddCategoryForm from "src/components/Admin/category/AddCategoryForm"
 import AddCategoryForm2 from "src/components/Admin/category/AddCategoryForm2"
+import EditCategoryForm from "src/components/Admin/category/EditCategoryForm"
 import NavBar from "src/components/NavBar"
 import TitleBanner from "src/components/TitleBanner"
 import NoCloseModal from "src/components/modal/NoCloseModal"
 import { fetchCategoriesList } from "src/store/admin/category"
-import { Buffer } from 'buffer'
+
+
 
 export default function Categories() {
     const [showAddDialog, setShowAddDialog] = useState(false)
+    const [showEditDialog, setShowEditDialog] = useState(false)
     const dispatch = useDispatch()
     const store = useSelector(state => state.category)
 
@@ -73,11 +76,12 @@ export default function Categories() {
 
 
 
-    function byteArrayToBase64(byteArray) {
-        const buffer = Buffer.from(byteArray);
-        const base64 = buffer.toString('base64');
-        console.log(base64)
-        return base64;
+    const [editRow, setEditRow] = useState(null);
+
+    const handelOnEditClicked = (category) => {
+        console.log('edit is clicked', category.id)
+        setEditRow(category)
+        setShowEditDialog(true)
     }
 
     return (
@@ -106,7 +110,7 @@ export default function Categories() {
                             </thead>
                             <tbody>
                                 {categories.map((category, i) => {
-                                    const decompressedImage = decompressBase64(category.imageData);
+                                    // const decompressedImage = decompressBase64(category.imageData);
 
                                     // var utf8 = require('utf8');
                                     // var binaryToBase64 = require('binaryToBase64');
@@ -118,7 +122,18 @@ export default function Categories() {
 
 
 
+                                    // const base64Code = btoa(category.imageData)
+                                    // const base64String = Buffer.from(category.imageData).toString('base64');
+                                    // const url = `data:image/png;base64,${base64String}`;
 
+
+                                    // const imageUrl = handleImageLoad(category.imageData);
+                                    // const imageUrl = getImageUrlFromBinaryCode(category.imageData);
+
+
+
+
+                                    // console.log(base64String)
                                     return (
                                         <tr key={i}>
                                             <th scope="row">{category?.title}</th>
@@ -127,14 +142,11 @@ export default function Categories() {
                                             <td>{category?.price}</td>
                                             {/* <td>{(room?.cleaning ? (<>true</>) : (<>false</>))}</td> */}
                                             <td>
-                                                <img src={`data:image/jpeg;base64,${byteArrayToBase64(category.imageData)}`} style={{ height: "200px", width: "200px" }}></img>
-                                                {/* <img src={`data:${getImageFormat(category.imageData)};base64,${encoded}`} style={{ height: "200px", width: "200px" }}></img> */}
-                                                {/* <img src={`data:image/png;base64,${decompressedImage}`} style={{ height: "200px", width: "200px" }}></img> */}
-                                                {/* <img src={`data:image/jpeg;base64,`} style={{ height: "200px", width: "200px" }}></img> */}
+                                                <img src={`data:${getImageFormat(category.imageData)};base64,${category.imageData}`} style={{ height: "200px", width: "200px" }}></img>
                                             </td>
                                             <td>{category.maxPeopleAllowed}</td>
                                             <td>
-                                                <button className="edit">Edit</button>
+                                                <button onClick={handelOnEditClicked.bind(this, category)} className="edit">Edit</button>
                                                 <button className="delete">Delete</button>
                                             </td>
                                         </tr>
@@ -146,9 +158,10 @@ export default function Categories() {
                     </div>
 
                     <NoCloseModal show={showAddDialog} onHide={() => { setShowAddDialog(false) }}>
-                        {/* <AddCategoryDialog /> */}
-                        {/* <AddCategoryForm setShowAddDialog={() => { setShowAddDialog(false) }} /> */}
                         <AddCategoryForm2 setShowAddDialog={() => { setShowAddDialog(false) }} />
+                    </NoCloseModal>
+                    <NoCloseModal show={showEditDialog} onHide={() => { setShowEditDialog(false) }}>
+                        <EditCategoryForm setShowEditDialog={() => { setShowEditDialog(false) }} editRow={editRow} setEditRow={setEditRow} />
                     </NoCloseModal>
                 </div>
             </div >
