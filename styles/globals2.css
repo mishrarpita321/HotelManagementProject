@@ -1702,3 +1702,8 @@ ul.social_icon li a:hover {
    /* .property-form .submit-button:hover,.property-form .submit-button:active {
     background-color: #cb8282 !important;
    } */
+   .bookConfirm {
+     color: #bf8840;
+     font-weight: 500;
+     font-style: italic; 
+   }
