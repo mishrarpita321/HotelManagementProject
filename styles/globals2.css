@@ -474,7 +474,7 @@ button {
      background-color: transparent;
      color: #fff;
      padding: 0 10px;
-     padding-right: 61px;
+     padding-right: 24px;
      margin-bottom: 0px;
      position: relative;
 }
@@ -1303,7 +1303,7 @@ ul.social_icon li a:hover {
 
 .transaction {
      text-align: center;
-     margin: 50px 0 0 0;
+     margin: 30px 0 0 0;
      border: 1px solid !important;
 }
 
