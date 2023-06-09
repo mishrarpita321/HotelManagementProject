@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import SideBar4 from "src/components/Admin/SideBar4"
 import AddCategoryDialog from "src/components/Admin/category/AddCategoryDialog"
@@ -9,7 +9,9 @@ import EditCategoryForm from "src/components/Admin/category/EditCategoryForm"
 import NavBar from "src/components/NavBar"
 import TitleBanner from "src/components/TitleBanner"
 import NoCloseModal from "src/components/modal/NoCloseModal"
-import { fetchCategoriesList } from "src/store/admin/category"
+import { AlertContext } from "src/context/AlertContext"
+import { fetchCategoriesList, deleteCategory } from "src/store/admin/category"
+
 
 
 
@@ -18,28 +20,33 @@ export default function Categories() {
     const [showEditDialog, setShowEditDialog] = useState(false)
     const dispatch = useDispatch()
     const store = useSelector(state => state.category)
-
+    const { showAlert } = useContext(AlertContext);
 
 
 
 
     // const [rooms, setrooms] = useState([])
     const [categories, setCategories] = useState([])
-
+    console.log(categories)
+    console.log(typeof (categories))
     // ** Hooks
 
-    console.log(store.data)
+    // console.log(store.data)
     useEffect(() => {
+
+        // console.log(typeof (store))
         dispatch(
             fetchCategoriesList({
             })
         )
-        console.log(typeof (store.data))
+        // console.log(typeof (store))
     }, [dispatch])
 
 
     useEffect(() => {
+        // console.log(categories)
         setCategories(store.data)
+        // console.log(store.data)
     }, [store])
 
 
@@ -79,10 +86,22 @@ export default function Categories() {
     const [editRow, setEditRow] = useState(null);
 
     const handelOnEditClicked = (category) => {
-        console.log('edit is clicked', category.id)
+        // console.log('edit is clicked', category.id)
         setEditRow(category)
         setShowEditDialog(true)
     }
+
+    const handleOnDeleteClicked = (category) => {
+        // console.log('edit is clicked', category.id)
+        showAlert('confirmation', 'Are you sure to delete this category?', () => {
+            dispatch(deleteCategory(category?.id))
+        }, () => {
+            console.log('clicked 2')
+        });
+        // setEditRow(category)
+        // setShowEditDialog(true)
+    }
+    // console.log(categories)
 
     return (
         <>
@@ -109,50 +128,30 @@ export default function Categories() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {categories.map((category, i) => {
-                                    // const decompressedImage = decompressBase64(category.imageData);
+                                {
+                                    categories.length !== 0 &&
+                                    (
+                                        categories.map((category, i) => (
+                                            <tr key={category?.id}>
+                                                {console.log(typeof (category.iam))}
+                                                <th scope="row">{category?.title}</th>
+                                                <td>{category?.rooms}</td>
+                                                <td>{category?.size}</td>
+                                                <td>{category?.price}</td>
+                                                <td>
+                                                    <img src={`data:${getImageFormat(category?.imageData)};base64,${category?.imageData}`} alt="Category Image" style={{ height: "200px", width: "200px" }}></img>
+                                                </td>
+                                                <td>{category?.maxPeopleAllowed}</td>
+                                                <td>
+                                                    <button onClick={handelOnEditClicked.bind(this, category)} className="edit">Edit</button>
+                                                    <button onClick={handleOnDeleteClicked.bind(this, category)} className="delete">Delete</button>
+                                                </td>
+                                            </tr>
+                                        )
+                                        )
 
-                                    // var utf8 = require('utf8');
-                                    // var binaryToBase64 = require('binaryToBase64');
-
-                                    // // var text = 'foo © bar 𝌆 baz';
-                                    // // var bytes = utf8.encode(text);
-                                    // var encoded = binaryToBase64(category.imageData);
-                                    // console.log(encoded);
-
-
-
-                                    // const base64Code = btoa(category.imageData)
-                                    // const base64String = Buffer.from(category.imageData).toString('base64');
-                                    // const url = `data:image/png;base64,${base64String}`;
-
-
-                                    // const imageUrl = handleImageLoad(category.imageData);
-                                    // const imageUrl = getImageUrlFromBinaryCode(category.imageData);
-
-
-
-
-                                    // console.log(base64String)
-                                    return (
-                                        <tr key={i}>
-                                            <th scope="row">{category?.title}</th>
-                                            <td>{category?.rooms}</td>
-                                            <td>{category?.size}</td>
-                                            <td>{category?.price}</td>
-                                            {/* <td>{(room?.cleaning ? (<>true</>) : (<>false</>))}</td> */}
-                                            <td>
-                                                <img src={`data:${getImageFormat(category.imageData)};base64,${category.imageData}`} style={{ height: "200px", width: "200px" }}></img>
-                                            </td>
-                                            <td>{category.maxPeopleAllowed}</td>
-                                            <td>
-                                                <button onClick={handelOnEditClicked.bind(this, category)} className="edit">Edit</button>
-                                                <button className="delete">Delete</button>
-                                            </td>
-                                        </tr>
                                     )
-
-                                })}
+                                }
                             </tbody>
                         </table>
                     </div>

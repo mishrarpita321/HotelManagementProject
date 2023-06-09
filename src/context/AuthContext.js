@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
           })
           .then(async (response) => {
             setLoading(false);
-            console.log(response)
+            // console.log(response)
             setUser({ ...response.data });
           })
           .catch(() => {
@@ -115,7 +115,7 @@ export const AuthProvider = ({ children }) => {
         // window.localStorage.setItem(authConfig.storageTokenKeyName, res.data.accessToken)
         data["message"] = "success";
         data["data"] = res;
-        console.log("##########################################################", res)
+        // console.log("##########################################################", res)
         // userData(data);
         window.localStorage.setItem(
           authConfig.storageTokenKeyName,
@@ -135,7 +135,7 @@ export const AuthProvider = ({ children }) => {
             const returnUrl = router.query.returnUrl;
             const url = router.asPath;
 
-            console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", response)
+            // console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%", response)
 
 
 
@@ -146,18 +146,18 @@ export const AuthProvider = ({ children }) => {
             if (url.includes('/admin/login') && response.data.role !== "[ADMIN]") {
               // The URL contains "/admin/login"
               window.localStorage.clear()
-              console.log('Admin login page');
+              // console.log('Admin login page');
               showAlert(
                 'error',
                 'Please Login with Admin credintials',
                 () => {
-                  console.log('Please Login with Admin credintials');
+                  // console.log('Please Login with Admin credintials');
                   return
                 }
               )
             } else {
               // The URL does not contain "/admin/login"
-              console.log('Not admin login page');
+              // console.log('Not admin login page');
 
               setUser({ ...response.data });
 
@@ -185,7 +185,7 @@ export const AuthProvider = ({ children }) => {
           });
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
 
         if (err.response.status == 400) {
           data["message"] = "failed";
@@ -234,7 +234,7 @@ export const AuthProvider = ({ children }) => {
         userData(data);
       })
       .catch((err) => {
-        console.log('from catch:', err)
+        // console.log('from catch:', err)
         if (err.response.status == 410 ||
           err.response.status == 400 ||
           err.response.status == 401) {
