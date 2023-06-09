@@ -191,6 +191,18 @@ export default function BookingDetail() {
                                             </div>
                                         </div>
                                     </div>
+                                    <div className="row priceRow">
+                                        <div className="col">
+                                            <div className="row">
+                                                <p>Parking Fees</p>
+                                            </div>
+                                        </div>
+                                        <div className="col">
+                                            <div className="row priceAlign">
+                                                <p>$ 10</p>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div className="row" style={{ backgroundColor: "burlywood" }}>
                                         <div className="col">
                                             <div className="row">
@@ -199,7 +211,7 @@ export default function BookingDetail() {
                                         </div>
                                         <div className="col">
                                             <div className="row priceAlign">
-                                                <p>$ 210</p>
+                                                <p>$ 41</p>
                                             </div>
                                         </div>
                                     </div>

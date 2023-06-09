@@ -33,9 +33,15 @@ export default function SideBar4() {
                     </a>
                     <a
                         className="list-group-item list-group-item-action list-group-item-light p-3"
-                        href="#!" style={{borderBottom: "1px solid rgba(0, 0, 0, 0.125) !important"}}
+                        href="#!"
                     >
                         Profile
+                    </a>
+                    <a
+                        className="list-group-item list-group-item-action list-group-item-light p-3"
+                        href="#!" style={{borderBottom: "1px solid rgba(0, 0, 0, 0.125)"}}
+                    >
+                        Parking
                     </a>
                 </div>
             </div>
