@@ -8,10 +8,8 @@ import adminConfig from 'src/config/adminConfig'
 export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchData', async params => {
   const data = [];
   const headers = {
-    Accept: "application/json",
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Credentials": "true",
-    "Access-Control-Allow-Origin": "*",
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
 
@@ -20,26 +18,49 @@ export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchDat
   // const filterParams = "?" + (params.name ? 'name=' + params.name : '') + (params.role ? '&role=' + params.role : '') + (params.currentPlan ? '&currentPlan=' + params.currentPlan : '') + (params.status ? '&status=' + params.status : '')
   const filterParams = ''
 
-  const response = await axios.get(adminConfig.categoriesGetAllEndpoint , { headers })
-  console.log(response)
-  // return {
-  //   categories: response.data.data.data,
-  // };
+  const response = await axios.get(adminConfig.categoriesGetAllEndpoint, { headers })
+  return {
+    categories: response.data,
+  };
 })
 
 // ** Add Categories
 export const addCategory = createAsyncThunk('appAdminCategory/addData', async (data, { getState, dispatch }) => {
   const headers = {
     Accept: 'application/json',
-    'Content-Type': 'application/json',
-    // 'Content-Type': 'multipart/form-data',
+    'Content-Type': 'multipart/form-data',
+
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
   let returnResponse = null
   try {
     const response = await axios.post(adminConfig.categoryAddEndpoint, data, { headers })
-    dispatch(fetchCategoriesList(getState().user.params))
-    returnResponse = { 'status': 'success', 'message': response?.data?.message }
+    dispatch(fetchCategoriesList(getState().category.params))
+    returnResponse = { 'status': 'success', 'message': response?.data }
+  } catch (e) {
+    returnResponse = {
+      'status': 'failed',
+      'message': (typeof (e?.response?.data?.message) != undefined ? (e?.response?.data?.message) : ('Something went wrong'))
+    }
+  }
+  return returnResponse
+})
+// ** Edit Categories
+export const editCategory = createAsyncThunk('appAdminCategory/editData', async (data, { getState, dispatch }) => {
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'multipart/form-data',
+    Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
+  }
+  if (data.get('image') == 'undefined') {
+    data.delete('image')
+  }
+  const id = data.get('id')
+  let returnResponse = null
+  try {
+    const response = await axios.patch(adminConfig.categoryEditEndpoint + '/' + id, data, { headers })
+    dispatch(fetchCategoriesList(getState().category))
+    returnResponse = { 'status': 'success', 'message': 'Category Updated Successfully.' }
   } catch (e) {
     returnResponse = {
       'status': 'failed',
@@ -51,10 +72,24 @@ export const addCategory = createAsyncThunk('appAdminCategory/addData', async (d
 
 // ** Delete Category
 export const deleteCategory = createAsyncThunk('appAdminCategory/deleteData', async (id, { getState, dispatch }) => {
-  const response = await axios.delete('/apps/users/delete' + id)
-  dispatch(fetchCategoriesList(getState().user.params))
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'multipart/form-data',
 
-  return response.data
+    Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
+  }
+    let returnResponse = null
+  try {
+    const response = await axios.delete(adminConfig.categoryDeleteEndpoint + '/' + id, { headers })
+    dispatch(fetchCategoriesList(getState().category))
+    returnResponse = { 'status': 'success', 'message': 'Category Deleted Successfully.' }
+  } catch (e) {
+    returnResponse = {
+      'status': 'failed',
+      'message': (typeof (e?.response?.data?.message) != undefined ? (e?.response?.data?.message) : ('Something went wrong'))
+    }
+  }
+  return returnResponse
 }
 )
 

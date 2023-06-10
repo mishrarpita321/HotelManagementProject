@@ -1699,6 +1699,15 @@ ul.social_icon li a:hover {
     color: #000000 !important;
     border: 1px solid #3e3939;
    }
+
+   .property-form .submit-button:disabled  {
+     margin-top: 10px;
+     /* width: 100%; */
+     background-color: #646464;
+    font-weight: 500;
+    color: #000000 !important;
+    border: 1px solid #3e3939;
+   }
    /* .property-form .submit-button:hover,.property-form .submit-button:active {
     background-color: #cb8282 !important;
    } */
@@ -1707,3 +1716,9 @@ ul.social_icon li a:hover {
      font-weight: 500;
      font-style: italic; 
    }
+
+
+
+
+
+   

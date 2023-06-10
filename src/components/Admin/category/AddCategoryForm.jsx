@@ -3,7 +3,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import './PropertyForm.css'; // Import your custom CSS file for additional styling
 
-const PropertyForm = ({ setShowAddDialog }) => {
+const AddCategoryForm = ({ setShowAddDialog }) => {
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = (data) => {
@@ -115,4 +115,4 @@ const PropertyForm = ({ setShowAddDialog }) => {
   );
 };
 
-export default PropertyForm;
+export default AddCategoryForm;

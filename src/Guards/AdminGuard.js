@@ -9,7 +9,7 @@ import { useAuthProvider } from "src/context/AuthContext";
 
 
 const AuthGuard = (props) => {
-  console.log('inside Admin Guard')
+  // console.log('inside Admin Guard')
   const { children, fallback, pageType } = props;
   const auth = useAuthProvider();
   const router = useRouter();
@@ -37,7 +37,7 @@ const AuthGuard = (props) => {
         }
       }
       else if (auth.user === null && (JSON.parse(window.localStorage.getItem("userData")).role != '[ADMIN]')) {
-        console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+        // console.log('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
         router.replace({
           pathname: "/",
           // query: { requireAuth: true, returnUrl: router.asPath },
@@ -50,8 +50,8 @@ const AuthGuard = (props) => {
   if (auth.loading || auth.user === null) {
     return fallback;
   }
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', auth)
-  console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', window.localStorage.getItem('userData').role)
+  // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', auth)
+  // console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@', window.localStorage.getItem('userData').role)
 
   return <>{children}</>;
 };

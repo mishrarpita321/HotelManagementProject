@@ -9,7 +9,7 @@ import { useAuthProvider } from "src/context/AuthContext";
 
 
 const AdminLoginGuard = (props) => {
-  console.log('inside Admin Login Guard')
+  // console.log('inside Admin Login Guard')
   const { children, fallback, pageType } = props;
   const auth = useAuthProvider();
   const router = useRouter();
