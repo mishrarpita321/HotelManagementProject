@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Spinner } from 'react-bootstrap';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
@@ -27,6 +27,7 @@ const schema = yup.object().shape({
 });
 
 const AddCategoryForm2 = ({ setShowAddDialog }) => {
+  const [isLoading, setIsLoading] = useState(false)
   const dispatch = useDispatch();
   const { showAlert } = useContext(AlertContext);
 
@@ -52,6 +53,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
   });
 
   const onSubmit = (data) => {
+    setIsLoading(true)
     const { name, rooms, size, capacity, price, image } = data;
     const categoryDto = {
       title: name,
@@ -63,8 +65,8 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
     const test = JSON.stringify(categoryDto)
 
 
-    const blob= new Blob([test],{
-      type:'application/json'
+    const blob = new Blob([test], {
+      type: 'application/json'
     })
 
 
@@ -73,12 +75,12 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
     formData.append('categoryDto', blob);
 
     dispatch(addCategory(formData)).then((data) => {
-      console.log(data)
       if (data?.payload?.status === 'success') {
         onAlertSuccessHandle(data?.payload?.message);
       } else {
         onAlertErrorHandle(data?.payload?.message);
       }
+      setIsLoading(false)
     });
   };
 
@@ -115,7 +117,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
             control={control}
             name="name"
             render={({ field }) => (
-              <Form.Control type="text" {...field} isInvalid={errors.name} />
+              <Form.Control disabled={isLoading} type="text" {...field} isInvalid={errors.name} />
             )}
           />
           {errors.name && <Form.Text className="text-danger">{errors.name.message}</Form.Text>}
@@ -130,7 +132,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
               <Form.Control
                 type="number"
                 {...field}
-
+                disabled={isLoading}
                 isInvalid={errors.rooms}
                 onChange={(e) => handleNonNegativeChange('rooms', setValue, e)}
               />
@@ -148,7 +150,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
               <Form.Control
                 type="number"
                 {...field}
-
+                disabled={isLoading}
                 isInvalid={errors.size}
                 onChange={(e) => handleNonNegativeChange('size', setValue, e)}
               />
@@ -166,7 +168,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
               <Form.Control
                 type="number"
                 {...field}
-
+                disabled={isLoading}
                 isInvalid={errors.capacity}
                 onChange={(e) => handleNonNegativeChange('capacity', setValue, e)}
               />
@@ -184,7 +186,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
               <Form.Control
                 type="number"
                 {...field}
-
+                disabled={isLoading}
                 isInvalid={errors.price}
                 onChange={(e) => handleNonNegativeChange('price', setValue, e)}
               />
@@ -200,6 +202,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
             name="image"
             render={({ field }) => (
               <Form.Control
+                disabled={isLoading}
                 type="file"
                 accept="image/*"
                 onChange={(e) => {
@@ -214,11 +217,15 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
         </Form.Group>
 
         <div className="row" style={{ justifyContent: 'center' }}>
-          <Button variant="primary" type="submit" className="submit-button col-2">
-            Submit
+          <Button disabled={isLoading} variant="primary" type="submit" className="submit-button col-2">
+            {
+              isLoading ? (<Spinner size='sm' />) : ('Submit')
+            }
           </Button>
-          <Button variant="primary" onClick={() => setShowAddDialog(false)} className="submit-button col-2">
-            Cancel
+          <Button disabled={isLoading} variant="primary" onClick={() => setShowAddDialog(false)} className="submit-button col-2">
+            {
+              isLoading ? (<Spinner size='sm' />) : ('Cancel')
+            }
           </Button>
         </div>
       </Form>

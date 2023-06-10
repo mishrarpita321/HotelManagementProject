@@ -8,6 +8,7 @@ import AddCategoryForm2 from "src/components/Admin/category/AddCategoryForm2"
 import EditCategoryForm from "src/components/Admin/category/EditCategoryForm"
 import NavBar from "src/components/NavBar"
 import TitleBanner from "src/components/TitleBanner"
+import ImageModal from "src/components/modal/ImageModal"
 import NoCloseModal from "src/components/modal/NoCloseModal"
 import { AlertContext } from "src/context/AlertContext"
 import { fetchCategoriesList, deleteCategory } from "src/store/admin/category"
@@ -27,26 +28,19 @@ export default function Categories() {
 
     // const [rooms, setrooms] = useState([])
     const [categories, setCategories] = useState([])
-    console.log(categories)
-    console.log(typeof (categories))
+
     // ** Hooks
 
-    // console.log(store.data)
     useEffect(() => {
-
-        // console.log(typeof (store))
         dispatch(
             fetchCategoriesList({
             })
         )
-        // console.log(typeof (store))
     }, [dispatch])
 
 
     useEffect(() => {
-        // console.log(categories)
         setCategories(store.data)
-        // console.log(store.data)
     }, [store])
 
 
@@ -86,22 +80,40 @@ export default function Categories() {
     const [editRow, setEditRow] = useState(null);
 
     const handelOnEditClicked = (category) => {
-        // console.log('edit is clicked', category.id)
         setEditRow(category)
         setShowEditDialog(true)
     }
+    const onAlertErrorHandle = (message) => {
+        showAlert('error', message, () => {
+            console.log('Ok button clicked');
+        });
+    };
+
+    const onAlertSuccessHandle = (message) => {
+        showAlert('success', message, () => { }, () => { }, () => {
+            setShowEditDialog(false)
+        });
+    };
 
     const handleOnDeleteClicked = (category) => {
-        // console.log('edit is clicked', category.id)
         showAlert('confirmation', 'Are you sure to delete this category?', () => {
-            dispatch(deleteCategory(category?.id))
+            dispatch(deleteCategory(category?.id)).then((data) => {
+                if (data?.payload?.status === 'success') {
+                    onAlertSuccessHandle(data?.payload?.message);
+                } else {
+                    onAlertErrorHandle(data?.payload?.message);
+                }
+            })
         }, () => {
-            console.log('clicked 2')
+            console.log('Cancel is clicked')
         });
         // setEditRow(category)
         // setShowEditDialog(true)
     }
-    // console.log(categories)
+
+
+
+    const [selectedImage, setSelectedImage] = useState(null);
 
     return (
         <>
@@ -133,13 +145,19 @@ export default function Categories() {
                                     (
                                         categories.map((category, i) => (
                                             <tr key={category?.id}>
-                                                {console.log(typeof (category.iam))}
                                                 <th scope="row">{category?.title}</th>
                                                 <td>{category?.rooms}</td>
                                                 <td>{category?.size}</td>
                                                 <td>{category?.price}</td>
                                                 <td>
-                                                    <img src={`data:${getImageFormat(category?.imageData)};base64,${category?.imageData}`} alt="Category Image" style={{ height: "200px", width: "200px" }}></img>
+                                                    {/* <img src={`data:${getImageFormat(category?.imageData)};base64,${category?.imageData}`} alt="Category Image" style={{ height: "200px", width: "200px" }}></img> */}
+                                                    <img
+                                                        src={`data:${getImageFormat(category?.imageData)};base64,${category?.imageData}`}
+                                                        alt="Category Image"
+                                                        style={{ height: "200px", width: "200px", cursor: "pointer" }}
+                                                        onClick={() => setSelectedImage(`data:${getImageFormat(category?.imageData)};base64,${category?.imageData}`)}
+                                                    />
+
                                                 </td>
                                                 <td>{category?.maxPeopleAllowed}</td>
                                                 <td>
@@ -162,6 +180,9 @@ export default function Categories() {
                     <NoCloseModal show={showEditDialog} onHide={() => { setShowEditDialog(false) }}>
                         <EditCategoryForm setShowEditDialog={() => { setShowEditDialog(false) }} editRow={editRow} setEditRow={setEditRow} />
                     </NoCloseModal>
+                    
+                    <ImageModal show={!!selectedImage} onHide={() => setSelectedImage(null)} image={selectedImage} />
+
                 </div>
             </div >
         </>

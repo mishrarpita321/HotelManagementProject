@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button, Container, Spinner } from 'react-bootstrap';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useDispatch } from 'react-redux';
@@ -27,6 +27,8 @@ const schema = yup.object().shape({
 });
 
 const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
+  const [isLoading, setIsLoading] = useState(false)
+
   const dispatch = useDispatch();
   const { showAlert } = useContext(AlertContext);
 
@@ -44,18 +46,6 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
   });
 
 
-
-  // useEffect(() => {
-
-  //   setValue('name', editRow?.title)
-  //   setValue('rooms', editRow?.rooms)
-  //   setValue('size', editRow?.size)
-  //   setValue('capacity', editRow?.maxPeopleAllowed)
-  //   setValue('price', editRow?.price)
-
-  // }, [editRow])
-
-
   useEffect(() => {
     if (editRow) {
       setValue('name', editRow?.title);
@@ -66,19 +56,43 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
     }
   }, [editRow, setValue]);
 
+  // const formatToFloat = (value) => {
+  //   // const formatedFloat = value % 1 === 0 ? value.toFixed(1) : value.toFixed(2);
+  //   const formatedFloat = Number.isInteger(value) ? value.toFixed(1) : value.toFixed(2);;
+  //   return formatedFloat
+  // }
+
+  // const formatToFloat = (value) => {
+  //   const floatValue = parseFloat(value);
+  //   return floatValue.toFixed(2);
+  // };
 
 
+  const formatToFloat = (value) => {
+    // const floatValue = parseFloat(value);
+    return value.toFixed(2);
+  };
 
 
   const onSubmit = (data) => {
+    setIsLoading(true)
     const { name, rooms, size, capacity, price, image } = data;
+
     const categoryDto = {
       title: name,
       rooms,
-      size: parseFloat(size.toFixed(2)),
-      price: parseFloat(price.toFixed(2)),
+      size: formatToFloat(size),
+      price: formatToFloat(price),
+      // size: parseFloat(size.toFixed(2)),
+      // price: parseFloat(price.toFixed(2)),
       maxPeopleAllowed: capacity
     };
+
+    // console.log(formatToFloat(size))
+    // console.log(typeof (formatToFloat(size)))
+    // console.log(categoryDto)
+
+    // console.log('datajahsdfabjsdhfhagsvdf', categoryDto)
     const test = JSON.stringify(categoryDto)
     const blob = new Blob([test], {
       type: 'application/json'
@@ -93,12 +107,14 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
 
     dispatch(editCategory(formData)).then((data) => {
       setShowEditDialog(false)
-      console.log(data)
       if (data?.payload?.status === 'success') {
         onAlertSuccessHandle(data?.payload?.message);
+        setIsLoading(false)
+
       } else {
-        console.log('failed');
         onAlertErrorHandle(data?.payload?.message);
+        setIsLoading(false)
+
       }
     });
   };
@@ -147,7 +163,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
               control={control}
               name="name"
               render={({ field }) => (
-                <Form.Control type="text" {...field} isInvalid={errors.name} />
+                <Form.Control disabled={isLoading} type="text" {...field} isInvalid={errors.name} />
               )}
             />
             {errors.name && <Form.Text className="text-danger">{errors.name.message}</Form.Text>}
@@ -162,7 +178,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
                 <Form.Control
                   type="number"
                   {...field}
-
+                  disabled={isLoading}
                   isInvalid={errors.rooms}
                   onChange={(e) => handleNonNegativeIntChange('rooms', setValue, e)}
                 />
@@ -181,6 +197,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
                   type="number"
                   step="0.01"
                   {...field}
+                  disabled={isLoading}
                   isInvalid={errors.size}
                   onChange={(e) => handleNonNegativeChange('size', setValue, e)}
                 />
@@ -198,7 +215,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
                 <Form.Control
                   type="number"
                   {...field}
-
+                  disabled={isLoading}
                   isInvalid={errors.capacity}
                   onChange={(e) => handleNonNegativeIntChange('capacity', setValue, e)}
                 />
@@ -217,8 +234,12 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
                   type="number"
                   step="0.01"
                   {...field}
+                  disabled={isLoading}
                   isInvalid={errors.price}
-                  onChange={(e) => handleNonNegativeChange('price', setValue, e)}
+                  onChange={(e) => {
+                    handleNonNegativeChange('price', setValue, e)
+                  }
+                  }
                 />
               )}
             />
@@ -232,6 +253,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
               name="image"
               render={({ field }) => (
                 <Form.Control
+                  disabled={isLoading}
                   type="file"
                   accept="image/*"
                   onChange={(e) => {
@@ -246,11 +268,15 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
           </Form.Group>
 
           <div className="row" style={{ justifyContent: 'center' }}>
-            <Button variant="primary" type="submit" className="submit-button col-2">
-              Submit
+            <Button disabled={isLoading} variant="primary" type="submit" className="submit-button col-2">
+              {
+                isLoading ? (<Spinner size='sm' />) : ('Submit')
+              }
             </Button>
-            <Button variant="primary" onClick={() => setShowEditDialog(false)} className="submit-button col-2">
-              Cancel
+            <Button disabled={isLoading} variant="primary" onClick={() => setShowEditDialog(false)} className="submit-button col-2">
+              {
+                isLoading ? (<Spinner size='sm' />) : ('Cancel')
+              }
             </Button>
           </div>
         </Form>

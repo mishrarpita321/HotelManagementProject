@@ -58,7 +58,7 @@ export const editCategory = createAsyncThunk('appAdminCategory/editData', async 
   const id = data.get('id')
   let returnResponse = null
   try {
-    const response = await axios.patch(adminConfig.categoryEditEndpoint + '/id/' + id, data, { headers })
+    const response = await axios.patch(adminConfig.categoryEditEndpoint + '/' + id, data, { headers })
     dispatch(fetchCategoriesList(getState().category))
     returnResponse = { 'status': 'success', 'message': 'Category Updated Successfully.' }
   } catch (e) {
@@ -78,9 +78,18 @@ export const deleteCategory = createAsyncThunk('appAdminCategory/deleteData', as
 
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
-  const response = await axios.delete(adminConfig.categoryDeleteEndpoint + '/' + id, { headers })
-  dispatch(fetchCategoriesList(getState().category))
-  return response.data
+    let returnResponse = null
+  try {
+    const response = await axios.delete(adminConfig.categoryDeleteEndpoint + '/' + id, { headers })
+    dispatch(fetchCategoriesList(getState().category))
+    returnResponse = { 'status': 'success', 'message': 'Category Deleted Successfully.' }
+  } catch (e) {
+    returnResponse = {
+      'status': 'failed',
+      'message': (typeof (e?.response?.data?.message) != undefined ? (e?.response?.data?.message) : ('Something went wrong'))
+    }
+  }
+  return returnResponse
 }
 )
 
