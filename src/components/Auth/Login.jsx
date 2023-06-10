@@ -5,22 +5,23 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useAuthProvider } from "src/context/AuthContext";
+import { Spinner } from "react-bootstrap";
 
 export default function Login({ }) {
   const [page, setPage] = useContext(AuthPageContext);
   const [loginLoading, setLoginLoading] = useState(false)
 
   const auth = useAuthProvider();
-
+  console.log('tracking the value of loading', loginLoading)
 
   const schema = yup.object().shape({
     email: yup.string().email().required("Email is a required field"),
-    password: yup.string().min(5).required("Password is a required field"),
+    password: yup.string().min(4).required("Password is a required field"),
   });
 
   const defaultValues = {
-    email: 'mahesh@gmail.com',
-    password: 'mahesh',
+    email: 'alan@gmail.com',
+    password: 'alan',
   }
 
   const {
@@ -36,23 +37,23 @@ export default function Login({ }) {
   });
 
 
+  const changeLoginStaate = (value) => {
+    console.log(value)
+    setLoginLoading(value)
+  }
 
 
 
 
   const handleLogin = (data) => {
-    console.log('Hi submit is clicked')
-    // alert('asdf')
     setLoginLoading(true)
     const { email, password } = data;
-    // let id = email;
-
     auth.handleLogin({ email, password }, (data) => {
       setLoginLoading(false)
       if (data.message === "success") {
-        // setEmail(id);
-        // setStep(2);
+        setLoginLoading(false)
       } else {
+        setLoginLoading(false)
         if (data.message === "failed") {
           if (data.type === 1) {
             setError("password", {
@@ -73,7 +74,6 @@ export default function Login({ }) {
         }
       }
     });
-
   };
 
   const errorStyle = {
@@ -96,7 +96,7 @@ export default function Login({ }) {
           </label> */}
           {/* <div onClick={onClick}>x</div> */}
           {/* <button onClick={onClick} >Close</button> */}
-          <h1>Welcome</h1>
+          <h1 onClick={() => setLoginLoading(true)}>Welcome {loginLoading ? ('true') : ('false')}</h1>
           <form action="#">
             <label>Email</label>
             <Controller
@@ -149,7 +149,9 @@ export default function Login({ }) {
             <button
               disabled={loginLoading}
               onClick={handleSubmit(handleLogin)}>
-              Submit
+              {
+                loginLoading ? (<Spinner size='sm' />) : ('Submit')
+              }
             </button>
             <div className="forgetpwd"><a href="#">Forgot Password?</a></div>
             <div className="link">

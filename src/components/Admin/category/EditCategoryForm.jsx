@@ -32,9 +32,6 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
   const dispatch = useDispatch();
   const { showAlert } = useContext(AlertContext);
 
-
-
-
   const {
     control,
     handleSubmit,
