@@ -2,22 +2,13 @@ import Footer from "src/components/Footer"
 import NavBar from "src/components/NavBar"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import TitleBanner from "src/components/TitleBanner";
 
 export default function BookingDetail() {
     return (
         <>
             <NavBar />
-            <div className="back_re">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="title">
-                                <h2>Review Your Booking</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <TitleBanner title={"Review Your Booking"}/>
             <div className="bookDetail">
                 <div className="container">
                     <div className="row">
