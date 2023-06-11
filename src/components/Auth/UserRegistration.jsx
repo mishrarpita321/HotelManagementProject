@@ -10,6 +10,7 @@ import AlertModal from "../AlertModal";
 import AlertModal2 from "../AlertModal2";
 import AlertTest from "../Alert";
 import { AlertContext } from "src/context/AlertContext";
+import { Spinner } from "react-bootstrap";
 
 
 export default function UserRegistration({ }) {
@@ -35,7 +36,7 @@ export default function UserRegistration({ }) {
   const auth = useAuthProvider();
   const [page, setPage] = useContext(AuthPageContext);
 
-  const [loginLoading, setLoginLoading] = useState(false)
+  const [signupLoading, setSignupLoading] = useState(false)
 
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 
@@ -80,34 +81,30 @@ export default function UserRegistration({ }) {
 
 
   const handleSignup = (data) => {
-    // console.log('Hi submit is clicked')
-    // alert('asdf')
-    setLoginLoading(true)
+    setSignupLoading(true)
     const { email, username, phone, password } = data;
-    const formData=JSON.stringify( {
+    const formData = JSON.stringify({
       email,
       username,
       phone,
       password
     })
     // let id = email;
-    auth.handleRegistration( formData, (data) => {
-      setLoginLoading(false)
-      console.log('returned data:', data)
+    auth.handleRegistration({ email, username, phone: parseInt(phone), password }, (data) => {
+      // setSignupLoading(false)
       if (data.message === "success") {
+        setSignupLoading(false)
         onAlerSuccessHandle('Congratulation, your account is created.')
-        // setEmail(id);
-        // setStep(2);
       } else {
-        console.log(data)
+        setSignupLoading(false)
         if (data.message === "failed") {
           onAlertErrorHandle(data.error.message);
         } else {
-          console.log(data.error)
           onAlertErrorHandle(data.error);
         }
       }
     });
+    // setSignupLoading(false)
   };
 
   const errorStyle = {
@@ -116,7 +113,6 @@ export default function UserRegistration({ }) {
     fontSize: '15px',
     margin: '0px 9px',
   };
-  // console.log(errors)
 
 
 
@@ -179,7 +175,7 @@ export default function UserRegistration({ }) {
               rules={{ required: true }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <input
-                  disabled={loginLoading}
+                  disabled={signupLoading}
                   value={value}
                   onChange={onChange}
                   // label="Email ID"
@@ -201,7 +197,7 @@ export default function UserRegistration({ }) {
               rules={{ required: true }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <input
-                  disabled={loginLoading}
+                  disabled={signupLoading}
                   value={value}
                   onChange={onChange}
                   id="username"
@@ -224,7 +220,7 @@ export default function UserRegistration({ }) {
 
 
                 <input
-                  disabled={loginLoading}
+                  disabled={signupLoading}
                   value={value}
                   onChange={onChange}
                   type="tel"
@@ -250,7 +246,7 @@ export default function UserRegistration({ }) {
               rules={{ required: true }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <input
-                  disabled={loginLoading}
+                  disabled={signupLoading}
                   value={value}
                   onBlur={onBlur}
                   label="Password"
@@ -273,7 +269,7 @@ export default function UserRegistration({ }) {
               rules={{ required: true }}
               render={({ field: { value, onChange, onBlur } }) => (
                 <input
-                  disabled={loginLoading}
+                  disabled={signupLoading}
                   value={value}
                   onBlur={onBlur}
                   // label="Password"
@@ -290,9 +286,11 @@ export default function UserRegistration({ }) {
               </p>
             )}
             <button
-              disabled={loginLoading}
+              disabled={signupLoading}
               onClick={handleSubmit(handleSignup)}>
-              Submit
+              {
+                signupLoading ? (<Spinner size='sm' />) : ('Submit')
+              }
             </button>
             <div className="forgetpwd"><a href="#" >Forgot Password?</a></div>
             <div className="link">

@@ -145,6 +145,8 @@ export const AuthProvider = ({ children }) => {
 
             if (url.includes('/admin/login') && response.data.role !== "[ADMIN]") {
               // The URL contains "/admin/login"
+              data["message"] = "failedType";
+              userData(data);
               window.localStorage.clear()
               // console.log('Admin login page');
               showAlert(
@@ -152,10 +154,30 @@ export const AuthProvider = ({ children }) => {
                 'Please Login with Admin credintials',
                 () => {
                   // console.log('Please Login with Admin credintials');
-                  return
+                  data["message"] = "failedtype";
+                  // data["type"] = 0; /* show in email field */
+                  // data["error"] = err.response.data;
+                  userData(data);
+                  // return
                 }
               )
-            } else {
+            } else if (!url.includes('/admin/login') && response.data.role !== "[USER]") {
+              data["message"] = "failedType";
+              userData(data);
+              window.localStorage.clear()
+              showAlert(
+                'error',
+                'Please Login with User credintials',
+                () => {
+                },
+                () => {
+                },
+                () => {
+                }
+              )
+
+            }
+            else {
               // The URL does not contain "/admin/login"
               // console.log('Not admin login page');
 
