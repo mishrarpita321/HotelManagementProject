@@ -5,7 +5,7 @@ import TitleBanner from "src/components/TitleBanner";
 import { useState } from "react"
 import NoCloseModal from "src/components/modal/NoCloseModal"
 import BookingForm from "src/components/Admin/AdminBooking";
-import ParkingForm from "src/components/Admin/category/ParkingForm";
+import ParkingForm from "src/components/Admin/parking/AddParkingDialog";
 
 export default function parking() {
     const [showAddDialog, addParkingClick] = useState()
@@ -48,3 +48,6 @@ export default function parking() {
         </div>
     )
 }
+parking.guestGuard = false
+parking.authGuard = true
+parking.adminGuard = true
