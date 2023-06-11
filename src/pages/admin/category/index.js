@@ -157,7 +157,6 @@ export default function Categories() {
                                                         style={{ height: "200px", width: "200px", cursor: "pointer" }}
                                                         onClick={() => setSelectedImage(`data:${getImageFormat(category?.imageData)};base64,${category?.imageData}`)}
                                                     />
-
                                                 </td>
                                                 <td>{category?.maxPeopleAllowed}</td>
                                                 <td>
