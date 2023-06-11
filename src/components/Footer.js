@@ -98,7 +98,7 @@ export default function Footer() {
                             <div className="row">
                                 <div className="col-md-10 offset-md-1">
                                     <p>
-                                        © 2019 All Rights Reserved. Design by{" "}
+                                        © 2023 All Rights Reserved. Design by{" "}
                                         <a href="https://www.srh-hochschule-heidelberg.de/en/">SRH University of Applied Sciences</a>
                                         <br />
                                     </p>

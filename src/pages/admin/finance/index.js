@@ -35,7 +35,7 @@ export default function finance() {
                                     <th scope="col">Room Category</th>
                                     <th scope="col">Customer Name</th>
                                     <th scope="col">Payment Method</th>
-                                    <th scope="col">Date of Booking</th>
+                                    <th scope="col">Date of Payment</th>
                                 </tr>
                             </thead>
                             <tbody>
