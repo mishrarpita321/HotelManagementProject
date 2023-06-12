@@ -3,12 +3,17 @@ import NavBar from "src/components/NavBar"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import TitleBanner from "src/components/TitleBanner";
+import { useRouter } from "next/router";
 
 export default function BookingDetail() {
+    const router = useRouter();
+    const { roomNumbers, arrivalDate, deptDate } = router.query;
+
+
     return (
         <>
             <NavBar />
-            <TitleBanner title={"Review Your Booking"}/>
+            <TitleBanner title={"Review Your Booking"} />
             <div className="bookDetail">
                 <div className="container">
                     <div className="row">
@@ -19,13 +24,15 @@ export default function BookingDetail() {
                                     <div className="row chekin-checkout">
                                         <div className="col">
                                             <div className="row">CHECK IN</div>
-                                            <div className="row">SUN 4JUN 23</div>
-                                            <div className="row">10:00</div>
+                                            {/* <div className="row">SUN 4JUN 23</div> */}
+                                            <div className="row">{arrivalDate}</div>
+                                            {/* <div className="row">10:00</div> */}
                                         </div>
                                         <div className="col" style={{ margin: "0 0 0 150px" }}>
                                             <div className="row">CHECK OUT</div>
-                                            <div className="row">SUN 5JUN 23</div>
-                                            <div className="row">10:00</div>
+                                            {/* <div className="row">SUN 5JUN 23</div> */}
+                                            <div className="row">{deptDate}</div>
+                                            {/* <div className="row">10:00</div> */}
                                         </div>
                                     </div>
                                 </div>

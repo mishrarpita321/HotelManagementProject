@@ -12,7 +12,14 @@ export default {
   adminAddRoomEndpoint: base.baseurl + "/admin/room/add/category/id",
   adminEditRoomEndpoint: base.baseurl + "/admin/room/update/id",
   adminDeleteRoomEndpoint: base.baseurl + "/admin/room/delete/id",
-  // admin/room/add/category/id/9
+
+
+
+  adminParkingGetAllEndpoint: base.baseurl + "/parking",
+  adminAddParkingEndpoint: base.baseurl + "/admin/parking/add",
+  adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
+  adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
+
 
 
 

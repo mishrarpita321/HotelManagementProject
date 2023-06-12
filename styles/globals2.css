@@ -1131,6 +1131,7 @@ ul.social_icon li a:hover {
 
 
 .roomCard {
+     /* position: relative; */
      display: flex;
      justify-content: center;
      min-height: 360px;
@@ -1213,6 +1214,7 @@ ul.social_icon li a:hover {
 }
 
 .roomChildCard {
+     position: relative;
      background-color: #eae8e8;
      border-radius: 9px;
      box-shadow: 6px 8px 8px 2px rgba(0, 0, 0, 0.16),
@@ -1744,4 +1746,46 @@ ul.social_icon li a:hover {
      align-items: center;
      width: 100%;
      max-width: max-content;
+}
+
+
+/* Button styles */
+.selectButton {
+     background-color: #4caf50;
+     color: #fff;
+     border: none;
+     padding: 10px 20px;
+     font-size: 14px;
+     cursor: pointer;
+}
+
+.deselectButton {
+     background-color: #f44336;
+     color: #fff;
+     border: none;
+     padding: 10px 20px;
+     font-size: 14px;
+     cursor: pointer;
+}
+
+
+/* Tick icon styles */
+/* Tick icon styles */
+.tickIcon {
+     position: absolute;
+     top: 8px;
+     right: -12px;
+     width: 30px;
+     height: 30px;
+     border-radius: 50%;
+     background-color: #2ecc71;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     z-index: 2;
+}
+
+.tickIcon i {
+     color: #fff;
+     font-size: 16px;
 }
