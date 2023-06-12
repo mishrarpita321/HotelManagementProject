@@ -195,8 +195,8 @@ export default function EditRoomDialog({ setShowEditDialog, categoryStore, editR
                                         disabled={isLoading}
                                         isInvalid={errors.roomStatus}
                                     >
-                                        <option value={true}>Booked</option>
-                                        <option value={false}>Not Booked</option>
+                                        <option value={false}>Booked</option>
+                                        <option value={true}>Not Booked</option>
                                     </Form.Control>
                                 )}
                             />
