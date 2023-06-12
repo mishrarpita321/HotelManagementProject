@@ -10,6 +10,14 @@ import axios from "axios";
 import userConfig from "src/config/userConfig";
 
 export default function BookingDetail() {
+
+
+
+
+
+    // const [guests, setGuests] = useState([{ title: 'Mr.', firstName: '', lastName: '', email: '', contactNumber: '' }]);
+    const [guests, setGuests] = useState([]);
+
     const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, guestCount } = useContext(CartContext)
 
     const router = useRouter();
@@ -87,6 +95,45 @@ export default function BookingDetail() {
 
 
 
+
+
+
+
+
+
+
+    const handleGuestChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedGuests = [...guests];
+        updatedGuests[index][name] = value;
+        setGuests(updatedGuests);
+    };
+
+
+
+
+
+
+    const handleAddGuest = () => {
+        const isAnyRowIncomplete = guests.some(
+            (row) => !row.firstName || !row.lastName || !row.email || !row.contactNumber
+        );
+        if (!isAnyRowIncomplete) {
+            setGuests([...guests, { title: 'Mr.', firstName: '', lastName: '', email: '', contactNumber: '' }]);
+        }
+    };
+
+    const handleRemoveGuest = (index) => {
+        const updatedGuests = [...guests];
+        updatedGuests.splice(index, 1);
+        setGuests(updatedGuests);
+    };
+
+
+    const handleConfirmBooking = (data) => {
+        console.log(data)
+    }
+
     return (
         <>
             <NavBar />
@@ -140,7 +187,100 @@ export default function BookingDetail() {
                                     </ul>
                                 </div>
                             </div>
-                            <div className="row guestForm" >
+                            {guests.map((guest, index) => {
+                                return (
+                                    <>
+                                        <div className="row guestForm" >
+                                            <h5>Guest Details</h5>
+                                            <form style={{ position: "relative" }}>
+                                                <div className="col">
+                                                    <div className="row">
+                                                        <label>&nbsp;</label>
+                                                    </div>
+                                                    <div className="row">
+                                                        {/* {index > 0 && ( */}
+                                                        <button type="button" style={{ top: "-39px", right: "10px", position: "absolute", width: "fit-content" }} className="btn btn-danger" onClick={() => handleRemoveGuest(index)}>
+                                                            Remove
+                                                        </button>
+                                                        {/* )} */}
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col">
+                                                        <div className="row"><label>Title</label><br /></div>
+                                                        <div className="row">
+                                                            <select class="custom-select mr-sm-2"
+                                                                name="title"
+                                                                value={guest.title}
+                                                                onChange={(event) => handleGuestChange(index, event)}
+                                                            >
+                                                                <option selected>Mr.</option>
+                                                                <option value="1">Mrs.</option>
+                                                                <option value="2">Ms.</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div className="col">
+                                                        <div className="row">
+                                                            <label>First name</label>
+                                                        </div>
+                                                        <div className="row">
+                                                            <input type="text"
+                                                                name="firstName"
+                                                                value={guest.firstName}
+                                                                onChange={(event) => handleGuestChange(index, event)}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col">
+                                                        <div className="row">
+                                                            <label>Last name</label>
+                                                        </div>
+                                                        <div className="row">
+                                                            <input
+                                                                type="text"
+                                                                name="lastName"
+                                                                value={guest.lastName}
+                                                                onChange={(event) => handleGuestChange(index, event)}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="row">
+                                                    <div className="col">
+                                                        <div className="row">
+                                                            <label>Email Address</label>
+                                                        </div>
+                                                        <div className="row">
+                                                            <input
+                                                                type="email"
+                                                                name="email"
+                                                                value={guest.email}
+                                                                onChange={(event) => handleGuestChange(index, event)}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <div className="col">
+                                                        <div className="row">
+                                                            <label>Contact Number</label>
+                                                        </div>
+                                                        <div className="row">
+                                                            <input
+                                                                type="phone"
+                                                                name="contactNumber"
+                                                                onChange={(event) => handleGuestChange(index, event)}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                    </>
+                                )
+                            })}
+
+                            {/* <div className="row guestForm" >
                                 <h5>Guest Details</h5>
                                 <form>
                                     <div className="row">
@@ -186,55 +326,8 @@ export default function BookingDetail() {
                                         </div>
                                     </div>
                                 </form>
-                            </div>
-                            <div className="row guestForm" >
-                                <h5>Guest Details</h5>
-                                <form>
-                                    <div className="row">
-                                        <div className="col">
-                                            <div className="row"><label>Title</label><br /></div>
-                                            <div className="row">
-                                                <select class="custom-select mr-sm-2">
-                                                    <option selected>Mr.</option>
-                                                    <option value="1">Mrs.</option>
-                                                    <option value="2">Ms.</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="row"><label>First name</label></div>
-                                            <div className="row"><input type="text" /></div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="row">
-                                                <label>Last name</label>
-                                            </div>
-                                            <div className="row">
-                                                <input type="text" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col">
-                                            <div className="row">
-                                                <label>Email Address</label>
-                                            </div>
-                                            <div className="row">
-                                                <input type="email" />
-                                            </div>
-                                        </div>
-                                        <div className="col">
-                                            <div className="row">
-                                                <label>Contact Number</label>
-                                            </div>
-                                            <div className="row">
-                                                <input type="phone" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div className="row"><button className="addGuestBtn">+Add Guest</button></div>
+                            </div> */}
+                            <div className="row"><button className="addGuestBtn" onClick={handleAddGuest}>+Add Guest</button></div>
                         </div>
                         <div className="col">
                             <div className="containerPrice">
@@ -290,6 +383,7 @@ export default function BookingDetail() {
                                             </div>
                                         </div>
                                     </div>
+                                    <div style={{ justifyContent: "flex-end" }} className="row"><button className="addGuestBtn" onClick={handleConfirmBooking}>Confirm Booking</button></div>
                                 </div>
 
                             </div>
