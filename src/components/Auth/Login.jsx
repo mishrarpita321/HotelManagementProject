@@ -20,8 +20,8 @@ export default function Login({ }) {
   });
 
   const defaultValues = {
-    email: 'alan@gmail.com',
-    password: 'alan',
+    email: 'mahesh@gmail.com',
+    password: 'mahesh',
   }
 
   const {

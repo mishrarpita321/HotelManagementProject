@@ -16,6 +16,7 @@ import { AlertProvider } from 'src/context/AlertContext';
 import Alert from 'src/components/Alert';
 import { Provider } from 'react-redux';
 import { store } from 'src/store';
+import { CartProvider } from 'src/context/CartContext';
 
 
 
@@ -71,7 +72,7 @@ function MyApp({ Component, pageProps }) {
   const adminLoginGuard = Component.adminLoginGuard ?? false;
   const pageType = Component.pageType ?? 'user';
   return (
-    <>
+    <><CartProvider>
       <Provider store={store}>
         <AlertProvider>
           <AuthProvider>
@@ -84,6 +85,7 @@ function MyApp({ Component, pageProps }) {
           </AuthProvider>
         </AlertProvider>
       </Provider>
+    </CartProvider>
     </>
   )
 }
