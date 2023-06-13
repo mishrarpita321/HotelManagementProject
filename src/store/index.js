@@ -6,6 +6,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import category from 'src/store/admin/category'
 import adminRoom from 'src/store/admin/rooms'
 import adminParking from 'src/store/admin/parkings'
+import adminBooking from 'src/store/admin/bookings'
 
 
 export const store = configureStore({
@@ -13,8 +14,9 @@ export const store = configureStore({
     category,
     adminRoom,
     adminParking,
-
+    adminBooking,
   },
+  
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import Footer from "src/components/Footer"
 import NavBar from "src/components/NavBar"
@@ -17,6 +17,8 @@ const AvailableRooms = () => {
     const dispatch = useDispatch()
     const availableRoomStore = useSelector(state => state.adminRoom)
     const [rooms, setRooms] = useState([])
+    const roomRef = useRef([]);
+    const isFirstRender = useRef(true)
 
     useEffect(() => {
         setArrivalDate(Date.parse('2023-06-10'))
@@ -30,11 +32,20 @@ const AvailableRooms = () => {
     }, [dispatch])
 
     useEffect(() => {
-        setRooms(availableRoomStore.data)
-        if (selectedRooms.length > 0) {
-            markSelectedRooms();
-        }
-    }, [availableRoomStore])
+        setRooms(availableRoomStore.data);
+    }, [availableRoomStore]);
+
+    // useEffect(() => {
+    //     if (selectedRooms.length > 0 && rooms.length > 0) {
+    //         markSelectedRooms();
+    //     }
+    // }, [selectedRooms, rooms]);
+
+    // useEffect(() => {
+    //     if (rooms.length > 0) {
+    //         markSelectedRooms();
+    //     }
+    // }, []);
 
     // Function to retrieve selected rooms from local storage
     // const getSelectedRoomsFromLocalStorage = () => {
@@ -57,17 +68,18 @@ const AvailableRooms = () => {
             const { category, roomNo, isActive, imageData, selected } = room;
 
             if (category) {
+                const isSelected = selected || selectedRooms.includes(roomNo);
                 if (categorizedRooms[category.title]) {
                     categorizedRooms[category.title].push({
                         roomNo,
                         category,
                         isActive,
                         imageData,
-                        selected,
+                        selected: isSelected,
                     });
                 } else {
                     categorizedRooms[category.title] = [
-                        { roomNo, category, isActive, imageData, selected },
+                        { roomNo, category, isActive, imageData, selected: isSelected },
                     ];
                 }
             }
@@ -79,8 +91,8 @@ const AvailableRooms = () => {
 
 
     const categorizedRooms = categorizeRooms();
-    console.log(rooms)
-    console.log(categorizedRooms)
+    // console.log(rooms)
+    // console.log(categorizedRooms)
 
 
     // useEffect(() => {
@@ -93,6 +105,7 @@ const AvailableRooms = () => {
 
     // Handler for toggling room selection
     const handleRoomSelect = (roomNo) => {
+
         const updatedRooms = rooms.map((room) => {
             if (room.roomNo === roomNo) {
                 return {
@@ -114,7 +127,7 @@ const AvailableRooms = () => {
     };
 
     const markSelectedRooms = () => {
-        
+        // console.log(rooms)
         const updatedRooms = rooms.map((room) => {
             if (selectedRooms.includes(room.roomNo)) {
                 return {

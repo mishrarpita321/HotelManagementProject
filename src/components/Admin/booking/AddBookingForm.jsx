@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Button, Container, Row, Col, CloseButton } from 'react-bootstrap';
 import * as yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch } from 'react-redux';
+import { addAdminBooking } from 'src/store/admin/bookings';
+import { AlertContext } from 'src/context/AlertContext';
 
 const schema = yup.object().shape({
-    name: yup.string().required('This field is required'),
+    // name: yup.string().required('This field is required'),
     arrival: yup.date().required('This field is required'),
     departure: yup.date().required('This field is required'),
     size: yup
@@ -17,7 +20,11 @@ const schema = yup.object().shape({
     category: yup.string().required('This field is required'),
 });
 
-const BookingForm = () => {
+const BookingForm = ({ setShowAddDialog, roomList }) => {
+    const dispatch = useDispatch();
+    const { showAlert } = useContext(AlertContext);
+    const [isLoading, setIsLoading] = useState(false);
+
     const {
         control,
         handleSubmit,
@@ -26,10 +33,34 @@ const BookingForm = () => {
         resolver: yupResolver(schema),
     });
     const [parkingRows, setParkingRows] = useState([]);
+    const [guestRows, setGuestRows] = useState([]);
 
     const onSubmit = (data) => {
-        const formData = { ...data, parkingRows };
+        setIsLoading(true)
+        const formData = { ...data, parkingRows, guestRows, selectedRoomList };
         console.log(formData);
+
+        dispatch(addAdminBooking(formData)).then((data) => {
+            console.log(data)
+            if (data?.payload?.status === 'success') {
+                onAlertSuccessHandle(data?.payload?.message);
+            } else {
+                onAlertErrorHandle(data?.payload?.message);
+            }
+            setIsLoading(false)
+        });
+    };
+
+    const onAlertErrorHandle = (message) => {
+        showAlert('error', message, () => {
+            console.log('Ok button clicked');
+        });
+    };
+
+    const onAlertSuccessHandle = (message) => {
+        showAlert('success', message, () => { }, () => { }, () => {
+            setShowAddDialog(false)
+        });
     };
 
     const addParkingRow = () => {
@@ -40,11 +71,27 @@ const BookingForm = () => {
             setParkingRows([...parkingRows, { parkingType: '', vehicleCount: '' }]);
         }
     };
+    const addGuestRow = () => {
+        const isAnyRowIncomplete = guestRows.some(
+            (row) => !row.name
+        );
+        if (!isAnyRowIncomplete) {
+            setGuestRows([...guestRows, { name: '' }]);
+        }
+    };
 
     const removeParkingRow = (index) => {
         setParkingRows(parkingRows.filter((_, i) => i !== index));
     };
+    const removeGuestRow = (index) => {
+        setGuestRows(guestRows.filter((_, i) => i !== index));
+    };
 
+    const handleGuestNameChange = (index, value) => {
+        const updatedRows = [...guestRows];
+        updatedRows[index].name = value;
+        setGuestRows(updatedRows);
+    };
     const handleParkingTypeChange = (index, value) => {
         const updatedRows = [...parkingRows];
         updatedRows[index].parkingType = value;
@@ -70,85 +117,150 @@ const BookingForm = () => {
     };
 
 
+    const [selectedRooms, setSelectedRooms] = useState([]);
+    const [selectedRoomList, setSelectedRoomList] = useState([]);
+
+    const handleSelectChange = (event) => {
+        const selectedRoomIds = Array.from(event.target.selectedOptions, (option) =>
+            parseInt(option.value)
+        );
+        const selectedRoomNumbers = selectedRoomIds.map((roomId) => {
+            const room = roomList.find((room) => room.id === roomId);
+            return room.roomNo;
+        });
+        setSelectedRooms(selectedRoomIds);
+        setSelectedRoomList(selectedRoomNumbers);
+    };
+
+    const isRoomSelected = (roomId) => {
+        return selectedRooms.includes(roomId);
+    };
+
+
     return (
         <Container style={{ display: 'contents' }}>
             <Form className="property-form" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group controlId="name">
                     <h4 style={{ textAlign: 'center' }}>Booking Form</h4>
-                    <Form.Label>Guest Name:</Form.Label>
-                    <Controller
-                        control={control}
-                        name="name"
-                        render={({ field }) => (
-                            <Form.Control
-                                type="text"
-                                {...field}
-                                style={{ marginBottom: '10px' }}
-                            />
+
+
+                    <Form.Group controlId="arrival">
+                        <Form.Label>Arrival date:</Form.Label>
+                        <Controller
+                            control={control}
+                            name="arrival"
+                            render={({ field }) => (
+                                <Form.Control
+                                    type="date"
+                                    {...field}
+                                    style={{ marginBottom: '10px' }}
+                                />
+                            )}
+                        />
+                        {errors.arrival && (
+                            <Form.Text className="text-danger">
+                                {errors.arrival.message}
+                            </Form.Text>
                         )}
-                    />
-                    {errors.name && (
-                        <Form.Text className="text-danger">{errors.name.message}</Form.Text>
-                    )}
+                    </Form.Group>
+
+                    <Form.Group controlId="departure">
+                        <Form.Label>Departure date:</Form.Label>
+                        <Controller
+                            control={control}
+                            name="departure"
+                            render={({ field }) => (
+                                <Form.Control
+                                    type="date"
+                                    {...field}
+                                    style={{ marginBottom: '10px' }}
+                                />
+                            )}
+                        />
+                        {errors.departure && (
+                            <Form.Text className="text-danger">
+                                {errors.departure.message}
+                            </Form.Text>
+                        )}
+                    </Form.Group>
+
+                    <Form.Group controlId="size">
+                        <Form.Label>Number of Guests:</Form.Label>
+                        <Controller
+                            control={control}
+                            name="size"
+                            render={({ field }) => (
+                                <Form.Control
+                                    type="number"
+                                    {...field}
+                                    style={{ marginBottom: '10px' }}
+                                />
+                            )}
+                        />
+                        {errors.size && (
+                            <Form.Text className="text-danger">{errors.size.message}</Form.Text>
+                        )}
+                    </Form.Group>
+
+                    {/* Add Parking Button */}
+                    <Button
+                        variant="primary"
+                        onClick={addGuestRow}
+                        style={{ marginBottom: '10px' }}
+                    >
+                        Add Guest
+                    </Button>
+                    {guestRows.map((row, index) => (
+                        <>
+                            <Row
+                                key={index}
+                                style={{ alignItems: 'center', marginBottom: '10px' }}
+                            >
+                                <Col>
+                                    <Form.Group>
+                                        <Form.Label>Guest Name:</Form.Label>
+                                        <Controller
+                                            control={control}
+                                            name="name"
+                                            render={({ field }) => (
+                                                <Form.Control
+                                                    type="text"
+                                                    // name='name'
+                                                    {...field}
+                                                    value={row.name}
+                                                    onChange={(e) => handleGuestNameChange(index, e.target.value)}
+                                                    style={{ marginBottom: '10px' }}
+                                                />
+                                            )}
+                                        />
+
+
+                                    </Form.Group>
+                                </Col>
+                                <Col xs="auto">
+                                    <CloseButton
+                                        onClick={() => removeGuestRow(index)}
+                                        style={{ marginTop: '4px' }}
+                                    />
+                                </Col>
+                            </Row>
+                        </>
+                    ))}
                 </Form.Group>
 
-                <Form.Group controlId="arrival">
-                    <Form.Label>Arrival date:</Form.Label>
-                    <Controller
-                        control={control}
-                        name="arrival"
-                        render={({ field }) => (
-                            <Form.Control
-                                type="date"
-                                {...field}
-                                style={{ marginBottom: '10px' }}
-                            />
-                        )}
-                    />
-                    {errors.arrival && (
-                        <Form.Text className="text-danger">
-                            {errors.arrival.message}
-                        </Form.Text>
-                    )}
+
+                <Form.Group controlId="exampleForm.SelectMultiple">
+                    <Form.Label>Select Multiple Rooms</Form.Label>
+                    <Form.Control as="select" multiple value={selectedRooms} onChange={handleSelectChange}>
+                        {roomList.map((room) => (
+                            <option key={room.id} value={room.id} selected={isRoomSelected(room.id)}>
+                                Room {room.roomNo}
+                            </option>
+                        ))}
+                    </Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId="departure">
-                    <Form.Label>Departure date:</Form.Label>
-                    <Controller
-                        control={control}
-                        name="departure"
-                        render={({ field }) => (
-                            <Form.Control
-                                type="date"
-                                {...field}
-                                style={{ marginBottom: '10px' }}
-                            />
-                        )}
-                    />
-                    {errors.departure && (
-                        <Form.Text className="text-danger">
-                            {errors.departure.message}
-                        </Form.Text>
-                    )}
-                </Form.Group>
 
-                <Form.Group controlId="size">
-                    <Form.Label>Number of Guests:</Form.Label>
-                    <Controller
-                        control={control}
-                        name="size"
-                        render={({ field }) => (
-                            <Form.Control
-                                type="number"
-                                {...field}
-                                style={{ marginBottom: '10px' }}
-                            />
-                        )}
-                    />
-                    {errors.size && (
-                        <Form.Text className="text-danger">{errors.size.message}</Form.Text>
-                    )}
-                </Form.Group>
 
                 <Form.Group controlId="category">
                     <Form.Label>Room Category:</Form.Label>
@@ -226,7 +338,7 @@ const BookingForm = () => {
                     <Button variant="primary" type="submit" className="submit-button col-2">
                         Submit
                     </Button>
-                    <Button variant="primary" className="submit-button col-2">
+                    <Button onClick={() => setShowAddDialog(false)} variant="primary" className="submit-button col-2">
                         Cancel
                     </Button>
                 </div>
