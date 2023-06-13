@@ -133,7 +133,7 @@ export default function EditRoomDialog({ setShowEditDialog, categoryStore, editR
 
 
     return (
-        <Container>
+        <Container style={{backgroundColor: "rgb(195 184 210 / 30%)"}}>
             <h5 className="text-center mt-3">Edit Room</h5>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row className="mb-3">
