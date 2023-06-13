@@ -18,7 +18,7 @@ export const fetchAdminRoomsList = createAsyncThunk('appAdminRooms/fetchData', a
   // const filterParams = "?" + (params.name ? 'name=' + params.name : '') + (params.role ? '&role=' + params.role : '') + (params.currentPlan ? '&currentPlan=' + params.currentPlan : '') + (params.status ? '&status=' + params.status : '')
   const filterParams = ''
 
-  const response = await axios.get(adminConfig.adminRoomsGetAllEndpoint + '?isActive=false', { headers })
+  const response = await axios.get(adminConfig.adminRoomsGetAllEndpoint + '?isActive=true', { headers })
   return {
     adminRooms: response.data,
   };

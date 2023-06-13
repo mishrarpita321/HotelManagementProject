@@ -11,18 +11,36 @@ import { useRouter } from "next/router"
 
 const AvailableRooms = () => {
     const router = useRouter();
-    const [arrivalDate, setArrivalDate] = useState('2023-06-10');
-    const [deptDate, setDeptDate] = useState('2023-06-15');
-    const { selectedRooms, addToCart, removeFromCart } = useContext(CartContext)
+    // const [arrivalDate, setArrivalDate] = useState('2023-06-10');
+    // const [deptDate, setDeptDate] = useState('2023-06-15');
+    const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, setGuestCount } = useContext(CartContext)
     const dispatch = useDispatch()
     const availableRoomStore = useSelector(state => state.adminRoom)
     const [rooms, setRooms] = useState([])
+
+    useEffect(() => {
+        setArrivalDate(Date.parse('2023-06-10'))
+        setDeptDate(Date.parse('2023-06-16'))
+        setGuestCount(6)
+    }, [])
+
+
     useEffect(() => {
         dispatch(fetchAdminRoomsList({}))
     }, [dispatch])
+
     useEffect(() => {
         setRooms(availableRoomStore.data)
+        if (selectedRooms.length > 0) {
+            markSelectedRooms();
+        }
     }, [availableRoomStore])
+
+    // Function to retrieve selected rooms from local storage
+    // const getSelectedRoomsFromLocalStorage = () => {
+    //     const selectedRoomsFromLocalStorage = localStorage.getItem("selectedRooms");
+    //     return selectedRoomsFromLocalStorage ? JSON.parse(selectedRoomsFromLocalStorage) : [];
+    // };
 
     // CSS classes for the buttons
     const selectButtonClass = 'selectButton';
@@ -65,7 +83,12 @@ const AvailableRooms = () => {
     console.log(categorizedRooms)
 
 
-
+    // useEffect(() => {
+    //     if (selectedRooms.length !== 0) {
+    //         alert('hi')
+    //         categorizeRooms();
+    //     }
+    // }, [])
 
 
     // Handler for toggling room selection
@@ -90,14 +113,27 @@ const AvailableRooms = () => {
         }
     };
 
+    const markSelectedRooms = () => {
+        
+        const updatedRooms = rooms.map((room) => {
+            if (selectedRooms.includes(room.roomNo)) {
+                return {
+                    ...room,
+                    selected: true,
+                };
+            }
+            return room;
+        });
+        setRooms(updatedRooms);
+    };
 
 
     const bookNowClicked = () => {
-        const queryParams = `?roomNumbers=${selectedRooms.join(',')}&arrivalDate=${arrivalDate}&deptDate=${deptDate}`;
+        // const queryParams = `?roomNumbers=${selectedRooms.join(',')}&arrivalDate=${arrivalDate}&deptDate=${deptDate}`;
 
         router.push({
             pathname: '/booking-detail',
-            query: queryParams,
+            // query: queryParams,
         });
     }
     // console.log()
@@ -138,6 +174,10 @@ const AvailableRooms = () => {
                                                     <div style={{ margin: "9px 0 0 0" }} className="row">
                                                         <div className="col-10">Rooms No</div>
                                                         <div className="col-2">{room.roomNo}</div>
+                                                    </div>
+                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
+                                                        <div className="col-10">Capacity</div>
+                                                        <div className="col-2">{room.category.maxPeopleAllowed}</div>
                                                     </div>
                                                     <div style={{ margin: "9px 0 0 0" }} className="row">
                                                         <div className="col-10">Price</div>
