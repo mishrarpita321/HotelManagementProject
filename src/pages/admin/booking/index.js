@@ -10,25 +10,30 @@ import NavBarAdmin from "src/components/NavBarAdmin"
 import TitleBanner from "src/components/TitleBanner"
 import NoCloseModal from "src/components/modal/NoCloseModal"
 import { fetchAdminBookingList } from "src/store/admin/bookings"
+import { fetchAdminRoomsList } from "src/store/user/availableRooms"
 
 export default function Categories() {
     const [bookingList, setBookingList] = useState([])
+    const [roomList, setRoomList] = useState([])
 
     const dispatch = useDispatch()
     const adminBookingStore = useSelector(state => state.adminBooking)
+    const roomStore = useSelector(state => state.adminRoom)
 
 
     useEffect(() => {
         dispatch(fetchAdminBookingList({}))
+        dispatch(fetchAdminRoomsList({}))
     }, [dispatch])
 
 
     useEffect(() => {
         setBookingList(adminBookingStore.data)
+        setRoomList(roomStore.data)
     }, [adminBookingStore])
 
 
-    const [showAddDialog, addBookingClick] = useState()
+    const [showAddDialog, setShowAddDialog] = useState()
 
 
     function formatTimestamp(timestamp) {
@@ -74,7 +79,7 @@ export default function Categories() {
                 <div className="col-10">
                     <TitleBanner marginBotton={'40px'} padding={'7'} title={"Bookings"} />
                     {/* <input placeholder="search" /><br /> */}
-                    <button onClick={() => addBookingClick(true)} className="loginButton" style={{ marginTop: "30px" }}>Create New Booking</button>
+                    <button onClick={() => setShowAddDialog(true)} className="loginButton" style={{ marginTop: "30px" }}>Create New Booking</button>
                     <table className="table table-bordered table-hover transaction">
                         <thead className="thead-dark">
                             <tr style={{ backgroundColor: "#38325059" }}>
@@ -119,9 +124,9 @@ export default function Categories() {
                             )}
                         </tbody>
                     </table>
-                    <NoCloseModal show={showAddDialog} onHide={() => { addBookingClick(false) }}>
+                    <NoCloseModal show={showAddDialog} onHide={() => { setShowAddDialog(false) }}>
                         {/* <BookingForm /> */}
-                        <AddBookingForm />
+                        <AddBookingForm setShowAddDialog={()=>setShowAddDialog(false)} roomList={roomList} />
                     </NoCloseModal>
                 </div >
             </div>

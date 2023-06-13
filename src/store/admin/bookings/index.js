@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 // ** Axios Imports
 import axios from 'axios'
 import adminConfig from 'src/config/adminConfig'
+import { formatDateforApi } from 'src/helper/get-date-format-for-api';
 
 // ** Fetch Categories
 export const fetchAdminBookingList = createAsyncThunk('appAdminBooking/fetchData', async params => {
@@ -25,7 +26,7 @@ export const fetchAdminBookingList = createAsyncThunk('appAdminBooking/fetchData
 })
 
 // ** Add Categories
-export const addAdminParkings = createAsyncThunk('appAdminParking/addData', async (data, { getState, dispatch }) => {
+export const addAdminBooking = createAsyncThunk('appAdminBooking/addData', async (data, { getState, dispatch }) => {
   const headers = {
     Accept: 'application/json',
     // 'Content-Type': 'multipart/form-data',
@@ -35,14 +36,23 @@ export const addAdminParkings = createAsyncThunk('appAdminParking/addData', asyn
   }
   let returnResponse = null
 
+  let rooms = (data.selectedRoomList)
+  let email = window.localStorage.getItem('userData').email
+  let guests = data.guestsRows
+  let arrivalDate = formatDateforApi(data.arrival)
+  let departureDate = formatDateforApi(data.depature)
+  let numberOfGuests = data.size
+  let parkingList = data.parkingRows
+  let paymentType = "card"
   // console.log(data)
   // let categoryId = data.get('categoryId')
   // data.delete('categoryId')
   // console.log(data.get('categoryId'))
+  // return
 
   try {
-    const response = await axios.post(adminConfig.adminAddParkingEndpoint, data, { headers })
-    dispatch(fetchAdminParkingList(getState().adminRoom))
+    const response = await axios.post(adminConfig.adminAddBookingEndpoint + rooms.join(","), { rooms, email, guests, arrivalDate, departureDate, numberOfGuests, parkingList, paymentType }, { headers })
+    dispatch(fetchAdminBookingList(getState().adminRoom))
     returnResponse = { 'status': 'success', 'message': response?.data }
   } catch (e) {
     // console.log(e)

@@ -23,7 +23,7 @@ export default {
   
   
   adminBookingGetAllEndpoint: base.baseurl + "/admin/bookings",
-  // adminAddParkingEndpoint: base.baseurl + "/admin/parking/add",
+  adminAddBookingEndpoint: base.baseurl + "/booking/book?roomNumber=",
   // adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
   // adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
 
