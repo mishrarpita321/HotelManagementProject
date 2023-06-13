@@ -19,9 +19,13 @@ export default {
   adminAddParkingEndpoint: base.baseurl + "/admin/parking/add",
   adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
   adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
-
-
-
+  
+  
+  
+  adminBookingGetAllEndpoint: base.baseurl + "/admin/bookings",
+  // adminAddParkingEndpoint: base.baseurl + "/admin/parking/add",
+  // adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
+  // adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
 
 
   storageTokenKeyName: "accessToken",

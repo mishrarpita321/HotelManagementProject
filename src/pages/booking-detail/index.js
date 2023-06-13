@@ -64,6 +64,10 @@ export default function BookingDetail() {
     }
 
     useEffect(() => {
+        console.log(selectedRooms)
+        console.log(arrivalDate)
+        console.log(deptDate)
+        console.log(guestCount)
         if (selectedRooms.length === 0 || arrivalDate === null || deptDate === null || guestCount === 0) {
             router.push({
                 pathname: '/rooms-available',
