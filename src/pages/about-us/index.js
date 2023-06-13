@@ -1,6 +1,6 @@
 import NavBar from 'src/components/NavBar'
 import Footer from 'src/components/Footer'
-import { useState } from 'react';
+import { useEffect, useState } from "react";
 
 import OurModal from 'src/components/modal/OurModal';
 import AuthPages from 'src/components/Auth/AuthPages';
@@ -11,6 +11,21 @@ import TitleBanner from 'src/components/TitleBanner';
 export default function AboutUs(params) {
     const auth = useAuthProvider();
     const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userType, setUserType] = useState(false);
+    useEffect(() => {
+        if ((JSON.parse(window.localStorage.getItem("userData"))?.role == '[ADMIN]')) {
+            setUserType('admin')
+        } else {
+            setUserType('user')
+        }
+        // let userData= strin window.localStorage.getItem('userData')
+        if (window.localStorage.getItem("accessToken")) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
 
     const [showLogin, setShowLogin] = useState(
         () => {
@@ -20,7 +35,7 @@ export default function AboutUs(params) {
 
     return (
         <>
-            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} />
+            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType} />
             <OurModal
                 show={showLogin}
                 onHide={() => setShowLogin(false)}

@@ -18,8 +18,19 @@ export default function Home() {
   const auth = useAuthProvider();
   const router = useRouter();
 
+
+
+
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState(false);
   useEffect(() => {
+    if ((JSON.parse(window.localStorage.getItem("userData"))?.role == '[ADMIN]')) {
+      setUserType('admin')
+    } else {
+      setUserType('user')
+    }
+    // let userData= strin window.localStorage.getItem('userData')
     if (window.localStorage.getItem("accessToken")) {
       setIsLoggedIn(true);
     } else {
@@ -34,6 +45,11 @@ export default function Home() {
     }
   )
 
+
+
+
+
+  
   const { showAlert, hideAlert } = useContext(AlertContext);
   const handleClick = () => {
     alert('clicked')
@@ -42,7 +58,7 @@ export default function Home() {
 
   return (
     <>
-      <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} />
+      <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType} />
       {/* <Modal isOpen={showLogin}  ><>Hello</></Modal> */}
 
       <OurModal

@@ -5,8 +5,9 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Image from 'next/image'
 // import logo from '../images/logo_1.png'
-const NavBar = ({ showLogin, setShowLogin, isLoggedIn = false }) => {
+const NavBar = ({ showLogin, setShowLogin, isLoggedIn = false, userType }) => {
     const { pathname } = useRouter()
+    const routerlog = useRouter()
 
     // const IsActive = pathname === url
     // const IsActive = pathname === url
@@ -42,7 +43,20 @@ const NavBar = ({ showLogin, setShowLogin, isLoggedIn = false }) => {
 
 
 
+    const logoutHelp = () => {
+        // alert('hi')
 
+        // Remove all data from localStorage
+        window.localStorage.clear();
+
+        // Redirect the user based on the provided parameter
+        if (userType === 'user') {
+            // routerlog.push('/');
+            routerlog.reload()
+        } else if (userType === 'admin') {
+            routerlog.push('/admin/login');
+        }
+    };
 
 
 
@@ -109,28 +123,22 @@ const NavBar = ({ showLogin, setShowLogin, isLoggedIn = false }) => {
                                             </li>
                                             {isLoggedIn ? (
                                                 <>
-                                                    {/* <li className={`nav-item ${pathname == '/contact' ? 'active' : ''}`}>
-                                                        <Link className="nav-link" href="contact">
-                                                            Contact Us
-                                                        </Link>
-                                                    </li> */}
-                                                    <li className={`nav-item ${pathname == '/profile' ? 'active' : ''}`}>
-                                                        <Link onMouseEnter={handleMouseEnter}
-                                                            onMouseLeave={handleMouseLeave}
-                                                            style={{ paddingTop: "3px", height: "57px" }}
-                                                            className="nav-link"
-                                                            href="profile">
-                                                            <svg
-                                                                style={svgStyle}
-                                                                xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" strokeWidth="1.2" color="#000" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" /><path strokeLinecap="round" strokeLinejoin="round" d="M4.271 18.346S6.5 15.5 12 15.5s7.73 2.846 7.73 2.846M12 12a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                                            </svg>
+                                                    {userType == 'user' && (
+                                                        <li className={`nav-item ${pathname == '/user-booking' ? 'active' : ''}`}>
+                                                            <Link className="nav-link" href="user-booking">
+                                                                Profile
+                                                            </Link>
+                                                        </li>
+                                                    )}
 
-                                                            Profile
+                                                    <li className="nav-item">
+                                                        <span onClick={logoutHelp} className="nav-link loginButton ">
+                                                            Logout
+                                                        </span>
 
-                                                        </Link>
                                                     </li>
-
                                                 </>
+
                                             )
                                                 :
                                                 (
