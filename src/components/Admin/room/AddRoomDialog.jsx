@@ -24,7 +24,7 @@ const schema = yup.object().shape({
 const defaultValues = {
     roomNo: '',
     category: '',
-    roomStatus: false,
+    roomStatus: true,
     inventory: false,
     cleaningStatus: false,
     image: null,
@@ -195,8 +195,8 @@ export default function AddRoomDialog({ setShowAddDialog, categoryStore }) {
                                         disabled={isLoading}
                                         isInvalid={errors.roomStatus}
                                     >
-                                        <option value={true}>Booked</option>
-                                        <option value={false}>Not Booked</option>
+                                        <option value={false}>Booked</option>
+                                        <option value={true}>Not Booked</option>
                                     </Form.Control>
                                 )}
                             />

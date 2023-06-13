@@ -143,7 +143,7 @@ const RoomList = () => {
                             />
                           </td>
                           <td>{room?.category?.title}</td>
-                          <td>{(room?.isActive ? (<>Booked</>) : (<>Not Booked</>))}</td>
+                          <td>{(room?.isActive ? (<>Not Booked</>) : (<>Booked</>))}</td>
                           <td>{(room?.isInventoryAvailable ? (<>Yes</>) : (<>No</>))}</td>
                           <td>{(room?.isCleaned ? (<>Yes</>) : (<>No</>))}</td>
                           <td>

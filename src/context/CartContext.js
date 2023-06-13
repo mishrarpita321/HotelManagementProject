@@ -4,6 +4,16 @@ const CartContext = createContext()
 
 const CartProvider = ({ children }) => {
     const [selectedRooms, setSelectedRooms] = useState([])
+    const [arrivalDate, setArrivalDate] = useState(null)
+    const [deptDate, setDeptDate] = useState(null)
+    const [guestCount, setGuestCount] = useState(0)
+
+    // const addArrivalDate = (arrivalDate) => {
+    //     setSelectedRooms(arrivalDate)
+    // }
+    // const addDeptDate = (arrivalDate) => {
+    //     setDeptDate(arrivalDate)
+    // }
 
     const addToCart = (roomNo) => {
         setSelectedRooms((prevSelectedRooms) => [...prevSelectedRooms, roomNo])
@@ -20,7 +30,7 @@ const CartProvider = ({ children }) => {
     }
 
     return (
-        <CartContext.Provider value={{ selectedRooms, addToCart, removeFromCart, clearCart }}>
+        <CartContext.Provider value={{ selectedRooms, addToCart, removeFromCart, clearCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, guestCount, setGuestCount }}>
             {children}
         </CartContext.Provider>
     )
