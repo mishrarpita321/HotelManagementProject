@@ -176,10 +176,6 @@ const AvailableRooms = () => {
                                                         <div className="col-2">{room.roomNo}</div>
                                                     </div>
                                                     <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Capacity</div>
-                                                        <div className="col-2">{room.category.maxPeopleAllowed}</div>
-                                                    </div>
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
                                                         <div className="col-10">Price</div>
                                                         <div className="col-2">{room.category.price}</div>
                                                     </div>
