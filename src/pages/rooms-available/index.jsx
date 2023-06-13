@@ -143,6 +143,10 @@ const AvailableRooms = () => {
                                                         <div className="col-10">Price</div>
                                                         <div className="col-2">{room.category.price}</div>
                                                     </div>
+                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
+                                                        <div className="col-10">Max Capacity</div>
+                                                        <div className="col-2">{room.category.price}</div>
+                                                    </div>
                                                 </div>
                                                 <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>
                                                     {/* <button className="bookButton">Select</button> */}
