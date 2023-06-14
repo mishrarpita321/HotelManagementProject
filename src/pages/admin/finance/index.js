@@ -40,10 +40,10 @@ export default function finance() {
                                 <tr style={{ backgroundColor: "#38325059" }}>
                                     <th scope="col">Transaction Id</th>
                                     <th scope="col">Booking Id</th>
-                                    <th scope="col">Room Category</th>
                                     <th scope="col">Customer Name</th>
-                                    <th scope="col">Payment Method</th>
-                                    <th scope="col">Date of Payment</th>
+                                    <th scope="col">Arrival Date</th>
+                                    <th scope="col">Departure Date</th>
+                                    <th scope="col">Final Cost</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,12 +51,13 @@ export default function finance() {
                                     finances.map((finance, i) => {
                                         return (
                                             <>
-                                                <th scope="row"></th>
-                                                <td>Mark</td>
-                                                <td>Otto</td>
-                                                <td>@mdo</td>
-                                                <td>@mdo</td>
-                                                <td>@mdo</td>
+                                                {/* <th scope="row"></th> */}
+                                                <td>{finance.id}</td>
+                                                <td>{finance.bookingId}</td>
+                                                <td>{finance.username}</td>
+                                                <td>{finance.arrivalDate}</td>
+                                                <td>{finance.deptDate}</td>
+                                                <td>{finance.finalCost}</td>
                                             </>
                                         )
                                     })

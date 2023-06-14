@@ -133,7 +133,7 @@ export default function EditRoomDialog({ setShowEditDialog, categoryStore, editR
 
 
     return (
-        <Container style={{backgroundColor: "rgb(195 184 210 / 30%)"}}>
+        <Container style={{ backgroundColor: "rgb(195 184 210 / 30%)" }}>
             <h5 className="text-center mt-3">Edit Room</h5>
             <Form onSubmit={handleSubmit(onSubmit)}>
                 <Row className="mb-3">
@@ -195,8 +195,8 @@ export default function EditRoomDialog({ setShowEditDialog, categoryStore, editR
                                         disabled={isLoading}
                                         isInvalid={errors.roomStatus}
                                     >
-                                        <option value={false}>Booked</option>
-                                        <option value={true}>Not Booked</option>
+                                        <option value={true}>Yes</option>
+                                        <option value={false}>No</option>
                                     </Form.Control>
                                 )}
                             />

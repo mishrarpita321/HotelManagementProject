@@ -23,7 +23,7 @@ export default function Categories() {
     const dispatch = useDispatch()
     const store = useSelector(state => state.category)
     const { showAlert } = useContext(AlertContext);
-
+    const [roomCounts, setRoomCounts] = useState([])
 
 
 
@@ -116,6 +116,30 @@ export default function Categories() {
 
     const [selectedImage, setSelectedImage] = useState(null);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     return (
         <>
             <NavBarAdmin />
@@ -147,7 +171,7 @@ export default function Categories() {
                                         categories.map((category, i) => (
                                             <tr key={category?.id}>
                                                 <th scope="row">{category?.title}</th>
-                                                <td>{category?.rooms}</td>
+                                                <td>{category?.roomCount}</td>
                                                 <td>{category?.size}</td>
                                                 <td>{category?.price}</td>
                                                 <td>
@@ -180,7 +204,7 @@ export default function Categories() {
                     <NoCloseModal show={showEditDialog} onHide={() => { setShowEditDialog(false) }}>
                         <EditCategoryForm setShowEditDialog={() => { setShowEditDialog(false) }} editRow={editRow} setEditRow={setEditRow} />
                     </NoCloseModal>
-                    
+
                     <ImageModal show={!!selectedImage} onHide={() => setSelectedImage(null)} image={selectedImage} />
 
                 </div>

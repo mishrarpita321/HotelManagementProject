@@ -16,11 +16,20 @@ export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchDat
   // axios.get(adminConfig.AdminListEndpoint, params, { headers: headers })
 
   // const filterParams = "?" + (params.name ? 'name=' + params.name : '') + (params.role ? '&role=' + params.role : '') + (params.currentPlan ? '&currentPlan=' + params.currentPlan : '') + (params.status ? '&status=' + params.status : '')
+
   const filterParams = ''
 
-  const response = await axios.get(adminConfig.categoriesGetAllEndpoint, { headers })
+  const response = await axios.get(adminConfig.categoriesGetAllEndpoint, { headers });
+  const categories = response.data;
+
+  for (const category of categories) {
+    const roomCountResponse = await axios.get(adminConfig.totalRoomCountEndpoint + category.id + "&isActive=true", { headers });
+    category.roomCount = roomCountResponse.data.totalRoomCount;
+  }
+  console.log(categories)
+
   return {
-    categories: response.data,
+    categories: categories,
   };
 })
 
@@ -78,7 +87,7 @@ export const deleteCategory = createAsyncThunk('appAdminCategory/deleteData', as
 
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
-    let returnResponse = null
+  let returnResponse = null
   try {
     const response = await axios.delete(adminConfig.categoryDeleteEndpoint + '/' + id, { headers })
     dispatch(fetchCategoriesList(getState().category))

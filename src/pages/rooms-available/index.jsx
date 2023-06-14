@@ -187,7 +187,7 @@ const AvailableRooms = () => {
             ) : (
                 <>
                     <button onClick={bookNowClicked} className="loginButton" style={{ float: "right", marginTop: "30px", marginRight: "180px" }}>Book Now</button>
-                    <div style={{ float: "right", marginTop: "44px", marginRight: "20px" }}>{selectedRooms.map((room) => (<>{room}, </>))}</div>
+                    {/* <div style={{ float: "right", marginTop: "44px", marginRight: "20px" }}>{selectedRooms.map((room) => (<>{room}, </>))}</div> */}
                     {Object.entries(categorizedRooms).map(([category, rooms]) => (
                         <div key={category}>
                             <h3 style={{ marginTop: '70px' }} className="categoryRibbon">{category}</h3>
