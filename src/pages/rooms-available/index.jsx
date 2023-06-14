@@ -8,22 +8,29 @@ import { fetchAdminRoomsList } from "src/store/user/availableRooms"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/router"
+import Spinner from "src/components/spinnner/PageSpinner"
+import { AlertContext } from "src/context/AlertContext"
 
 const AvailableRooms = () => {
     const router = useRouter();
     // const [arrivalDate, setArrivalDate] = useState('2023-06-10');
     // const [deptDate, setDeptDate] = useState('2023-06-15');
-    const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, setGuestCount } = useContext(CartContext)
+    const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, guestCount, setGuestCount } = useContext(CartContext)
     const dispatch = useDispatch()
     const availableRoomStore = useSelector(state => state.adminRoom)
     const [rooms, setRooms] = useState([])
     const roomRef = useRef([]);
     const isFirstRender = useRef(true)
+    const [loading, setLoading] = useState(false)
+
+    const { showAlert } = useContext(AlertContext);
 
     useEffect(() => {
-        setArrivalDate(Date.parse('2023-06-10'))
-        setDeptDate(Date.parse('2023-06-16'))
-        setGuestCount(6)
+        setLoading(true)
+        if (arrivalDate == '' || deptDate == '' || guestCount == 0) {
+            router.push('/')
+        }
+        setLoading(false)
     }, [])
 
 
@@ -35,6 +42,9 @@ const AvailableRooms = () => {
         setRooms(availableRoomStore.data);
     }, [availableRoomStore]);
 
+    console.log(arrivalDate)
+    console.log(deptDate)
+    console.log(guestCount)
     // useEffect(() => {
     //     if (selectedRooms.length > 0 && rooms.length > 0) {
     //         markSelectedRooms();
@@ -140,14 +150,28 @@ const AvailableRooms = () => {
         setRooms(updatedRooms);
     };
 
+    const onAlertErrorHandle = (message) => {
+        showAlert('error', message, () => {
+            console.log('Ok button clicked');
+        });
+    };
+
 
     const bookNowClicked = () => {
         // const queryParams = `?roomNumbers=${selectedRooms.join(',')}&arrivalDate=${arrivalDate}&deptDate=${deptDate}`;
+        setLoading(true)
+        if (selectedRooms.length == 0) {
+            onAlertErrorHandle('Please Select atleast room.');
+        } else {
+            router.push({
+                pathname: '/booking-detail',
+                // query: queryParams,
+            });
+        }
+        setLoading(false)
 
-        router.push({
-            pathname: '/booking-detail',
-            // query: queryParams,
-        });
+
+
     }
     // console.log()
     return (
@@ -155,155 +179,82 @@ const AvailableRooms = () => {
             <NavBar />
             <TitleBanner marginBotton={"-12px"} padding={'10'} title={"Rooms Available for Booking"} />
 
-            <button onClick={bookNowClicked} className="loginButton" style={{ float: "right", marginTop: "30px", marginRight: "180px" }}>Book Now</button>
-            <div style={{ float: "right", marginTop: "44px", marginRight: "20px" }}>{selectedRooms.map((room) => (<>{room}, </>))}</div>
-            {Object.entries(categorizedRooms).map(([category, rooms]) => (
-                <div key={category}>
-                    <h3 style={{ marginTop: '70px' }} className="categoryRibbon">{category}</h3>
-                    <div className="container">
-                        <div className="row">
-                            {rooms.map((room) => {
-                                return (
-                                    <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
-                                        {/* <div class="overlay"></div> */}
-                                        {/* <div class="tickIcon"></div> */}
-                                        <div className="roomChildCard" >
-                                            {room.selected && (
-                                                <div className="tickIcon">
-                                                    <FontAwesomeIcon icon={faCheck} />
-                                                </div>
-                                            )}
-                                            <div className="row position-relative roomBox">
-                                                <div className="ribbon">
-                                                    <span className="position-absolute roomCategoryRibbon">
-                                                        {category}
-                                                        {/* {room.selected ? ('true') : ('false')} */}
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <img src="images/gallery1.jpg" alt="room" ></img>
-                                                </div>
-                                                <div className="row">
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Rooms No</div>
-                                                        <div className="col-2">{room.roomNo}</div>
-                                                    </div>
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Price</div>
-                                                        <div className="col-2">{room.category.price}</div>
-                                                    </div>
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Max Capacity</div>
-                                                        <div className="col-2">{room.category.price}</div>
-                                                    </div>
-                                                </div>
-                                                <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>
-                                                    {/* <button className="bookButton">Select</button> */}
-                                                    <button
-                                                        className={`bookButton ${room.selected ? deselectButtonClass : selectButtonClass}`}
-                                                        onClick={() => handleRoomSelect(room.roomNo)}>
-                                                        {room.selected ? "Deselect" : "Select"}
-                                                    </button>
 
+            {loading ? (
+                <>
+                    <Spinner />
+                </>
+            ) : (
+                <>
+                    <button onClick={bookNowClicked} className="loginButton" style={{ float: "right", marginTop: "30px", marginRight: "180px" }}>Book Now</button>
+                    <div style={{ float: "right", marginTop: "44px", marginRight: "20px" }}>{selectedRooms.map((room) => (<>{room}, </>))}</div>
+                    {Object.entries(categorizedRooms).map(([category, rooms]) => (
+                        <div key={category}>
+                            <h3 style={{ marginTop: '70px' }} className="categoryRibbon">{category}</h3>
+                            <div className="container">
+                                <div className="row">
+                                    {rooms.map((room) => {
+                                        return (
+                                            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
+                                                {/* <div class="overlay"></div> */}
+                                                {/* <div class="tickIcon"></div> */}
+                                                <div className="roomChildCard" >
+                                                    {room.selected && (
+                                                        <div className="tickIcon">
+                                                            <FontAwesomeIcon icon={faCheck} />
+                                                        </div>
+                                                    )}
+                                                    <div className="row position-relative roomBox">
+                                                        <div className="ribbon">
+                                                            <span className="position-absolute roomCategoryRibbon">
+                                                                {category}
+                                                                {/* {room.selected ? ('true') : ('false')} */}
+                                                            </span>
+                                                        </div>
+                                                        <div>
+                                                            <img src="images/gallery1.jpg" alt="room" ></img>
+                                                        </div>
+                                                        <div className="row">
+                                                            <div style={{ margin: "9px 0 0 0" }} className="row">
+                                                                <div className="col-10">Rooms No</div>
+                                                                <div className="col-2">{room.roomNo}</div>
+                                                            </div>
+                                                            <div style={{ margin: "9px 0 0 0" }} className="row">
+                                                                <div className="col-10">Price</div>
+                                                                <div className="col-2">{room.category.price}</div>
+                                                            </div>
+                                                            <div style={{ margin: "9px 0 0 0" }} className="row">
+                                                                <div className="col-10">Max Capacity</div>
+                                                                <div className="col-2">{room.category.price}</div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>
+                                                            {/* <button className="bookButton">Select</button> */}
+                                                            <button
+                                                                className={`bookButton ${room.selected ? deselectButtonClass : selectButtonClass}`}
+                                                                onClick={() => handleRoomSelect(room.roomNo)}>
+                                                                {room.selected ? "Deselect" : "Select"}
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
-                            )}
+                                        )
+                                    }
+                                    )}
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            ))}
+                    ))}
+
+                </>
+            )}
 
 
 
-            {/* <div className="container">
-                <div className="row">
-                    {
-                        rooms.map((room, i) => {
-                            return (
-                                <>
-                                    <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
-                                        <div className="roomChildCard" >
-                                            <div className="row position-relative roomBox">
-                                                <div className="ribbon">
-                                                    <span className="position-absolute roomCategoryRibbon">
-                                                        {room.name}
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <img src="images/gallery1.jpg" alt="room" ></img>
-                                                </div>
-                                                <div className="row">
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Rooms No</div>
-                                                        <div className="col-2">{room.roomNo}</div>
-                                                    </div>
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Price</div>
-                                                        <div className="col-2">{room.category.price}</div>
-                                                    </div>
-                                                </div>
-                                                <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>
-                                                    <button className="bookButton">Select</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            )
 
-                        })
-                    }
 
-                </div>
-
-            </div> */}
-            {/* <h3 style={{ marginTop: '70px' }} className="categoryRibbon">Deluxe</h3>
-            <div className="container">
-                <div className="row">
-                    {
-                        rooms.map((room, i) => {
-                            return (
-                                <>
-                                    <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
-                                        <div className="roomChildCard" >
-                                            <div className="row position-relative roomBox">
-                                                <div className="ribbon">
-                                                    <span className="position-absolute roomCategoryRibbon">
-                                                        {room.name}
-                                                    </span>
-                                                </div>
-                                                <div>
-                                                    <img src="images/gallery1.jpg" alt="room" ></img>
-                                                </div>
-                                                <div className="row">
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Rooms Available</div>
-                                                        <div className="col-2">4</div>
-                                                    </div>
-                                                    <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                        <div className="col-10">Price</div>
-                                                        <div className="col-2">{room.price}</div>
-                                                    </div>
-                                                </div>
-                                                <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>
-                                                    <button className="bookButton">Select</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            )
-
-                        })
-                    }
-
-                </div>
-
-            </div> */}
             <Footer />
         </>
     )
