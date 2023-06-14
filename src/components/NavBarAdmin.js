@@ -77,9 +77,17 @@ export default function NavBarAdmin({ showLogin, setShowLogin }) {
 
                                             {loggedIn ? (
                                                 <>
-                                                    <span onClick={onLogoutClick} className="nav-link loginButton " >
-                                                        Logout
-                                                    </span>
+                                                    {pathname == '/admin/login' ? (
+                                                        <>
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <span onClick={onLogoutClick} className="nav-link loginButton">
+                                                                Logout
+                                                            </span>
+                                                        </>
+                                                    )}
+
                                                 </>
                                             ) : (
                                                 <>

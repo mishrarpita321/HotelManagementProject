@@ -190,7 +190,7 @@ export const AuthProvider = ({ children }) => {
 
               if (returnUrl == undefined) {
                 if (response.data.role == "[ADMIN]") {
-                  router.replace('/admin/dashboard')
+                  router.replace('/admin/booking')
                 } else {
                   router.reload();
                 }

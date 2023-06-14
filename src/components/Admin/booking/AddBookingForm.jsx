@@ -284,7 +284,7 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
                 <Button
                     variant="primary"
                     onClick={addParkingRow}
-                    style={{ marginBottom: '10px' }}
+                    style={{ margin: '10px' }}
                 >
                     Add Parking
                 </Button>

@@ -7,6 +7,7 @@ import AddCategoryForm from "src/components/Admin/category/AddCategoryForm"
 import AddCategoryForm2 from "src/components/Admin/category/AddCategoryForm2"
 import EditCategoryForm from "src/components/Admin/category/EditCategoryForm"
 import NavBar from "src/components/NavBar"
+import NavBarAdmin from "src/components/NavBarAdmin"
 import TitleBanner from "src/components/TitleBanner"
 import ImageModal from "src/components/modal/ImageModal"
 import NoCloseModal from "src/components/modal/NoCloseModal"
@@ -117,7 +118,7 @@ export default function Categories() {
 
     return (
         <>
-            <NavBar />
+            <NavBarAdmin />
             <div className="row container">
                 <div className="col-2">
                     <SideBar4 />

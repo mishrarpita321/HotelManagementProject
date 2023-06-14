@@ -157,14 +157,15 @@ export default function Booking() {
                                                 <td>{booking.paymentType}</td>
                                                 <td><a href='/admin/finance'>{formatTotalCost(booking.totalCost)}</a></td>
                                                 <td>{formatTimestamp(booking.arrivalDate)}</td>
-                                                <td>{formatTimestamp(booking.arrivalDate)}</td>
+                                                <td>{formatTimestamp(booking.departureDate)}</td>
                                                 <td>
                                                     {booking.parking.length > 0 ? 'Yes' : 'No'}
                                                 </td>
                                                 <td>{booking.numberOfGuests}</td>
-                                                <td>
+                                                <td style={{display: "flex"}}>
                                                     <button onClick={handelOnEditClicked.bind(this, booking)} className="edit">Edit</button>
                                                     <button onClick={handleOnDeleteClicked.bind(this, booking)} className="delete">Delete</button>
+                                                    <button onClick={handleOnDeleteClicked.bind(this, booking)} className="delete" style={{width: "auto"}}>Checkout</button>
                                                 </td>
                                             </tr>
                                         )
