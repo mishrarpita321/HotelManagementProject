@@ -35,7 +35,7 @@ const AvailableRooms = () => {
 
 
     useEffect(() => {
-        dispatch(fetchAdminRoomsList({}))
+        dispatch(fetchAdminRoomsList({ arrivalDate, deptDate }))
     }, [dispatch])
 
     useEffect(() => {
@@ -225,7 +225,7 @@ const AvailableRooms = () => {
                                                             </div>
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
                                                                 <div className="col-10">Max Capacity</div>
-                                                                <div className="col-2">{room.category.price}</div>
+                                                                <div className="col-2"></div>
                                                             </div>
                                                         </div>
                                                         <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>

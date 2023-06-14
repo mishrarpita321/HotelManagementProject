@@ -23,7 +23,7 @@ export const fetchCategoriesList = createAsyncThunk('appAdminCategories/fetchDat
   const categories = response.data;
 
   for (const category of categories) {
-    const roomCountResponse = await axios.get(adminConfig.totalRoomCountEndpoint + category.id + "&isActive=true", { headers });
+    const roomCountResponse = await axios.get(adminConfig.totalRoomCountEndpoint + category.id , { headers });
     category.roomCount = roomCountResponse.data.totalRoomCount;
   }
   console.log(categories)
