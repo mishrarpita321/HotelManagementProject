@@ -119,7 +119,7 @@ const RoomList = () => {
                   <th scope="col">Room No</th>
                   <th scope="col">Image</th>
                   <th scope="col">Category</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">Available</th>
                   <th scope="col">Inventory Available?</th>
                   <th scope="col">Cleaning Status?</th>
                   <th scope="col">Action</th>
@@ -143,7 +143,7 @@ const RoomList = () => {
                             />
                           </td>
                           <td>{room?.category?.title}</td>
-                          <td>{(room?.isActive ? (<>Not Booked</>) : (<>Booked</>))}</td>
+                          <td>{(room?.isActive ? (<>Yes</>) : (<>No</>))}</td>
                           <td>{(room?.isInventoryAvailable ? (<>Yes</>) : (<>No</>))}</td>
                           <td>{(room?.isCleaned ? (<>Yes</>) : (<>No</>))}</td>
                           <td>

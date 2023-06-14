@@ -1,13 +1,23 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
 import TitleBanner from "src/components/TitleBanner";
+import { fetchUserBookingList } from "src/store/user/bookings";
 
 export default function userBooking() {
+    const [bookingList, setBookingList] = useState([])
+    const dispatch = useDispatch()
+    const [update, setUpdate] = useState(0)
 
 
 
+    const userBookingStore = useSelector(state => state.userBooking)
+    useEffect(() => {
+        setBookingList(userBookingStore.data)
+        // setRoomList(roomStore.data)
+    }, [userBookingStore])
 
     const router = useRouter();
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -34,6 +44,10 @@ export default function userBooking() {
     )
 
 
+    useEffect(() => {
+        // alert('asd')
+        dispatch(fetchUserBookingList({}))
+    }, [dispatch, update])
 
 
 
@@ -46,45 +60,44 @@ export default function userBooking() {
                     <thead className="thead-dark">
                         <tr style={{ backgroundColor: "#38325059" }}>
                             <th scope="col">Booking Id</th>
-                            <th scope="col">Guest Name</th>
-                            <th scope="col">Roomcategory</th>
-                            <th scope="col">Payment Id</th>
+                            <th scope="col">Guest Email</th>
+                            <th scope="col">Rooms</th>
+                            <th scope="col">Payment Type</th>
+                            <th scope="col">Total Cost</th>
                             <th scope="col">Arrival Dt</th>
                             <th scope="col">Departure Dt</th>
                             <th scope="col">Parking</th>
-                            <th scope="col">Guests</th>
+                            <th scope="col">Guests Count</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1234</th>
-                            <td>Arpita Mishra</td>
-                            <td>Deluxe</td>
-                            <td><a href='/admin/finance'>500</a></td>
-                            <td>01June,2023</td>
-                            <td>05June,2023</td>
-                            <td>
-                                No
-                            </td>
-                            <td>2</td>
-                            <td>
-                                <button className="delete">Cancel</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">1234</th>
-                            <td>Arpita Mishra</td>
-                            <td>Deluxe</td>
-                            <td>500</td>
-                            <td>01June,2023</td>
-                            <td>05June,2023</td>
-                            <td>No</td>
-                            <td>2</td>
-                            <td>
-                                <button className="delete">Cancel</button>
-                            </td>
-                        </tr>
+                        {bookingList.length !== 0 && (
+                            <>
+                                {bookingList.map((booking, i) => {
+                                    console.log(booking)
+                                    return (
+                                        <tr>
+                                            <th scope="row">{booking.id}</th>
+                                            <td>{formatGuestsAndEmail(booking.email, booking.guests)}</td>
+                                            <td>{getRoomNumbersWithCategory(booking.rooms)}</td>
+                                            <td>{booking.paymentType}</td>
+                                            <td><a href='/admin/finance'>{formatTotalCost(booking.totalCost)}</a></td>
+                                            <td>{formatTimestamp(booking.arrivalDate)}</td>
+                                            <td>{formatTimestamp(booking.arrivalDate)}</td>
+                                            <td>
+                                                {booking.parking.length > 0 ? 'Yes' : 'No'}
+                                            </td>
+                                            <td>{booking.numberOfGuests}</td>
+                                            <td>
+                                                <button onClick={handelOnEditClicked.bind(this, booking)} className="edit">Edit</button>
+                                                <button onClick={handleOnDeleteClicked.bind(this, booking)} className="delete">Delete</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
+                            </>
+                        )}
                     </tbody>
                 </table>
             </div >
@@ -92,3 +105,7 @@ export default function userBooking() {
         </>
     )
 }
+
+userBooking.guestGuard = false
+userBooking.authGuard = true
+userBooking.adminGuard = false

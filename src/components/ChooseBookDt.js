@@ -8,14 +8,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
 import { CartContext } from 'src/context/CartContext';
 import { formatDateforApi } from 'src/helper/get-date-format-for-api';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 export default function ChooseBookDt() {
-    const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, setGuestCount } = useContext(CartContext)
+    const { clearCart, selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, setGuestCount } = useContext(CartContext)
     const router = useRouter()
     const maxGuest = 10; // Maximum number of guests allowed
 
+    useEffect(() => {
+        clearCart()
+    }, [])
     const schema = yup.object().shape({
         arrival: yup.date().required('Arrival date is required'),
         departure: yup.date().required('Departure date is required'),

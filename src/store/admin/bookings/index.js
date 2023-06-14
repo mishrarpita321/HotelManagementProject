@@ -129,7 +129,7 @@ export const deleteAdminBooking = createAsyncThunk('appAdminBooking/deleteData',
   try {
     const response = await axios.delete(adminConfig.adminDeleteBookingEndpoint + '/' + id, { headers })
     dispatch(fetchAdminBookingList(getState().adminRoom))
-    returnResponse = { 'status': 'success', 'message': 'Room Deleted Successfully.' }
+    returnResponse = { 'status': 'success', 'message': 'Booking Deleted Successfully.' }
   } catch (e) {
     returnResponse = {
       'status': 'failed',

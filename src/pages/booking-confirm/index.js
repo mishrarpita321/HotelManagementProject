@@ -1,6 +1,14 @@
+import { Router, useRouter } from "next/router";
+import { Button } from "react-bootstrap";
 import Footer from "src/components/Footer";
 
 export default function bookingConfirm() {
+    const router = useRouter();
+
+    const onBtnClicked = () => {
+        router.push('/user-booking')
+    }
+
     return (
         <>
             <>
@@ -92,6 +100,7 @@ export default function bookingConfirm() {
                                 <p className="text-center">
                                     <i className="fas fa-phone" /> Contact: +123456789
                                 </p>
+                                <Button onClick={onBtnClicked}>See Booking</Button>
                             </div>
                         </div>
                     </div>

@@ -29,6 +29,13 @@ export default {
   adminCheckoutBookingEndpoint: base.baseurl + "/admin/bookings/update/id",
   // adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
   // adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
+  
+  
+  
+  
+  
+  adminFinanceGetAllEndpoint: base.baseurl + "/admin/bookings",
+
 
 
   storageTokenKeyName: "accessToken",

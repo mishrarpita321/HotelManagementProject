@@ -187,6 +187,6 @@ export default function Categories() {
         </>
     )
 }
-// Categories.guestGuard = false
-// Categories.authGuard = true
-// Categories.adminGuard = true
+Categories.guestGuard = false
+Categories.authGuard = true
+Categories.adminGuard = true

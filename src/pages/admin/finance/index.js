@@ -1,10 +1,30 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SideBar4 from "src/components/Admin/SideBar4";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
 import NavBarAdmin from "src/components/NavBarAdmin";
 import TitleBanner from "src/components/TitleBanner";
+import { fetchAdminFinanceList } from "src/store/admin/finance";
 
 export default function finance() {
+    const [finances, setFinances] = useState([])
+    const dispatch = useDispatch()
+    const adminFinanceStore = useSelector(state => state.adminFinance)
+
+
+    useEffect(() => {
+        dispatch(fetchAdminFinanceList({}))
+    }, [dispatch])
+
+
+
+    useEffect(() => {
+        setFinances(adminFinanceStore.data)
+    }, [adminFinanceStore])
+
+
+
     return (
         <>
             <NavBarAdmin />
@@ -13,18 +33,6 @@ export default function finance() {
                     <div className="col-2">
                         <SideBar4 />
                     </div>
-
-                    {/* <div className="back_re">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="title">
-                                    <h2>Transaction Details</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
                     <div className="col-10">
                         <TitleBanner marginBotton={'40px'} padding={'7'} title={'Transactions'} />
                         <table className="table table-bordered table-hover transaction">
@@ -39,29 +47,22 @@ export default function finance() {
                                 </tr>
                             </thead>
                             <tbody>
+                                {
+                                    finances.map((finance, i) => {
+                                        return (
+                                            <>
+                                                <th scope="row"></th>
+                                                <td>Mark</td>
+                                                <td>Otto</td>
+                                                <td>@mdo</td>
+                                                <td>@mdo</td>
+                                                <td>@mdo</td>
+                                            </>
+                                        )
+                                    })
+                                }
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>@mdo</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td>@fat</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>@twitter</td>
-                                    <td>@twitter</td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -72,3 +73,6 @@ export default function finance() {
         </>
     )
 }
+finance.guestGuard = false
+finance.authGuard = true
+finance.adminGuard = true

@@ -15,7 +15,7 @@ import { deleteAdminBooking, fetchAdminBookingList } from "src/store/admin/booki
 import { fetchAdminParkingList } from "src/store/admin/parkings"
 import { fetchAdminRoomsList } from "src/store/user/availableRooms"
 
-export default function Categories() {
+export default function Booking() {
     const [bookingList, setBookingList] = useState([])
     // const [roomList, setRoomList] = useState([])
     const { showAlert } = useContext(AlertContext);
@@ -185,3 +185,6 @@ export default function Categories() {
         </>
     )
 }
+Booking.guestGuard = false
+Booking.authGuard = true
+Booking.adminGuard = true
