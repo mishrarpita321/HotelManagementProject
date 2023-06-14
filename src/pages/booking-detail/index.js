@@ -12,6 +12,8 @@ import { addAdminBooking } from "src/store/admin/bookings";
 import { AlertContext } from "src/context/AlertContext";
 import { useDispatch } from "react-redux";
 import Spinner from "src/components/spinnner/PageSpinner";
+import { useAuthProvider } from "src/context/AuthContext";
+
 
 export default function BookingDetail() {
     const dispatch = useDispatch();
@@ -19,12 +21,37 @@ export default function BookingDetail() {
     const [isLoading, setIsLoading] = useState(false);
 
 
+
+    const auth = useAuthProvider();
+    const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userType, setUserType] = useState(false);
+    useEffect(() => {
+        if ((JSON.parse(window.localStorage.getItem("userData"))?.role == '[ADMIN]')) {
+            setUserType('admin')
+        } else {
+            setUserType('user')
+        }
+        // let userData= strin window.localStorage.getItem('userData')
+        if (window.localStorage.getItem("accessToken")) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
+
+
+    const [showLogin, setShowLogin] = useState(
+        () => {
+            return !!router.query.requireAuth ?? false;
+        }
+    )
+
+
     // const [guests, setGuests] = useState([{ title: 'Mr.', firstName: '', lastName: '', email: '', contactNumber: '' }]);
     const [guests, setGuests] = useState([]);
 
     const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, guestCount } = useContext(CartContext)
-
-    const router = useRouter();
 
     const [estimatedCost, setEstimatedCost] = useState(0)
     // const { roomNumbers, arrivalDate, deptDate } = router.query;
@@ -180,7 +207,7 @@ export default function BookingDetail() {
     };
     return (
         <>
-            <NavBar />
+            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType} />
             <TitleBanner title={"Review Your Booking"} />
             {isLoading ? (<Spinner />) : (
                 <>
@@ -204,6 +231,10 @@ export default function BookingDetail() {
                                                     <div className="row">{formatTimestamp(deptDate)}</div>
                                                     {/* <div className="row">10:00</div> */}
                                                 </div>
+                                            </div>
+                                            <div className="row" style={{ marginTop: '5px', backgroundColor: '#52404014' }}>
+                                                <p>Rooms Selected</p>
+                                                <div>{selectedRooms.join(",")}</div>
                                             </div>
                                         </div>
                                         <div className="col-md-4 detailBook">

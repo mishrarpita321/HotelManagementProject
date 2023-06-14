@@ -114,7 +114,7 @@ export default function Dashboard() {
                         <div className='col-12 col-sm-10 col-md-7 col-lg-5'>
                             <div style={{ background: "unset" }} className="login">
                                 <div style={{ display: "block", position: "unset", transform: "unset", width: "unset", borderRadius: "12px" }} className="container">
-                                    <h1>Welcome</h1>
+                                    <h1>Welcome Admin</h1>
                                     <form action="#">
                                         <label>Email</label>
                                         <Controller
