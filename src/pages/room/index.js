@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AuthPages from "src/components/Auth/AuthPages";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
@@ -10,6 +10,22 @@ import { useAuthProvider } from "src/context/AuthContext";
 export default function Room(params) {
     const auth = useAuthProvider();
     const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userType, setUserType] = useState(false);
+    useEffect(() => {
+        if ((JSON.parse(window.localStorage.getItem("userData"))?.role == '[ADMIN]')) {
+            setUserType('admin')
+        } else {
+            setUserType('user')
+        }
+        // let userData= strin window.localStorage.getItem('userData')
+        if (window.localStorage.getItem("accessToken")) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
+
 
     const [showLogin, setShowLogin] = useState(
         () => {
@@ -18,7 +34,7 @@ export default function Room(params) {
     )
     return (
         <>
-            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} />
+            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType} />
             <OurModal
                 show={showLogin}
                 onHide={() => setShowLogin(false)}
@@ -37,7 +53,7 @@ export default function Room(params) {
                 </div>
             </div> */}
             {/* <TitleBanner marginBotton={'40px'} padding={'7'} /> */}
-            <TitleBanner title={"Our Room"}/>
+            <TitleBanner title={"Our Room"} />
 
 
             <div className="our_room">

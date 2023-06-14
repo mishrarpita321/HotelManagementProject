@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
+// import { logoutHelp } from "src/logout/logout";
 
 export default function NavBarAdmin({ showLogin, setShowLogin }) {
 
@@ -8,6 +9,7 @@ export default function NavBarAdmin({ showLogin, setShowLogin }) {
     const [loggedIn, setloggedIn] = useState(true)
 
     const { pathname } = useRouter()
+    const routerlog = useRouter()
 
     // const IsActive = pathname === url
     // const IsActive = pathname === url
@@ -17,7 +19,26 @@ export default function NavBarAdmin({ showLogin, setShowLogin }) {
         // setShowLogin(true);
         setShowLogin(true)
     }
+    const onLogoutClick = () => {
+        logoutHelp('admin')
+    }
 
+
+
+
+    const logoutHelp = (user) => {
+
+
+        // Remove all data from localStorage
+        window.localStorage.clear();
+
+        // Redirect the user based on the provided parameter
+        if (user === 'user') {
+            routerlog.push('/');
+        } else if (user === 'admin') {
+            routerlog.push('/admin/login');
+        }
+    };
 
     return (<>
         <header>
@@ -56,13 +77,13 @@ export default function NavBarAdmin({ showLogin, setShowLogin }) {
 
                                             {loggedIn ? (
                                                 <>
-                                                    <span onClick={onClick} className="nav-link loginButton " href="contact.html">
+                                                    <span onClick={onLogoutClick} className="nav-link loginButton " >
                                                         Logout
                                                     </span>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <span onClick={onClick} className="nav-link loginButton " href="contact.html">
+                                                    <span onClick={onClick} className="nav-link loginButton " >
                                                         Login
                                                     </span>
                                                 </>

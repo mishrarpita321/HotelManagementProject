@@ -1,11 +1,45 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Footer from "src/components/Footer";
 import NavBar from "src/components/NavBar";
 import TitleBanner from "src/components/TitleBanner";
 
 export default function userBooking() {
+
+
+
+
+    const router = useRouter();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userType, setUserType] = useState(false);
+    useEffect(() => {
+        if ((JSON.parse(window.localStorage.getItem("userData"))?.role == '[ADMIN]')) {
+            setUserType('admin')
+        } else {
+            setUserType('user')
+        }
+        // let userData= strin window.localStorage.getItem('userData')
+        if (window.localStorage.getItem("accessToken")) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
+
+
+    const [showLogin, setShowLogin] = useState(
+        () => {
+            return !!router.query.requireAuth ?? false;
+        }
+    )
+
+
+
+
+
     return (
         <>
-            <NavBar/>
+            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType} />
             <div className="container">
                 <TitleBanner marginBotton={'40px'} padding={'7'} title={"Bookings"} />
                 <table className="table table-bordered table-hover transaction">
