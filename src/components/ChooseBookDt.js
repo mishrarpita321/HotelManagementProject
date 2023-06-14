@@ -1,14 +1,47 @@
-import { useState } from "react";
-import DatePicker from "react-datepicker";
+import { useForm, Controller } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import DatePicker from 'react-datepicker';
 
-import "react-datepicker/dist/react-datepicker.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import 'react-datepicker/dist/react-datepicker.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAdd } from '@fortawesome/free-solid-svg-icons';
-
+import { CartContext } from 'src/context/CartContext';
+import { formatDateforApi } from 'src/helper/get-date-format-for-api';
+import { useContext } from 'react';
+import { useRouter } from 'next/router';
 
 export default function ChooseBookDt() {
-    const [arrivalDate, setArrivalDate] = useState(new Date());
-    const [departureDate, setDepartureDate] = useState(new Date());
+    const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, setGuestCount } = useContext(CartContext)
+    const router = useRouter()
+    const maxGuest = 10; // Maximum number of guests allowed
+
+    const schema = yup.object().shape({
+        arrival: yup.date().required('Arrival date is required'),
+        departure: yup.date().required('Departure date is required'),
+        noOfGuests: yup
+            .number()
+            .typeError('Please enter a valid number')
+            .positive('Number of guests must be positive')
+            .max(maxGuest, 'Number of guests cannot exceed the maximum allowed')
+            .required('Number of guests is required'),
+    });
+
+    const { control, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(schema),
+    });
+
+    const onSubmit = (data) => {
+        // Handle form submission
+        console.log(data);
+        setArrivalDate(formatDateforApi(data.arrival))
+        setDeptDate(formatDateforApi(data.departure))
+        setGuestCount(data.noOfGuests)
+        router.push("/rooms-available")
+
+
+    };
+
     return (
         <>
             <div className="booking_ocline">
@@ -17,32 +50,68 @@ export default function ChooseBookDt() {
                         <div className="col-md-5">
                             <div className="book_room">
                                 <h1>Book a Room Online</h1>
-                                <form className="book_now">
+                                <form className="book_now" onSubmit={handleSubmit(onSubmit)}>
                                     <div className="row">
                                         <div className="col-md-12">
                                             <span>Arrival</span>
                                             <img className="date_cua" src="images/date.png" />
-                                            <DatePicker className="online_book" selected={arrivalDate} onChange={(date) => setArrivalDate(date)} />
-
-                                            {/* <input
-                                                className="online_book"
-                                                placeholder="dd/mm/yyyy"
-                                                type="date"
-                                                name="dd/mm/yyyy"
-                                            /> */}
+                                            <Controller
+                                                control={control}
+                                                name="arrival"
+                                                render={({ field }) => (
+                                                    <DatePicker
+                                                        className="online_book"
+                                                        selected={field.value}
+                                                        onChange={(date) => field.onChange(date)}
+                                                        required
+                                                    />
+                                                )}
+                                            />
+                                            {errors?.arrival && (
+                                                <span className="text-danger">{errors.arrival.message}</span>
+                                            )}
                                         </div>
-                                        <div style={{margin:"20px 0 20px 0"}} className="col-md-12">
+                                        <div style={{ margin: '20px 0 20px 0' }} className="col-md-12">
                                             <span>Departure</span>
                                             <img className="date_cua" src="images/date.png" />
-                                            <DatePicker className="online_book" selected={departureDate} onChange={(date) => setDepartureDate(date)} />
-
+                                            <Controller
+                                                control={control}
+                                                name="departure"
+                                                render={({ field }) => (
+                                                    <DatePicker
+                                                        className="online_book"
+                                                        selected={field.value}
+                                                        onChange={(date) => field.onChange(date)}
+                                                        required
+                                                    />
+                                                )}
+                                            />
+                                            {errors?.departure && (
+                                                <span className="text-danger">{errors.departure.message}</span>
+                                            )}
                                         </div>
-                                        <div style={{margin:"0 0 20px 0"}} className="col-md-12">
+                                        <div style={{ margin: '0 0 20px 0' }} className="col-md-12">
                                             <span>No. of Guests</span>
-                                            <input type="number" className="dare_cua online_book"></input>
+                                            <Controller
+                                                control={control}
+                                                name="noOfGuests"
+                                                render={({ field }) => (
+                                                    <input
+                                                        type="number"
+                                                        className="dare_cua online_book"
+                                                        {...field}
+                                                        required
+                                                    />
+                                                )}
+                                            />
+                                            {errors?.noOfGuests && (
+                                                <span className="text-danger">{errors.noOfGuests.message}</span>
+                                            )}
                                         </div>
                                         <div className="col-md-12">
-                                            <button className="book_btn">Book Now</button>
+                                            <button type="submit" className="book_btn">
+                                                Book Now
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -51,5 +120,6 @@ export default function ChooseBookDt() {
                     </div>
                 </div>
             </div>
-        </>)
+        </>
+    );
 }
