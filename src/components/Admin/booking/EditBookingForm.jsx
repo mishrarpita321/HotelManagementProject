@@ -5,22 +5,23 @@ import { Form, Button, Container, Row, Col, CloseButton } from 'react-bootstrap'
 import * as yup from 'yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch } from 'react-redux';
-import { addAdminBooking } from 'src/store/admin/bookings';
+import { addAdminBooking, editAdminBooking } from 'src/store/admin/bookings';
 import { AlertContext } from 'src/context/AlertContext';
+import { formatDateforApi } from 'src/helper/get-date-format-for-api';
 
 const schema = yup.object().shape({
     // name: yup.string().required('This field is required'),
     arrival: yup.date().required('This field is required'),
     departure: yup.date().required('This field is required'),
-    size: yup
-        .number()
-        .typeError('This field is required')
-        .positive('The size should be a positive value')
-        .required('This field is required'),
+    // size: yup
+    //     .number()
+    //     .typeError('This field is required')
+    //     .positive('The size should be a positive value')
+    //     .required('This field is required'),
     // category: yup.string().required('This field is required'),
 });
 
-const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate }) => {
+const EditBookingForm = ({ setShowEditDialog, rooms, parkingStore, update, setUpdate, editRow, setEditRow }) => {
     const dispatch = useDispatch();
     const { showAlert } = useContext(AlertContext);
     const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +31,8 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
     const {
         control,
         handleSubmit,
+        getValues,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
@@ -50,12 +53,29 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
 
 
 
+
+    useEffect(() => {
+        console.log(editRow)
+        if (editRow) {
+
+        }
+    }, [editRow, setValue]);
+
+
+
+
+
+
+
     const onSubmit = (data) => {
         setIsLoading(true)
-        const formData = { ...data, parkingRows, guestRows, selectedRoomList };
+        let rooms = editRow?.rooms.map(room => room.roomNo)
+        let id = editRow?.id
+        // editRow.rooms.map(room => room.roomNo)
+        const formData = { ...data, parkingRows, rooms, id };
         console.log(formData);
 
-        dispatch(addAdminBooking(formData)).then((data) => {
+        dispatch(editAdminBooking(formData)).then((data) => {
             console.log(data)
             if (data?.payload?.status === 'success') {
                 setUpdate(update + 1)
@@ -75,7 +95,7 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
 
     const onAlertSuccessHandle = (message) => {
         showAlert('success', message, () => { }, () => { }, () => {
-            setShowAddDialog(false)
+            setShowEditDialog(false)
         });
     };
 
@@ -153,130 +173,61 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
     };
 
 
+    const { arrivalDate, departureDate } = editRow;
+    useEffect(() => {
+        setValue('arrival', formatDateforApi(arrivalDate));
+        setValue('departure', formatDateforApi(departureDate));
+    }, [setValue, arrivalDate, departureDate, editRow]);
+
     return (
         <Container style={{ display: 'contents' }}>
             <Form className="property-form" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group controlId="name">
-                    <h4 style={{ textAlign: 'center' }}>Booking Form</h4>
-
-
-                    <Form.Group controlId="arrival">
-                        <Form.Label>Arrival date:</Form.Label>
-                        <Controller
-                            control={control}
-                            name="arrival"
-                            render={({ field }) => (
-                                <Form.Control
-                                    type="date"
-                                    {...field}
-                                    style={{ marginBottom: '10px' }}
-                                />
-                            )}
-                        />
-                        {errors.arrival && (
-                            <Form.Text className="text-danger">
-                                {errors.arrival.message}
-                            </Form.Text>
-                        )}
-                    </Form.Group>
-
-                    <Form.Group controlId="departure">
-                        <Form.Label>Departure date:</Form.Label>
-                        <Controller
-                            control={control}
-                            name="departure"
-                            render={({ field }) => (
-                                <Form.Control
-                                    type="date"
-                                    {...field}
-                                    style={{ marginBottom: '10px' }}
-                                />
-                            )}
-                        />
-                        {errors.departure && (
-                            <Form.Text className="text-danger">
-                                {errors.departure.message}
-                            </Form.Text>
-                        )}
-                    </Form.Group>
-
-                    <Form.Group controlId="size">
-                        <Form.Label>Number of Guests:</Form.Label>
-                        <Controller
-                            control={control}
-                            name="size"
-                            render={({ field }) => (
-                                <Form.Control
-                                    type="number"
-                                    {...field}
-                                    style={{ marginBottom: '10px' }}
-                                />
-                            )}
-                        />
-                        {errors.size && (
-                            <Form.Text className="text-danger">{errors.size.message}</Form.Text>
-                        )}
-                    </Form.Group>
-
-                    {/* Add Parking Button */}
-                    <Button
-                        variant="primary"
-                        onClick={addGuestRow}
-                        style={{ marginBottom: '10px' }}
-                    >
-                        Add Guest
-                    </Button>
-                    {guestRows.map((row, index) => (
-                        <>
-                            <Row
-                                key={index}
-                                style={{ alignItems: 'center', marginBottom: '10px' }}
-                            >
-                                <Col>
-                                    <Form.Group>
-                                        <Form.Label>Guest Name:</Form.Label>
-                                        <Controller
-                                            control={control}
-                                            name="name"
-                                            render={({ field }) => (
-                                                <Form.Control
-                                                    type="text"
-                                                    // name='name'
-                                                    {...field}
-                                                    value={row.name}
-                                                    onChange={(e) => handleGuestNameChange(index, e.target.value)}
-                                                    style={{ marginBottom: '10px' }}
-                                                />
-                                            )}
-                                        />
-
-
-                                    </Form.Group>
-                                </Col>
-                                <Col xs="auto">
-                                    <CloseButton
-                                        onClick={() => removeGuestRow(index)}
-                                        style={{ marginTop: '4px' }}
-                                    />
-                                </Col>
-                            </Row>
-                        </>
-                    ))}
+                    <h4 style={{ textAlign: 'center' }}>Edit Booking</h4>
                 </Form.Group>
 
-
-                <Form.Group controlId="exampleForm.SelectMultiple">
-                    <Form.Label>Select Multiple Rooms</Form.Label>
-                    <Form.Control as="select" multiple value={selectedRooms} onChange={handleSelectChange}>
-                        {roomList.map((room) => (
-                            <option key={room.id} value={room.id} selected={isRoomSelected(room.id)}>
-                                Room {room.roomNo}
-                            </option>
-                        ))}
-                    </Form.Control>
+                <Form.Group controlId="arrival" style={{ display: "none" }}>
+                    <Form.Label>Arrival date:</Form.Label>
+                    <Controller
+                        control={control}
+                        name="arrival"
+                        defaultValue={editRow?.arrivalDate}
+                        render={({ field }) => (
+                            <Form.Control
+                                type="date"
+                                {...field}
+                                value={field.value}
+                                onChange={(e) => field.onChange(e.target.value)}
+                                style={{ marginBottom: '10px' }}
+                            />
+                        )}
+                    />
+                    {errors.arrival && (
+                        <Form.Text className="text-danger">
+                            {errors.arrival.message}
+                        </Form.Text>
+                    )}
                 </Form.Group>
 
-
+                <Form.Group controlId="departure" style={{ display: "none" }}>
+                    <Form.Label>Departure date:</Form.Label>
+                    <Controller
+                        control={control}
+                        name="departure"
+                        render={({ field }) => (
+                            <Form.Control
+                                type="date"
+                                {...field}
+                                style={{ marginBottom: '10px' }}
+                            />
+                        )}
+                    />
+                    {errors.departure && (
+                        <Form.Text className="text-danger">
+                            {errors.departure.message}
+                        </Form.Text>
+                    )}
+                </Form.Group>
 
 
 
@@ -336,7 +287,7 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
                     <Button variant="primary" type="submit" className="submit-button col-2">
                         Submit
                     </Button>
-                    <Button onClick={() => setShowAddDialog(false)} variant="primary" className="submit-button col-2">
+                    <Button onClick={() => setShowEditDialog(false)} variant="primary" className="submit-button col-2">
                         Cancel
                     </Button>
                 </div>
@@ -345,4 +296,4 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
     );
 };
 
-export default BookingForm;
+export default EditBookingForm;

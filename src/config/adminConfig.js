@@ -19,11 +19,14 @@ export default {
   adminAddParkingEndpoint: base.baseurl + "/admin/parking/add",
   adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
   adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
-  
-  
-  
+
+
+
   adminBookingGetAllEndpoint: base.baseurl + "/admin/bookings",
-  adminAddBookingEndpoint: base.baseurl + "/booking/book?roomNumber=",
+  adminAddBookingEndpoint: base.baseurl + "/booking/book?roomNumbers=",
+  adminEditBookingEndpoint: base.baseurl + "/admin/bookings/update/id",
+  adminDeleteBookingEndpoint: base.baseurl + "/admin/booking/delete/id",
+  adminCheckoutBookingEndpoint: base.baseurl + "/admin/bookings/update/id",
   // adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
   // adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
 

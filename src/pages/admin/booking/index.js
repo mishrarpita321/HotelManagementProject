@@ -1,40 +1,51 @@
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import BookingForm from "src/components/Admin/AdminBooking"
 import SideBar4 from "src/components/Admin/SideBar4"
 import AddBookingForm from "src/components/Admin/booking/AddBookingForm"
+import EditBookingForm from "src/components/Admin/booking/EditBookingForm"
 import AddCategoryDialog from "src/components/Admin/category/AddCategoryDialog"
 import NavBar from "src/components/NavBar"
 import NavBarAdmin from "src/components/NavBarAdmin"
 import TitleBanner from "src/components/TitleBanner"
 import NoCloseModal from "src/components/modal/NoCloseModal"
-import { fetchAdminBookingList } from "src/store/admin/bookings"
+import { AlertContext } from "src/context/AlertContext"
+import { deleteAdminBooking, fetchAdminBookingList } from "src/store/admin/bookings"
+import { fetchAdminParkingList } from "src/store/admin/parkings"
 import { fetchAdminRoomsList } from "src/store/user/availableRooms"
 
 export default function Categories() {
     const [bookingList, setBookingList] = useState([])
-    const [roomList, setRoomList] = useState([])
+    // const [roomList, setRoomList] = useState([])
+    const { showAlert } = useContext(AlertContext);
 
     const dispatch = useDispatch()
     const adminBookingStore = useSelector(state => state.adminBooking)
     const roomStore = useSelector(state => state.adminRoom)
+    const parkingStore = useSelector(state => state.adminParking)
+
+    const [showEditDialog, setShowEditDialog] = useState(false)
+    const [update, setUpdate] = useState(0)
 
 
     useEffect(() => {
         dispatch(fetchAdminBookingList({}))
         dispatch(fetchAdminRoomsList({}))
-    }, [dispatch])
+        dispatch(fetchAdminParkingList({}))
+    }, [dispatch, update])
 
 
     useEffect(() => {
         setBookingList(adminBookingStore.data)
-        setRoomList(roomStore.data)
+        // setRoomList(roomStore.data)
     }, [adminBookingStore])
 
 
     const [showAddDialog, setShowAddDialog] = useState()
 
+
+    // console.log(roomList)
 
     function formatTimestamp(timestamp) {
         const options = {
@@ -67,6 +78,44 @@ export default function Categories() {
         });
 
         return formattedCost;
+    }
+
+    const handleOnDeleteClicked = (booking) => {
+        showAlert('confirmation', 'Are you sure to delete this booking?', () => {
+            dispatch(deleteAdminBooking(booking?.id)).then((data) => {
+                if (data?.payload?.status === 'success') {
+                    setUpdate(update+1)
+                    onAlertSuccessHandle(data?.payload?.message);
+                } else {
+                    onAlertErrorHandle(data?.payload?.message);
+                }
+            })
+        }, () => {
+            console.log('Cancel is clicked')
+        });
+        // setEditRow(category)
+        // setShowEditDialog(true)
+    }
+
+
+
+    const onAlertErrorHandle = (message) => {
+        showAlert('error', message, () => {
+            console.log('Ok button clicked');
+        });
+    };
+
+
+    const onAlertSuccessHandle = (message) => {
+        showAlert('success', message, () => { }, () => { }, () => {
+            setShowEditDialog(false)
+        });
+    };
+
+    const [editRow, setEditRow] = useState(null);
+    const handelOnEditClicked = (booking) => {
+        setEditRow(booking)
+        setShowEditDialog(true)
     }
 
     return (
@@ -114,8 +163,8 @@ export default function Categories() {
                                                 </td>
                                                 <td>{booking.numberOfGuests}</td>
                                                 <td>
-                                                    <button className="edit">Edit</button>
-                                                    <button className="delete">Delete</button>
+                                                    <button onClick={handelOnEditClicked.bind(this, booking)} className="edit">Edit</button>
+                                                    <button onClick={handleOnDeleteClicked.bind(this, booking)} className="delete">Delete</button>
                                                 </td>
                                             </tr>
                                         )
@@ -126,7 +175,10 @@ export default function Categories() {
                     </table>
                     <NoCloseModal show={showAddDialog} onHide={() => { setShowAddDialog(false) }}>
                         {/* <BookingForm /> */}
-                        <AddBookingForm setShowAddDialog={()=>setShowAddDialog(false)} roomList={roomList} />
+                        <AddBookingForm setShowAddDialog={() => setShowAddDialog(false)} rooms={roomStore} parkingStore={parkingStore} update={update} setUpdate={setUpdate} />
+                    </NoCloseModal>
+                    <NoCloseModal show={showEditDialog} onHide={() => { setShowEditDialog(false) }}>
+                        <EditBookingForm setShowEditDialog={() => { setShowEditDialog(false) }} rooms={roomStore} parkingStore={parkingStore} editRow={editRow} setEditRow={setEditRow} update={update} setUpdate={setUpdate} />
                     </NoCloseModal>
                 </div >
             </div>

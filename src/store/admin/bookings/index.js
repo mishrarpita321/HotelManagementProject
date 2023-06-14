@@ -37,22 +37,33 @@ export const addAdminBooking = createAsyncThunk('appAdminBooking/addData', async
   let returnResponse = null
 
   let rooms = (data.selectedRoomList)
-  let email = window.localStorage.getItem('userData').email
-  let guests = data.guestsRows
+  let email = JSON.parse(window.localStorage.getItem('userData')).email
+  let guests = data.guestRows
   let arrivalDate = formatDateforApi(data.arrival)
-  let departureDate = formatDateforApi(data.depature)
+  let departureDate = formatDateforApi(data.departure)
   let numberOfGuests = data.size
   let parkingList = data.parkingRows
   let paymentType = "card"
-  // console.log(data)
+
+  let finaldata = JSON.stringify({
+    email,
+    guests,
+    arrivalDate,
+    departureDate,
+    numberOfGuests,
+    parkingList,
+    paymentType
+  })
+  console.log(data)
   // let categoryId = data.get('categoryId')
   // data.delete('categoryId')
   // console.log(data.get('categoryId'))
   // return
 
   try {
-    const response = await axios.post(adminConfig.adminAddBookingEndpoint + rooms.join(","), { rooms, email, guests, arrivalDate, departureDate, numberOfGuests, parkingList, paymentType }, { headers })
-    dispatch(fetchAdminBookingList(getState().adminRoom))
+    // const response = await axios.post(adminConfig.adminAddBookingEndpoint + rooms.join(","), { email, guests, arrivalDate, departureDate, numberOfGuests, parkingList, paymentType }, { headers })
+    const response = await axios.post(adminConfig.adminAddBookingEndpoint + rooms.join(","), finaldata, { headers })
+    dispatch(fetchAdminBookingList(getState().adminBooking))
     returnResponse = { 'status': 'success', 'message': response?.data }
   } catch (e) {
     // console.log(e)
@@ -64,28 +75,37 @@ export const addAdminBooking = createAsyncThunk('appAdminBooking/addData', async
   return returnResponse
 })
 // ** Edit Categories
-export const editAdminParkings = createAsyncThunk('appAdminParking/editData', async (data, { getState, dispatch }) => {
+export const editAdminBooking = createAsyncThunk('appAdminBooking/editData', async (data, { getState, dispatch }) => {
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
-  console.log(data)
-
-  let id = data.id
-  // let id = data.get('id')
   let returnResponse = null
-  // let categoryId = data.get('categoryId')
-  // data.delete('categoryId')
-  // data.delete('id')
-  // let dataToSend = data.get('data')
-  delete data.id
-  console.log(data)
+  let id = data.id
+  console.log(data.arrivalDate)
+  // return
+  let roomslist = (data?.rooms)
+  // let id= data?.id
+  let arrivalDate = formatDateforApi(data.arrival)
+  let departureDate = formatDateforApi(data.departure)
+console.log(arrivalDate)
+
+
+  let parkingList = data.parkingRows
+
+  let finaldata = JSON.stringify({
+    arrivalDate,
+    departureDate,
+    parkingList,
+  })
+
+  console.log(finaldata)
 
   try {
-    const response = await axios.patch(adminConfig.adminEditParkingEndpoint + '/' + id, data, { headers })
-    dispatch(fetchAdminParkingList(getState().adminRoom))
-    returnResponse = { 'status': 'success', 'message': 'Room Updated Successfully.' }
+    const response = await axios.patch(adminConfig.adminEditBookingEndpoint + '/' + id + '?roomNumbers=' + roomslist.join(","), finaldata, { headers })
+    dispatch(fetchAdminBookingList(getState().adminRoom))
+    returnResponse = { 'status': 'success', 'message': 'Booking Updated Successfully.' }
   } catch (e) {
     console.log(e)
     returnResponse = {
@@ -97,18 +117,41 @@ export const editAdminParkings = createAsyncThunk('appAdminParking/editData', as
 })
 
 // ** Delete Category
-export const deleteAdminParkings = createAsyncThunk('appAdminParking/deleteData', async (id, { getState, dispatch }) => {
+export const deleteAdminBooking = createAsyncThunk('appAdminBooking/deleteData', async (id, { getState, dispatch }) => {
   const headers = {
     Accept: 'application/json',
-    'Content-Type': 'multipart/form-data',
+    'Content-Type': 'application/json',
+
 
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
   let returnResponse = null
   try {
-    const response = await axios.delete(adminConfig.adminDeleteParkingEndpoint + '/' + id, { headers })
-    dispatch(fetchAdminParkingList(getState().adminRoom))
+    const response = await axios.delete(adminConfig.adminDeleteBookingEndpoint + '/' + id, { headers })
+    dispatch(fetchAdminBookingList(getState().adminRoom))
     returnResponse = { 'status': 'success', 'message': 'Room Deleted Successfully.' }
+  } catch (e) {
+    returnResponse = {
+      'status': 'failed',
+      'message': (typeof (e?.response?.data?.message) != undefined ? (e?.response?.data?.message) : ('Something went wrong'))
+    }
+  }
+  return returnResponse
+}
+)
+export const checkoutAdminBooking = createAsyncThunk('appAdminBooking/checkoutData', async (id, { getState, dispatch }) => {
+  const headers = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+
+
+    Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
+  }
+  let returnResponse = null
+  try {
+    const response = await axios.delete(adminConfig.adminCheckoutBookingEndpoint + '/' + id, { headers })
+    dispatch(fetchAdminBookingList(getState().adminRoom))
+    returnResponse = { 'status': 'success', 'message': 'Room Checkout Successfull.' }
   } catch (e) {
     returnResponse = {
       'status': 'failed',
