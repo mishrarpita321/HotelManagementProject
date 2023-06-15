@@ -30,8 +30,12 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
     }, []);
 
     const schema = yup.object().shape({
-        arrival: yup.date().required('Arrival date is required'),
-        departure: yup.date().required('Departure date is required'),
+        arrival: yup.date().min(today, 'Arrival date cannot be in the past')
+            .required('Arrival date is required'),
+        departure: yup
+            .date()
+            .min(yup.ref('arrival'), 'Departure date must be after arrival date')
+            .required('Departure date is required'),
         noOfGuests: yup
             .number()
             .typeError('Please enter a valid number')
