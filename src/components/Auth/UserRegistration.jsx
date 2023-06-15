@@ -292,7 +292,7 @@ export default function UserRegistration({ }) {
                 signupLoading ? (<Spinner size='sm' />) : ('Submit')
               }
             </button>
-            <div className="forgetpwd"><a href="#" >Forgot Password?</a></div>
+            {/* <div className="forgetpwd"><a href="#" >Forgot Password?</a></div> */}
             <div className="link">
               Already a member? <a href="#" onClick={() => setPage("login")}>Sigin here</a>
             </div>
