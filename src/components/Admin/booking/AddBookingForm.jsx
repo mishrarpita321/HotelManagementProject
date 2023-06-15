@@ -373,10 +373,10 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
                                 style={{ marginRight: '10px' }}
                             >
                                 <option value="">Select Parking Type</option>
-                                {parkingList.map((parking) => {
+                                {parkingList.map((parking,i) => {
                                     return (
 
-                                        <option value={parking.vehicleType}>{parking.vehicleType}</option>
+                                        <option key={i} value={parking.vehicleType}>{parking.vehicleType}</option>
                                     )
                                 })}
                                 {/* <option value="motorcycle">Motorcycle</option>
