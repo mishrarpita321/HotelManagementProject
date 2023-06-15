@@ -27,7 +27,7 @@ export default {
   adminBookingGetAllEndpoint: base.baseurl + "/admin/bookings",
   adminAddBookingEndpoint: base.baseurl + "/booking/book?roomNumbers=",
   adminEditBookingEndpoint: base.baseurl + "/admin/bookings/update/id",
-  adminDeleteBookingEndpoint: base.baseurl + "/admin/booking/delete/id",
+  adminDeleteBookingEndpoint: base.baseurl + "/booking/delete/id",
   adminCheckoutBookingEndpoint: base.baseurl + "/admin/checkout?roomNumbers=",
   // adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
   // adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",

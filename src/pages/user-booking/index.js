@@ -100,7 +100,7 @@ export default function UserBooking() {
 
     const onAlertSuccessHandle = (message) => {
         showAlert('success', message, () => { }, () => { }, () => {
-            setShowEditDialog(false)
+            // setShowEditDialog(false)
         });
     };
 
@@ -109,7 +109,7 @@ export default function UserBooking() {
             dispatch(deleteAdminBooking(booking?.id)).then((data) => {
                 if (data?.payload?.status === 'success') {
                     setUpdate(update + 1)
-                    onAlertSuccessHandle(data?.payload?.message);
+                    onAlertSuccessHandle("Booking Cancelled Successfully.");
                 } else {
                     onAlertErrorHandle(data?.payload?.message);
                 }
