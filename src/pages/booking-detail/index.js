@@ -173,7 +173,7 @@ export default function BookingDetail() {
         // const formData = { parkingRows, guestRows, selectedRoomList };
 
         let formData = {
-            email:JSON.parse(window.localStorage.getItem('userData')).email,
+            email: JSON.parse(window.localStorage.getItem('userData')).email,
             arrival: arrivalDate,
             departure: deptDate,
             guestRows: transformData(guests),
@@ -206,6 +206,17 @@ export default function BookingDetail() {
             router.push("/booking-confirm")
         });
     };
+
+    function formatTotalCost(totalCost) {
+        const formattedCost = totalCost.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        return formattedCost;
+    }
     return (
         <>
             <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType} />
@@ -394,7 +405,7 @@ export default function BookingDetail() {
                                                 </div>
                                                 <div className="col">
                                                     <div className="row priceAlign">
-                                                        <p>$ {estimatedCost - 10}</p>
+                                                        <p> {formatTotalCost(estimatedCost - 10)}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -406,7 +417,7 @@ export default function BookingDetail() {
                                                 </div>
                                                 <div className="col">
                                                     <div className="row priceAlign">
-                                                        <p>$ 10</p>
+                                                        <p>{formatTotalCost(10)}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -430,7 +441,7 @@ export default function BookingDetail() {
                                                 </div>
                                                 <div className="col">
                                                     <div className="row priceAlign">
-                                                        <p>$ {estimatedCost}</p>
+                                                        <p>{formatTotalCost(estimatedCost)}</p>
                                                     </div>
                                                 </div>
                                             </div>
