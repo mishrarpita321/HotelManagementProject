@@ -8,7 +8,7 @@ import { AlertContext } from "src/context/AlertContext";
 import { deleteAdminBooking } from "src/store/admin/bookings";
 import { fetchUserBookingList } from "src/store/user/bookings";
 
-export default function userBooking() {
+export default function UserBooking() {
     const [bookingList, setBookingList] = useState([])
     const dispatch = useDispatch()
     const [update, setUpdate] = useState(0)
@@ -147,12 +147,12 @@ export default function userBooking() {
                                 {bookingList.map((booking, i) => {
                                     console.log(booking)
                                     return (
-                                        <tr>
+                                        <tr key={booking.id}>
                                             <th scope="row">{booking.id}</th>
                                             <td>{formatGuestsAndEmail(booking.email, booking.guests)}</td>
                                             <td>{getRoomNumbersWithCategory(booking.rooms)}</td>
                                             <td>{booking.paymentType}</td>
-                                            <td><a href='/admin/finance'>{formatTotalCost(booking.totalCost)}</a></td>
+                                            <td>{formatTotalCost(booking.totalCost)}</td>
                                             <td>{formatTimestamp(booking.arrivalDate)}</td>
                                             <td>{formatTimestamp(booking.departureDate)}</td>
                                             <td>
@@ -176,6 +176,6 @@ export default function userBooking() {
     )
 }
 
-userBooking.guestGuard = false
-userBooking.authGuard = true
-userBooking.adminGuard = false
+UserBooking.guestGuard = false
+UserBooking.authGuard = true
+UserBooking.adminGuard = false

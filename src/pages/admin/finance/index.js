@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SideBar4 from "src/components/Admin/SideBar4";
 import Footer from "src/components/Footer";
-import NavBar from "src/components/NavBar";
 import NavBarAdmin from "src/components/NavBarAdmin";
 import TitleBanner from "src/components/TitleBanner";
 import { fetchAdminFinanceList } from "src/store/admin/finance";
 
-export default function finance() {
+export default function Finance() {
     const [finances, setFinances] = useState([])
     const dispatch = useDispatch()
     const adminFinanceStore = useSelector(state => state.adminFinance)
@@ -74,6 +73,6 @@ export default function finance() {
         </>
     )
 }
-finance.guestGuard = false
-finance.authGuard = true
-finance.adminGuard = true
+Finance.guestGuard = false
+Finance.authGuard = true
+Finance.adminGuard = true

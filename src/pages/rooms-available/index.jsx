@@ -193,9 +193,9 @@ const AvailableRooms = () => {
                             <h3 style={{ marginTop: '70px' }} className="categoryRibbon">{category}</h3>
                             <div className="container">
                                 <div className="row">
-                                    {rooms.map((room) => {
+                                    {rooms.map((room,i) => {
                                         return (
-                                            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
+                                            <div key={i} className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
                                                 {/* <div class="overlay"></div> */}
                                                 {/* <div class="tickIcon"></div> */}
                                                 <div className="roomChildCard" >

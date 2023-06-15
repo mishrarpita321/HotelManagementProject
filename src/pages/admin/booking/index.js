@@ -167,12 +167,12 @@ export default function Booking() {
                                     {bookingList.map((booking, i) => {
                                         console.log(booking)
                                         return (
-                                            <tr>
+                                            <tr key={booking.id}>
                                                 <th scope="row">{booking.id}</th>
                                                 <td>{formatGuestsAndEmail(booking.email, booking.guests)}</td>
                                                 <td>{getRoomNumbersWithCategory(booking.rooms)}</td>
                                                 <td>{booking.paymentType}</td>
-                                                <td><a href='/admin/finance'>{formatTotalCost(booking.totalCost)}</a></td>
+                                                <td>{formatTotalCost(booking.totalCost)}</td>
                                                 <td>{formatTimestamp(booking.arrivalDate)}</td>
                                                 <td>{formatTimestamp(booking.departureDate)}</td>
                                                 <td>

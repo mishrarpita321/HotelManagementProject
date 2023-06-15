@@ -10,7 +10,7 @@ import { AlertContext } from "src/context/AlertContext";
 import { deleteAdminParkings, fetchAdminParkingList } from "src/store/admin/parkings";
 import EditParkingDialog from "src/components/Admin/parking/EditParkingDialog";
 
-export default function parking() {
+export default function Parking() {
     const [parkings, setParkings] = useState([])
     const [showAddDialog, setShowAddDialog] = useState(false)
     const [showEditDialog, setShowEditDialog] = useState(false)
@@ -121,6 +121,6 @@ export default function parking() {
         </div>
     )
 }
-parking.guestGuard = false
-parking.authGuard = true
-parking.adminGuard = true
+Parking.guestGuard = false
+Parking.authGuard = true
+Parking.adminGuard = true
