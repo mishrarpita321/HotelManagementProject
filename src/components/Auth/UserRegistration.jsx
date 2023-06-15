@@ -58,11 +58,11 @@ export default function UserRegistration({ }) {
 
 
   const defaultValues = {
-    email: 'mahesh@gmail.com',
-    password: 'mahesh',
-    username: 'mahesh',
-    confirm_password: 'mahesh',
-    phone: '15735598680'
+    email: '',
+    password: '',
+    username: '',
+    confirm_password: '',
+    phone: ''
   }
 
   const {
