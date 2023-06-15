@@ -19,7 +19,7 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
     const router = useRouter();
     const [maxGuest, setMaxGuest] = useState(10); // Maximum number of guests allowed
     const today = new Date();
-    today.setHours(0,0,0,0)
+    today.setHours(0, 0, 0, 0)
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -92,6 +92,12 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
         await fetchMaxGuest(arrivalDate, departureDate);
     };
 
+    const onClickCheck = () => {
+        if (!isLoggedIn) {
+            setShowLogin(true)
+        }
+    }
+
     return (
         <>
             <div className="booking_ocline">
@@ -114,6 +120,7 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                         selected={field.value}
                                                         onChange={(date) => handleDateChange(field, date)}
                                                         required
+                                                        onInputClick={onClickCheck}
                                                     />
                                                 )}
                                             />
@@ -133,6 +140,8 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                         selected={field.value}
                                                         onChange={(date) => handleDateChange(field, date)}
                                                         required
+                                                        onInputClick={onClickCheck}
+
                                                     />
                                                 )}
                                             />
@@ -151,6 +160,7 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                         className="dare_cua online_book"
                                                         {...field}
                                                         required
+                                                        onClick={onClickCheck}
                                                     />
                                                 )}
                                             />
