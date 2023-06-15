@@ -96,7 +96,7 @@ export default function Login({ }) {
           </label> */}
           {/* <div onClick={onClick}>x</div> */}
           {/* <button onClick={onClick} >Close</button> */}
-          <h1 onClick={() => setLoginLoading(true)}>Welcome {loginLoading ? ('true') : ('false')}</h1>
+          <h1 onClick={() => setLoginLoading(true)}>Welcome</h1>
           <form action="#">
             <label>Email</label>
             <Controller
