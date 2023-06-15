@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, set } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Form, Button, Container, Row, Col, CloseButton } from 'react-bootstrap';
 import * as yup from 'yup';
@@ -7,9 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useDispatch } from 'react-redux';
 import { addAdminBooking } from 'src/store/admin/bookings';
 import { AlertContext } from 'src/context/AlertContext';
+import { fetchAdminRoomsList } from 'src/store/user/availableRooms';
 
 const schema = yup.object().shape({
     // name: yup.string().required('This field is required'),
+    email: yup.string().email('Invalid email').required('Email is required'),
     arrival: yup.date().required('This field is required'),
     departure: yup.date().required('This field is required'),
     size: yup
@@ -27,9 +29,15 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
     const [roomList, setRoomList] = useState([]);
     const [parkingList, setParkingList] = useState([]);
 
+    const [arrivalDate, setArrivalDate] = useState(new Date().toISOString().split('T')[0]);
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const [deptDate, setDeptDate] = useState(tomorrow.toISOString().split('T')[0]);
+
     const {
         control,
         handleSubmit,
+        setValue,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
@@ -40,15 +48,59 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
 
 
     useEffect(() => {
-        setRoomList(rooms.data)
-        console.log(roomList)
+        if (rooms.data.length !== 0) {
+
+            setRoomList(rooms.data)
+            console.log(roomList)
+        }
     }, [rooms])
 
     useEffect(() => {
         setParkingList(parkingStore.data)
     }, [parkingStore])
 
+    useEffect(() => {
 
+        setRoomList([])
+        // console.log(errors)
+        if ( arrivalDate && deptDate) {
+            dispatch(fetchAdminRoomsList({ arrivalDate, deptDate }));
+        }
+    }, [arrivalDate, deptDate, dispatch, errors.arrival, errors.departure]);
+
+    // useEffect(() => {
+    //     if (errors.arrival || errors.departure) {
+    //         setRoomList([])
+    //     }
+    // }, [rooms])
+
+
+
+    const handleArrivalDateChange = (event) => {
+        const selectedDate = event.target.value;
+        const currentDate = new Date().toISOString().split('T')[0]; // Get current date
+
+        if (selectedDate < currentDate) {
+            // Do not update the state if the selected date is in the past
+            return;
+        }
+        setArrivalDate(event.target.value);
+        setValue('arrival', event.target.value)
+
+    };
+
+    const handleDeptDateChange = (event) => {
+        const selectedDate = event.target.value;
+
+        if (selectedDate < arrivalDate) {
+            // Do not update the state if the selected departure date is before the arrival date
+            return;
+        }
+
+        setDeptDate(event.target.value);
+        setValue('departure', event.target.value)
+
+    };
 
     const onSubmit = (data) => {
         setIsLoading(true)
@@ -158,7 +210,19 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
             <Form className="property-form" onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group controlId="name">
                     <h4 style={{ textAlign: 'center' }}>Booking Form</h4>
-
+                    <Form.Group controlId="email">
+                        <Form.Label>Email:</Form.Label>
+                        <Controller
+                            control={control}
+                            name="email"
+                            render={({ field }) => (
+                                <Form.Control type="email" {...field} style={{ marginBottom: '10px' }} />
+                            )}
+                        />
+                        {errors.email && (
+                            <Form.Text className="text-danger">{errors.email.message}</Form.Text>
+                        )}
+                    </Form.Group>
 
                     <Form.Group controlId="arrival">
                         <Form.Label>Arrival date:</Form.Label>
@@ -169,14 +233,17 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
                                 <Form.Control
                                     type="date"
                                     {...field}
+                                    value={arrivalDate}
+                                    onChange={handleArrivalDateChange}
                                     style={{ marginBottom: '10px' }}
                                 />
                             )}
                         />
+                        {arrivalDate < new Date().toISOString().split('T')[0] && (
+                            <Form.Text className="text-danger">Cannot select a past date</Form.Text>
+                        )}
                         {errors.arrival && (
-                            <Form.Text className="text-danger">
-                                {errors.arrival.message}
-                            </Form.Text>
+                            <Form.Text className="text-danger">{errors.arrival.message}</Form.Text>
                         )}
                     </Form.Group>
 
@@ -189,14 +256,17 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
                                 <Form.Control
                                     type="date"
                                     {...field}
+                                    value={deptDate}
+                                    onChange={handleDeptDateChange}
                                     style={{ marginBottom: '10px' }}
                                 />
                             )}
                         />
+                        {deptDate < arrivalDate && (
+                            <Form.Text className="text-danger">Departure date must be after the arrival date</Form.Text>
+                        )}
                         {errors.departure && (
-                            <Form.Text className="text-danger">
-                                {errors.departure.message}
-                            </Form.Text>
+                            <Form.Text className="text-danger">{errors.departure.message}</Form.Text>
                         )}
                     </Form.Group>
 
@@ -303,10 +373,10 @@ const BookingForm = ({ setShowAddDialog, rooms, parkingStore, update, setUpdate 
                                 style={{ marginRight: '10px' }}
                             >
                                 <option value="">Select Parking Type</option>
-                                {parkingList.map((parking) => {
+                                {parkingList.map((parking,i) => {
                                     return (
 
-                                        <option value={parking.vehicleType}>{parking.vehicleType}</option>
+                                        <option key={i} value={parking.vehicleType}>{parking.vehicleType}</option>
                                     )
                                 })}
                                 {/* <option value="motorcycle">Motorcycle</option>

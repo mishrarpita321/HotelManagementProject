@@ -1,6 +1,17 @@
+import { Router, useRouter } from "next/router";
+import { Button } from "react-bootstrap";
 import Footer from "src/components/Footer";
+import { CartContext } from "src/context/CartContext";
 
-export default function bookingConfirm() {
+export default function BookingConfirm() {
+    const router = useRouter();
+    const { selectedRooms, addToCart, removeFromCart, arrivalDate, setArrivalDate, deptDate, setDeptDate, guestCount } = useContext(CartContext)
+
+
+    const onBtnClicked = () => {
+        router.push('/user-booking')
+    }
+
     return (
         <>
             <>
@@ -38,14 +49,14 @@ export default function bookingConfirm() {
                                     <div className="row">
                                         <div className="col">
                                             <p>Booking details:</p>
-                                            <div className="row">
+                                            {/* <div className="row">
                                                 <div className="col">
                                                     <p>Booking Id:</p>
                                                 </div>
                                                 <div className="col">
                                                     <p>1234567IO</p>
                                                 </div>
-                                            </div>
+                                            </div> */}
                                             <div className="row">
                                                 <div className="col">
                                                     <p>Hotel Name:</p>
@@ -59,23 +70,24 @@ export default function bookingConfirm() {
                                                     <p>Check-In:</p>
                                                 </div>
                                                 <div className="col">
-                                                    <p>June 10, 2023</p>
+                                                    <p>{formatTimestamp(arrivalDate)}</p>
                                                 </div>
                                             </div>
+
                                             <div className="row">
                                                 <div className="col">
                                                     <p>Check-Out:</p>
                                                 </div>
                                                 <div className="col">
-                                                    <p>June 15, 2023</p>
+                                                    <p>{formatTimestamp(deptDate)}</p>
                                                 </div>
                                             </div>
                                             <div className="row">
                                                 <div className="col">
-                                                    <p>Room Type:</p>
+                                                    <p>Rooms:</p>
                                                 </div>
                                                 <div className="col">
-                                                    <p>Deluxe Double Room</p>
+                                                    <p>{selectedRooms.join(",")}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,12 +98,14 @@ export default function bookingConfirm() {
                                 </div>
                                 <p>
                                     We look forward to welcoming you. If you have any questions or need
-                                    further assistance, please don't hesitate to contact us.
+                                    further assistance, please don`&apos;`t hesitate to contact us.
                                 </p>
                                 <hr />
                                 <p className="text-center">
                                     <i className="fas fa-phone" /> Contact: +123456789
                                 </p>
+
+                                <Button onClick={onBtnClicked}>See Booking</Button>
                             </div>
                         </div>
                     </div>
@@ -102,3 +116,6 @@ export default function bookingConfirm() {
         </>
     )
 }
+BookingConfirm.guestGuard = false
+BookingConfirm.authGuard = true
+BookingConfirm.adminGuard = false

@@ -11,11 +11,11 @@ import NavBarAdmin from "src/components/NavBarAdmin"
 import TitleBanner from "src/components/TitleBanner"
 import NoCloseModal from "src/components/modal/NoCloseModal"
 import { AlertContext } from "src/context/AlertContext"
-import { deleteAdminBooking, fetchAdminBookingList } from "src/store/admin/bookings"
+import { checkoutAdminBooking, deleteAdminBooking, fetchAdminBookingList } from "src/store/admin/bookings"
 import { fetchAdminParkingList } from "src/store/admin/parkings"
 import { fetchAdminRoomsList } from "src/store/user/availableRooms"
 
-export default function Categories() {
+export default function Booking() {
     const [bookingList, setBookingList] = useState([])
     // const [roomList, setRoomList] = useState([])
     const { showAlert } = useContext(AlertContext);
@@ -64,6 +64,7 @@ export default function Categories() {
             .join(", ");
     }
 
+
     function formatGuestsAndEmail(email, guests) {
         const otherGuests = guests.map((guest) => guest.name).join(", ");
         return `${email}, ${otherGuests}`;
@@ -84,7 +85,23 @@ export default function Categories() {
         showAlert('confirmation', 'Are you sure to delete this booking?', () => {
             dispatch(deleteAdminBooking(booking?.id)).then((data) => {
                 if (data?.payload?.status === 'success') {
-                    setUpdate(update+1)
+                    setUpdate(update + 1)
+                    onAlertSuccessHandle(data?.payload?.message);
+                } else {
+                    onAlertErrorHandle(data?.payload?.message);
+                }
+            })
+        }, () => {
+            console.log('Cancel is clicked')
+        });
+        // setEditRow(category)
+        // setShowEditDialog(true)
+    }
+    const handleOnCheckoutClicked = (booking) => {
+        showAlert('confirmation', 'Are you sure to check out?', () => {
+            dispatch(checkoutAdminBooking(booking)).then((data) => {
+                if (data?.payload?.status === 'success') {
+                    setUpdate(update + 1)
                     onAlertSuccessHandle(data?.payload?.message);
                 } else {
                     onAlertErrorHandle(data?.payload?.message);
@@ -150,22 +167,22 @@ export default function Categories() {
                                     {bookingList.map((booking, i) => {
                                         console.log(booking)
                                         return (
-                                            <tr>
+                                            <tr key={booking.id}>
                                                 <th scope="row">{booking.id}</th>
                                                 <td>{formatGuestsAndEmail(booking.email, booking.guests)}</td>
                                                 <td>{getRoomNumbersWithCategory(booking.rooms)}</td>
                                                 <td>{booking.paymentType}</td>
-                                                <td><a href='/admin/finance'>{formatTotalCost(booking.totalCost)}</a></td>
+                                                <td>{formatTotalCost(booking.totalCost)}</td>
                                                 <td>{formatTimestamp(booking.arrivalDate)}</td>
                                                 <td>{formatTimestamp(booking.departureDate)}</td>
                                                 <td>
                                                     {booking.parking.length > 0 ? 'Yes' : 'No'}
                                                 </td>
                                                 <td>{booking.numberOfGuests}</td>
-                                                <td style={{display: "flex"}}>
+                                                <td style={{ display: "flex" }}>
                                                     <button onClick={handelOnEditClicked.bind(this, booking)} className="edit">Edit</button>
                                                     <button onClick={handleOnDeleteClicked.bind(this, booking)} className="delete">Delete</button>
-                                                    <button onClick={handleOnDeleteClicked.bind(this, booking)} className="delete" style={{width: "auto"}}>Checkout</button>
+                                                    <button onClick={handleOnCheckoutClicked.bind(this, booking)} className="delete" style={{ width: "auto" }}>Checkout</button>
                                                 </td>
                                             </tr>
                                         )
@@ -186,3 +203,6 @@ export default function Categories() {
         </>
     )
 }
+Booking.guestGuard = false
+Booking.authGuard = true
+Booking.adminGuard = true

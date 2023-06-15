@@ -6,6 +6,8 @@ export default {
   categoryEditEndpoint: base.baseurl + "/admin/category/update/id",
   categoryDeleteEndpoint: base.baseurl + "/admin/category/delete/id",
 
+  totalRoomCountEndpoint: base.baseurl + "/room/count?categoryId=",
+
 
 
   adminRoomsGetAllEndpoint: base.baseurl + "/rooms",
@@ -26,9 +28,16 @@ export default {
   adminAddBookingEndpoint: base.baseurl + "/booking/book?roomNumbers=",
   adminEditBookingEndpoint: base.baseurl + "/admin/bookings/update/id",
   adminDeleteBookingEndpoint: base.baseurl + "/admin/booking/delete/id",
-  adminCheckoutBookingEndpoint: base.baseurl + "/admin/bookings/update/id",
+  adminCheckoutBookingEndpoint: base.baseurl + "/admin/checkout?roomNumbers=",
   // adminEditParkingEndpoint: base.baseurl + "/admin/parking/update/id",
   // adminDeleteParkingEndpoint: base.baseurl + "/admin/parking/delete/id",
+
+
+
+
+
+  adminFinanceGetAllEndpoint: base.baseurl + "/admin/transactions",
+
 
 
   storageTokenKeyName: "accessToken",

@@ -27,6 +27,10 @@ const CartProvider = ({ children }) => {
 
     const clearCart = () => {
         setSelectedRooms([])
+        setArrivalDate(null)
+        setDeptDate(null)
+        setGuestCount(0)
+
     }
 
     return (

@@ -37,7 +37,7 @@ export const addAdminBooking = createAsyncThunk('appAdminBooking/addData', async
   let returnResponse = null
 
   let rooms = (data.selectedRoomList)
-  let email = JSON.parse(window.localStorage.getItem('userData')).email
+  let email = data.email
   let guests = data.guestRows
   let arrivalDate = formatDateforApi(data.arrival)
   let departureDate = formatDateforApi(data.departure)
@@ -89,7 +89,7 @@ export const editAdminBooking = createAsyncThunk('appAdminBooking/editData', asy
   // let id= data?.id
   let arrivalDate = formatDateforApi(data.arrival)
   let departureDate = formatDateforApi(data.departure)
-console.log(arrivalDate)
+  console.log(arrivalDate)
 
 
   let parkingList = data.parkingRows
@@ -129,7 +129,7 @@ export const deleteAdminBooking = createAsyncThunk('appAdminBooking/deleteData',
   try {
     const response = await axios.delete(adminConfig.adminDeleteBookingEndpoint + '/' + id, { headers })
     dispatch(fetchAdminBookingList(getState().adminRoom))
-    returnResponse = { 'status': 'success', 'message': 'Room Deleted Successfully.' }
+    returnResponse = { 'status': 'success', 'message': 'Booking Deleted Successfully.' }
   } catch (e) {
     returnResponse = {
       'status': 'failed',
@@ -139,17 +139,35 @@ export const deleteAdminBooking = createAsyncThunk('appAdminBooking/deleteData',
   return returnResponse
 }
 )
-export const checkoutAdminBooking = createAsyncThunk('appAdminBooking/checkoutData', async (id, { getState, dispatch }) => {
+
+function getRoomNumbers(rooms) {
+  return rooms
+    .map((room) => `${room.roomNo}`)
+    .join(",");
+}
+
+export const checkoutAdminBooking = createAsyncThunk('appAdminBooking/checkoutData', async (data, { getState, dispatch }) => {
   const headers = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
-
-
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
   let returnResponse = null
+
+  console.log(data)
+  let rooms = getRoomNumbers(data.rooms)
+
+  let apidata = JSON.stringify({
+    username: data.email,
+    bookingId: data.id,
+    arrivalDate: formatDateforApi(data.arrivalDate),
+    deptDate: formatDateforApi(data.departureDate),
+    finalCost:data.totalCost
+  })
+  // console.log(rooms)
+  // return
   try {
-    const response = await axios.delete(adminConfig.adminCheckoutBookingEndpoint + '/' + id, { headers })
+    const response = await axios.post(adminConfig.adminCheckoutBookingEndpoint + rooms, apidata, { headers })
     dispatch(fetchAdminBookingList(getState().adminRoom))
     returnResponse = { 'status': 'success', 'message': 'Room Checkout Successfull.' }
   } catch (e) {

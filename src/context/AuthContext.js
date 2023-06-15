@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }) => {
       const storedToken =
         "Bearer " + window.localStorage.getItem(authConfig.storageTokenKeyName);
 
-      if (storedToken) {
+      if (storedToken && window.localStorage.getItem(authConfig.storageTokenKeyName)) {
         setLoading(true);
         await axios
           .get(authConfig.meEndpoint, {
@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem("accessToken");
             setUser(null);
             setLoading(false);
+            router.reload()
           });
       } else {
         setLoading(false);

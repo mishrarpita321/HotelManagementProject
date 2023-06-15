@@ -49,7 +49,7 @@ export default function Home() {
 
 
 
-  
+
   const { showAlert, hideAlert } = useContext(AlertContext);
   const handleClick = () => {
     alert('clicked')
@@ -109,7 +109,7 @@ export default function Home() {
               )} */}
             </div>
           </div>
-          <ChooseBookDt />
+          <ChooseBookDt setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} />
         </section>
         {/* end banner */}
         {/* about */}

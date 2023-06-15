@@ -3,6 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 // ** Axios Imports
 import axios from 'axios'
 import adminConfig from 'src/config/adminConfig'
+import userConfig from 'src/config/userConfig';
 
 // ** Fetch Categories
 export const fetchAdminRoomsList = createAsyncThunk('appAdminRooms/fetchData', async params => {
@@ -13,12 +14,14 @@ export const fetchAdminRoomsList = createAsyncThunk('appAdminRooms/fetchData', a
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
 
+  // console.log(params)
+
   // axios.get(adminConfig.AdminListEndpoint, params, { headers: headers })
 
   // const filterParams = "?" + (params.name ? 'name=' + params.name : '') + (params.role ? '&role=' + params.role : '') + (params.currentPlan ? '&currentPlan=' + params.currentPlan : '') + (params.status ? '&status=' + params.status : '')
   const filterParams = ''
 
-  const response = await axios.get(adminConfig.adminRoomsGetAllEndpoint + '?isActive=true', { headers })
+  const response = await axios.get(userConfig.userAvailableRoomsEndPoint + '?arrivalDate=' + params.arrivalDate + '&deptDate=' + params.deptDate, { headers })
   return {
     adminRooms: response.data,
   };

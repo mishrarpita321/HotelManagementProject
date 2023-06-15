@@ -1,10 +1,29 @@
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SideBar4 from "src/components/Admin/SideBar4";
 import Footer from "src/components/Footer";
-import NavBar from "src/components/NavBar";
 import NavBarAdmin from "src/components/NavBarAdmin";
 import TitleBanner from "src/components/TitleBanner";
+import { fetchAdminFinanceList } from "src/store/admin/finance";
 
-export default function finance() {
+export default function Finance() {
+    const [finances, setFinances] = useState([])
+    const dispatch = useDispatch()
+    const adminFinanceStore = useSelector(state => state.adminFinance)
+
+
+    useEffect(() => {
+        dispatch(fetchAdminFinanceList({}))
+    }, [dispatch])
+
+
+
+    useEffect(() => {
+        setFinances(adminFinanceStore.data)
+    }, [adminFinanceStore])
+
+
+
     return (
         <>
             <NavBarAdmin />
@@ -13,18 +32,6 @@ export default function finance() {
                     <div className="col-2">
                         <SideBar4 />
                     </div>
-
-                    {/* <div className="back_re">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="title">
-                                    <h2>Transaction Details</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
                     <div className="col-10">
                         <TitleBanner marginBotton={'40px'} padding={'7'} title={'Transactions'} />
                         <table className="table table-bordered table-hover transaction">
@@ -32,36 +39,30 @@ export default function finance() {
                                 <tr style={{ backgroundColor: "#38325059" }}>
                                     <th scope="col">Transaction Id</th>
                                     <th scope="col">Booking Id</th>
-                                    <th scope="col">Room Category</th>
                                     <th scope="col">Customer Name</th>
-                                    <th scope="col">Payment Method</th>
-                                    <th scope="col">Date of Payment</th>
+                                    <th scope="col">Arrival Date</th>
+                                    <th scope="col">Departure Date</th>
+                                    <th scope="col">Final Cost</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                {
+                                    finances.map((finance, i) => {
+                                        return (
+                                            <>
+                                                {/* <th scope="row"></th> */}
+                                                <td>{finance.id}</td>
+                                                <td>{finance.bookingId}</td>
+                                                <td>{finance.username}</td>
+                                                <td>{finance.arrivalDate}</td>
+                                                <td>{finance.deptDate}</td>
+                                                <td>{finance.finalCost}</td>
+                                            </>
+                                        )
+                                    })
+                                }
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                    <td>@mdo</td>
-                                    <td>@mdo</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                    <td>@fat</td>
-                                    <td>@fat</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Larry</td>
-                                    <td>the Bird</td>
-                                    <td>@twitter</td>
-                                    <td>@twitter</td>
-                                    <td>@twitter</td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -72,3 +73,6 @@ export default function finance() {
         </>
     )
 }
+Finance.guestGuard = false
+Finance.authGuard = true
+Finance.adminGuard = true

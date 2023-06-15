@@ -35,7 +35,7 @@ const AvailableRooms = () => {
 
 
     useEffect(() => {
-        dispatch(fetchAdminRoomsList({}))
+        dispatch(fetchAdminRoomsList({ arrivalDate, deptDate }))
     }, [dispatch])
 
     useEffect(() => {
@@ -187,15 +187,15 @@ const AvailableRooms = () => {
             ) : (
                 <>
                     <button onClick={bookNowClicked} className="loginButton" style={{ float: "right", marginTop: "30px", marginRight: "180px" }}>Book Now</button>
-                    <div style={{ float: "right", marginTop: "44px", marginRight: "20px" }}>{selectedRooms.map((room) => (<>{room}, </>))}</div>
+                    {/* <div style={{ float: "right", marginTop: "44px", marginRight: "20px" }}>{selectedRooms.map((room) => (<>{room}, </>))}</div> */}
                     {Object.entries(categorizedRooms).map(([category, rooms]) => (
                         <div key={category}>
                             <h3 style={{ marginTop: '70px' }} className="categoryRibbon">{category}</h3>
                             <div className="container">
                                 <div className="row">
-                                    {rooms.map((room) => {
+                                    {rooms.map((room,i) => {
                                         return (
-                                            <div className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
+                                            <div key={i} className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
                                                 {/* <div class="overlay"></div> */}
                                                 {/* <div class="tickIcon"></div> */}
                                                 <div className="roomChildCard" >
@@ -225,7 +225,7 @@ const AvailableRooms = () => {
                                                             </div>
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
                                                                 <div className="col-10">Max Capacity</div>
-                                                                <div className="col-2">{room.category.price}</div>
+                                                                <div className="col-2"></div>
                                                             </div>
                                                         </div>
                                                         <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>
