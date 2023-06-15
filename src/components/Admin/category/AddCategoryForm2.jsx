@@ -9,11 +9,11 @@ import { AlertContext } from 'src/context/AlertContext';
 
 const schema = yup.object().shape({
   name: yup.string().required('This field is required'),
-  rooms: yup
-    .number()
-    .positive('The number of rooms should be a positive value')
-    .integer('The number of rooms should be an integer')
-    .required('This field is required'),
+  // rooms: yup
+  //   .number()
+  //   .positive('The number of rooms should be a positive value')
+  //   .integer('The number of rooms should be an integer')
+  //   .required('This field is required'),
   size: yup
     .number()
     .positive('The size should be a positive value')
@@ -34,7 +34,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
 
   const defaultValues = {
     name: 'Deluxe-4',
-    rooms: 3,
+    // rooms: 3,
     size: 54,
     capacity: 2,
     price: '25'
@@ -54,16 +54,15 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
 
   const onSubmit = (data) => {
     setIsLoading(true)
-    const { name, rooms, size, capacity, price, image } = data;
+    const { name, size, capacity, price, image } = data;
     const categoryDto = {
       title: name,
-      rooms,
       size,
       price,
       maxPeopleAllowed: capacity
     };
     const test = JSON.stringify(categoryDto)
-
+    console.log(categoryDto)
 
     const blob = new Blob([test], {
       type: 'application/json'
@@ -123,7 +122,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
           {errors.name && <Form.Text className="text-danger">{errors.name.message}</Form.Text>}
         </Form.Group>
 
-        <Form.Group controlId="rooms">
+        {/* <Form.Group controlId="rooms">
           <Form.Label>Number of Rooms:</Form.Label>
           <Controller
             control={control}
@@ -139,7 +138,7 @@ const AddCategoryForm2 = ({ setShowAddDialog }) => {
             )}
           />
           {errors.rooms && <Form.Text className="text-danger">{errors.rooms.message}</Form.Text>}
-        </Form.Group>
+        </Form.Group> */}
 
         <Form.Group controlId="size">
           <Form.Label>Size (in sq mt):</Form.Label>
