@@ -10,6 +10,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from "next/router"
 import Spinner from "src/components/spinnner/PageSpinner"
 import { AlertContext } from "src/context/AlertContext"
+import { useAuthProvider } from "src/context/AuthContext"
 
 const AvailableRooms = () => {
     const router = useRouter();
@@ -24,6 +25,29 @@ const AvailableRooms = () => {
     const [loading, setLoading] = useState(false)
 
     const { showAlert } = useContext(AlertContext);
+    const auth = useAuthProvider();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [userType, setUserType] = useState(false);
+    useEffect(() => {
+        if ((JSON.parse(window.localStorage.getItem("userData"))?.role == '[ADMIN]')) {
+            setUserType('admin')
+        } else {
+            setUserType('user')
+        }
+        // let userData= strin window.localStorage.getItem('userData')
+        if (window.localStorage.getItem("accessToken")) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
+
+
+    const [showLogin, setShowLogin] = useState(
+        () => {
+            return !!router.query.requireAuth ?? false;
+        }
+    )
 
     useEffect(() => {
         setLoading(true)
@@ -69,6 +93,18 @@ const AvailableRooms = () => {
 
     // CSS classes for the tick icon
     const tickIconClass = 'tickIcon';
+
+
+    function formatTotalCost(totalCost) {
+        const formattedCost = totalCost.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        return formattedCost;
+    }
 
 
     function categorizeRooms() {
@@ -176,7 +212,7 @@ const AvailableRooms = () => {
     // console.log()
     return (
         <>
-            <NavBar />
+            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType}/>
             <TitleBanner marginBotton={"-12px"} padding={'10'} title={"Rooms Available for Booking"} />
 
 
@@ -193,7 +229,7 @@ const AvailableRooms = () => {
                             <h3 style={{ marginTop: '70px' }} className="categoryRibbon">{category}</h3>
                             <div className="container">
                                 <div className="row">
-                                    {rooms.map((room,i) => {
+                                    {rooms.map((room, i) => {
                                         return (
                                             <div key={i} className="col-xs-12 col-sm-6 col-md-4 col-lg-4 roomCard" >
                                                 {/* <div class="overlay"></div> */}
@@ -212,7 +248,7 @@ const AvailableRooms = () => {
                                                             </span>
                                                         </div>
                                                         <div>
-                                                            <img src="images/gallery1.jpg" alt="room" ></img>
+                                                            <img src="images/gallery1.jpg" alt="room" style={{width: '105%',maxWidth:"unset"}}></img>
                                                         </div>
                                                         <div className="row">
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
@@ -221,11 +257,11 @@ const AvailableRooms = () => {
                                                             </div>
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
                                                                 <div className="col-10">Price</div>
-                                                                <div className="col-2">{room.category.price}</div>
+                                                                <div className="col-2">{formatTotalCost(room.category.price)}</div>
                                                             </div>
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
                                                                 <div className="col-10">Max Capacity</div>
-                                                                <div className="col-2"></div>
+                                                                <div className="col-2">{room.category.maxPeopleAllowed}</div>
                                                             </div>
                                                         </div>
                                                         <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>

@@ -118,7 +118,16 @@ export default function Categories() {
 
 
 
+    function formatTotalCost(totalCost) {
+        const formattedCost = totalCost.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
 
+        return formattedCost;
+    }
 
 
 
@@ -173,7 +182,7 @@ export default function Categories() {
                                                 <th scope="row">{category?.title}</th>
                                                 <td>{category?.roomCount}</td>
                                                 <td>{category?.size}</td>
-                                                <td>{category?.price}</td>
+                                                <td>{formatTotalCost(category?.price)}</td>
                                                 <td>
                                                     {/* <img src={`data:${getImageFormat(category?.imageData)};base64,${category?.imageData}`} alt="Category Image" style={{ height: "200px", width: "200px" }}></img> */}
                                                     <img

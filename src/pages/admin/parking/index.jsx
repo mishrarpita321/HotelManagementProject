@@ -70,6 +70,16 @@ export default function Parking() {
     }
 
 
+    function formatTotalCost(totalCost) {
+        const formattedCost = totalCost.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        return formattedCost;
+    }
 
     return (
         <div>
@@ -96,7 +106,7 @@ export default function Parking() {
                                         return (
                                             <tr key={parking?.id}>
                                                 <td>{parking?.vehicleType}</td>
-                                                <td>{parking?.price}</td>
+                                                <td>{formatTotalCost(parking?.price)}</td>
                                                 <td>
                                                     <button onClick={handelOnEditClicked.bind(this, parking)} className="edit">Edit</button>
                                                     <button onClick={handleOnDeleteClicked.bind(this, parking)} className="delete">Delete</button>
