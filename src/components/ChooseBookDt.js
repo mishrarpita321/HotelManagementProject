@@ -19,6 +19,7 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
     const router = useRouter();
     const [maxGuest, setMaxGuest] = useState(10); // Maximum number of guests allowed
     const today = new Date();
+    today.setHours(0,0,0,0)
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 

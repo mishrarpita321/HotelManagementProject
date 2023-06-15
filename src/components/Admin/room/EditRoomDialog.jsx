@@ -184,7 +184,7 @@ export default function EditRoomDialog({ setShowEditDialog, categoryStore, editR
                 <Row className="mb-3">
                     <Col>
                         <Form.Group controlId="roomStatus">
-                            <Form.Label>Status:</Form.Label>
+                            <Form.Label>Available:</Form.Label>
                             <Controller
                                 control={control}
                                 name="roomStatus"

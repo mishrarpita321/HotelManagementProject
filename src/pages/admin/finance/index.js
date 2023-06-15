@@ -23,7 +23,28 @@ export default function Finance() {
     }, [adminFinanceStore])
 
 
+    function formatTimestamp(timestamp) {
+        const options = {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        };
 
+        return new Date(timestamp).toLocaleDateString('en-US', options);
+    }
+
+
+    function formatTotalCost(totalCost) {
+        const formattedCost = totalCost.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'EUR',
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        return formattedCost;
+    }
     return (
         <>
             <NavBarAdmin />
@@ -50,20 +71,21 @@ export default function Finance() {
                                     finances.map((finance, i) => {
                                         return (
                                             <>
-                                                {/* <th scope="row"></th> */}
-                                                <td>{finance.id}</td>
-                                                <td>{finance.bookingId}</td>
-                                                <td>{finance.username}</td>
-                                                <td>{finance.arrivalDate}</td>
-                                                <td>{finance.deptDate}</td>
-                                                <td>{finance.finalCost}</td>
+                                                <tr>
+
+                                                    {/* <th scope="row"></th> */}
+                                                    <td>{finance.id}</td>
+                                                    <td>{finance.bookingId}</td>
+                                                    <td>{finance.username}</td>
+                                                    <td>{formatTimestamp(finance.arrivalDate)}</td>
+                                                    <td>{formatTimestamp(finance.deptDate)}</td>
+                                                    <td>{formatTotalCost(parseFloat(finance.finalCost))}</td>
+                                                </tr>
                                             </>
                                         )
                                     })
                                 }
-                                <tr>
 
-                                </tr>
                             </tbody>
                         </table>
                     </div>

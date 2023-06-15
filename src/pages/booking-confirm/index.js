@@ -1,4 +1,5 @@
 import { Router, useRouter } from "next/router";
+import { useContext } from "react";
 import { Button } from "react-bootstrap";
 import Footer from "src/components/Footer";
 import { CartContext } from "src/context/CartContext";
@@ -12,6 +13,17 @@ export default function BookingConfirm() {
         router.push('/user-booking')
     }
 
+
+    function formatTimestamp(timestamp) {
+        const options = {
+            weekday: 'short',
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        };
+
+        return new Date(timestamp).toLocaleDateString('en-US', options);
+    }
     return (
         <>
             <>
@@ -71,6 +83,7 @@ export default function BookingConfirm() {
                                                 </div>
                                                 <div className="col">
                                                     <p>{formatTimestamp(arrivalDate)}</p>
+
                                                 </div>
                                             </div>
 
