@@ -173,6 +173,7 @@ export default function BookingDetail() {
         // const formData = { parkingRows, guestRows, selectedRoomList };
 
         let formData = {
+            email:JSON.parse(window.localStorage.getItem('userData')).email,
             arrival: arrivalDate,
             departure: deptDate,
             guestRows: transformData(guests),

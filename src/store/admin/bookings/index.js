@@ -37,7 +37,7 @@ export const addAdminBooking = createAsyncThunk('appAdminBooking/addData', async
   let returnResponse = null
 
   let rooms = (data.selectedRoomList)
-  let email = JSON.parse(window.localStorage.getItem('userData')).email
+  let email = data.email
   let guests = data.guestRows
   let arrivalDate = formatDateforApi(data.arrival)
   let departureDate = formatDateforApi(data.departure)
