@@ -31,13 +31,13 @@ export default function NavBarAdmin({ showLogin, setShowLogin }) {
 
         // Remove all data from localStorage
         window.localStorage.clear();
-
+        routerlog.reload()
         // Redirect the user based on the provided parameter
-        if (user === 'user') {
-            routerlog.push('/');
-        } else if (user === 'admin') {
-            routerlog.push('/admin/login');
-        }
+        // if (user === 'user') {
+        //     routerlog.push('/');
+        // } else if (user === 'admin') {
+        //     routerlog.push('/admin/login');
+        // }
     };
 
     return (<>
