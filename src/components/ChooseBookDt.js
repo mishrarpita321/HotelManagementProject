@@ -149,8 +149,9 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                 <span className="text-danger">{errors.departure.message}</span>
                                             )}
                                         </div>
+                                        
                                         <div style={{ margin: '0 0 20px 0' }} className="col-md-12">
-                                            <span>No. of Guests</span>
+                                            <span>No. of Guests (max {maxGuest})</span>
                                             <Controller
                                                 control={control}
                                                 name="noOfGuests"
