@@ -42,6 +42,7 @@ export const addCategory = createAsyncThunk('appAdminCategory/addData', async (d
     Authorization: 'Bearer ' + window.localStorage.getItem(adminConfig.storageTokenKeyName)
   }
   let returnResponse = null
+  console.log(data)
   try {
     const response = await axios.post(adminConfig.categoryAddEndpoint, data, { headers })
     dispatch(fetchCategoriesList(getState().category.params))

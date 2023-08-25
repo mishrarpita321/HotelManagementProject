@@ -20,8 +20,8 @@ export default function Login({ }) {
   });
 
   const defaultValues = {
-    email: 'mahesh@gmail.com',
-    password: 'mahesh',
+    email: '',
+    password: '',
   }
 
   const {
@@ -96,7 +96,7 @@ export default function Login({ }) {
           </label> */}
           {/* <div onClick={onClick}>x</div> */}
           {/* <button onClick={onClick} >Close</button> */}
-          <h1 onClick={() => setLoginLoading(true)}>Welcome {loginLoading ? ('true') : ('false')}</h1>
+          <h1 onClick={() => setLoginLoading(true)}>Welcome</h1>
           <form action="#">
             <label>Email</label>
             <Controller
@@ -153,7 +153,7 @@ export default function Login({ }) {
                 loginLoading ? (<Spinner size='sm' />) : ('Submit')
               }
             </button>
-            <div className="forgetpwd"><a href="#">Forgot Password?</a></div>
+            {/* <div className="forgetpwd"><a href="#">Forgot Password?</a></div> */}
             <div className="link">
               Not a member? <a href="#" onClick={() => setPage("registration")} >Sigup here</a>
             </div>

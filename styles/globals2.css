@@ -1134,7 +1134,8 @@ ul.social_icon li a:hover {
      /* position: relative; */
      display: flex;
      justify-content: center;
-     min-height: 403px;
+     min-height: 390px;
+     /* min-height: 403px; */
      margin-top: 50px !important;
 }
 
@@ -1214,7 +1215,7 @@ ul.social_icon li a:hover {
 }
 
 .roomChildCard {
-     width: 70%;
+     /* width: 70%; */
      position: relative;
      background-color: #eae8e8;
      border-radius: 9px;

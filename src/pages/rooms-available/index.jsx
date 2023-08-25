@@ -212,7 +212,7 @@ const AvailableRooms = () => {
     // console.log()
     return (
         <>
-            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType}/>
+            <NavBar showLogin={showLogin} setShowLogin={setShowLogin} isLoggedIn={isLoggedIn} userType={userType} />
             <TitleBanner marginBotton={"-12px"} padding={'10'} title={"Rooms Available for Booking"} />
 
 
@@ -248,20 +248,21 @@ const AvailableRooms = () => {
                                                             </span>
                                                         </div>
                                                         <div>
-                                                            <img src="images/gallery1.jpg" alt="room" style={{width: '105%',maxWidth:"unset"}}></img>
+                                                            {/* <img src="images/gallery1.jpg" alt="room" style={{width: '105%',maxWidth:"unset"}}></img> */}
+                                                            <img src="images/gallery1.jpg" alt="room" ></img>
                                                         </div>
                                                         <div className="row">
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                                <div className="col-10">Rooms No</div>
-                                                                <div className="col-2">{room.roomNo}</div>
+                                                                <div className="col">Rooms No</div>
+                                                                <div style={{display:"contents"}} className="col">{room.roomNo}</div>
                                                             </div>
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                                <div className="col-10">Price</div>
-                                                                <div className="col-2">{formatTotalCost(room.category.price)}</div>
+                                                                <div className="col">Price</div>
+                                                                <div style={{display:"contents"}} className="col">{formatTotalCost(room.category.price)}</div>
                                                             </div>
                                                             <div style={{ margin: "9px 0 0 0" }} className="row">
-                                                                <div className="col-10">Max Capacity</div>
-                                                                <div className="col-2">{room.category.maxPeopleAllowed}</div>
+                                                                <div className="col">Max Capacity</div>
+                                                                <div style={{display:"contents"}} className="col">{room.category.maxPeopleAllowed}</div>
                                                             </div>
                                                         </div>
                                                         <div className="row" style={{ justifyContent: "center", margin: "9px 0 0 0" }}>

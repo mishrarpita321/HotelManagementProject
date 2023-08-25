@@ -19,7 +19,7 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
     const router = useRouter();
     const [maxGuest, setMaxGuest] = useState(10); // Maximum number of guests allowed
     const today = new Date();
-    today.setHours(0,0,0,0)
+    today.setHours(0, 0, 0, 0)
     const tomorrow = new Date(today);
     tomorrow.setDate(tomorrow.getDate() + 1);
 
@@ -92,6 +92,12 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
         await fetchMaxGuest(arrivalDate, departureDate);
     };
 
+    const onClickCheck = () => {
+        if (!isLoggedIn) {
+            setShowLogin(true)
+        }
+    }
+
     return (
         <>
             <div className="booking_ocline">
@@ -114,6 +120,7 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                         selected={field.value}
                                                         onChange={(date) => handleDateChange(field, date)}
                                                         required
+                                                        onInputClick={onClickCheck}
                                                     />
                                                 )}
                                             />
@@ -133,6 +140,8 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                         selected={field.value}
                                                         onChange={(date) => handleDateChange(field, date)}
                                                         required
+                                                        onInputClick={onClickCheck}
+
                                                     />
                                                 )}
                                             />
@@ -140,8 +149,9 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                 <span className="text-danger">{errors.departure.message}</span>
                                             )}
                                         </div>
+                                        
                                         <div style={{ margin: '0 0 20px 0' }} className="col-md-12">
-                                            <span>No. of Guests</span>
+                                            <span>No. of Guests (max {maxGuest})</span>
                                             <Controller
                                                 control={control}
                                                 name="noOfGuests"
@@ -151,6 +161,7 @@ export default function ChooseBookDt({ setShowLogin, isLoggedIn }) {
                                                         className="dare_cua online_book"
                                                         {...field}
                                                         required
+                                                        onClick={onClickCheck}
                                                     />
                                                 )}
                                             />

@@ -9,11 +9,11 @@ import { AlertContext } from 'src/context/AlertContext';
 
 const schema = yup.object().shape({
   name: yup.string().required('This field is required'),
-  rooms: yup
-    .number()
-    .positive('The number of rooms should be a positive value')
-    .integer('The number of rooms should be an integer')
-    .required('This field is required'),
+  // rooms: yup
+  //   .number()
+  //   .positive('The number of rooms should be a positive value')
+  //   .integer('The number of rooms should be an integer')
+  //   .required('This field is required'),
   size: yup
     .number()
     .positive('The size should be a positive value')
@@ -46,7 +46,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
   useEffect(() => {
     if (editRow) {
       setValue('name', editRow?.title);
-      setValue('rooms', editRow?.rooms);
+      // setValue('rooms', editRow?.rooms);
       setValue('size', editRow?.size);
       setValue('capacity', editRow?.maxPeopleAllowed);
       setValue('price', editRow?.price);
@@ -73,11 +73,10 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
 
   const onSubmit = (data) => {
     setIsLoading(true)
-    const { name, rooms, size, capacity, price, image } = data;
+    const { name, size, capacity, price, image } = data;
 
     const categoryDto = {
       title: name,
-      rooms,
       size: formatToFloat(size),
       price: formatToFloat(price),
       // size: parseFloat(size.toFixed(2)),
@@ -166,7 +165,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
             {errors.name && <Form.Text className="text-danger">{errors.name.message}</Form.Text>}
           </Form.Group>
 
-          <Form.Group controlId="rooms">
+          {/* <Form.Group controlId="rooms">
             <Form.Label>Number of Rooms:</Form.Label>
             <Controller
               control={control}
@@ -182,7 +181,7 @@ const EditCategoryForm = ({ setShowEditDialog, editRow, setEditRow }) => {
               )}
             />
             {errors.rooms && <Form.Text className="text-danger">{errors.rooms.message}</Form.Text>}
-          </Form.Group>
+          </Form.Group> */}
 
           <Form.Group controlId="size">
             <Form.Label>Size (in sq mt):</Form.Label>

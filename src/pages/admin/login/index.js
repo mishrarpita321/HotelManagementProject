@@ -169,7 +169,7 @@ export default function Dashboard() {
                                             onClick={handleSubmit(handleLogin)}>
                                             Submit
                                         </button>
-                                        <div className="forgetpwd"><a href="#">Forgot Password?</a></div>
+                                        {/* <div className="forgetpwd"><a href="#">Forgot Password?</a></div> */}
                                         {/* <div className="link">
                                             Not a member? <a href="#" onClick={() => setPage("registration")} >Sigup here</a>
                                         </div> */}

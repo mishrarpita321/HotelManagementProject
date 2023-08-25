@@ -58,11 +58,11 @@ export default function UserRegistration({ }) {
 
 
   const defaultValues = {
-    email: 'mahesh@gmail.com',
-    password: 'mahesh',
-    username: 'mahesh',
-    confirm_password: 'mahesh',
-    phone: '15735598680'
+    email: '',
+    password: '',
+    username: '',
+    confirm_password: '',
+    phone: ''
   }
 
   const {
@@ -292,7 +292,7 @@ export default function UserRegistration({ }) {
                 signupLoading ? (<Spinner size='sm' />) : ('Submit')
               }
             </button>
-            <div className="forgetpwd"><a href="#" >Forgot Password?</a></div>
+            {/* <div className="forgetpwd"><a href="#" >Forgot Password?</a></div> */}
             <div className="link">
               Already a member? <a href="#" onClick={() => setPage("login")}>Sigin here</a>
             </div>
